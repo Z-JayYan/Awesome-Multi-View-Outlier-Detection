@@ -1,6 +1,6 @@
 # Reproducibility Registry
 
-The first public release records conservative, observable artifacts:
+The v0.2 registry records conservative, observable artifacts:
 
 - `official_code`: repository explicitly connected to the paper by an author, paper, or project page;
 - `official_config`: runnable experiment configs or documented hyperparameters;

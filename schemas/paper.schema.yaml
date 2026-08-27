@@ -9,6 +9,8 @@ required:
   - venue_type
   - venue_status
   - track
+  - view_setting
+  - training_paradigm
   - status
   - featured
   - tasks
@@ -23,6 +25,7 @@ required:
   - link_status
   - verified_from
   - reproducibility
+  - protocol
 additionalProperties: false
 properties:
   id:
@@ -50,6 +53,10 @@ properties:
     enum: [proceedings, published, accepted, preprint]
   track:
     enum: [core_mvod, partial_mvod, related_natural_multimodal, uncertain]
+  view_setting:
+    enum: [complete, incomplete, partial, industrial, unknown]
+  training_paradigm:
+    enum: [unsupervised, semi_supervised, normal_only, online, transductive, unknown]
   status:
     enum: [verified, partially_verified, uncertain]
   featured:
@@ -123,12 +130,106 @@ properties:
     type: object
     required: [official_code, official_config, dataset_instructions, pretrained_weights, environment, license]
     properties:
-      official_code: {enum: [yes, no, partial, unknown]}
-      official_config: {enum: [yes, no, partial, unknown]}
-      dataset_instructions: {enum: [yes, no, partial, unknown]}
-      pretrained_weights: {enum: [yes, no, partial, unknown]}
-      environment: {enum: [yes, no, partial, unknown]}
-      license: {enum: [yes, no, partial, unknown]}
+      official_code: {enum: ['yes', 'no', partial, unknown]}
+      official_config: {enum: ['yes', 'no', partial, unknown]}
+      dataset_instructions: {enum: ['yes', 'no', partial, unknown]}
+      pretrained_weights: {enum: ['yes', 'no', partial, unknown]}
+      environment: {enum: ['yes', 'no', partial, unknown]}
+      license: {enum: ['yes', 'no', partial, unknown]}
     additionalProperties: false
+  protocol:
+    type: object
+    required: [view_setting, anomaly_types, anomaly_generation, contamination, preprocessing, evaluation, data_setting, verification]
+    additionalProperties: false
+    properties:
+      view_setting:
+        type: object
+        required: [type]
+        additionalProperties: false
+        properties:
+          type: {enum: [complete, incomplete, partial, industrial, unknown]}
+      anomaly_types:
+        type: array
+        minItems: 1
+        items: {type: string}
+      anomaly_generation:
+        type: object
+        required: [attribute, class]
+        additionalProperties: false
+        properties:
+          attribute: {$ref: '#/$defs/generation'}
+          class: {$ref: '#/$defs/generation'}
+      contamination:
+        type: object
+        required: [values, training_contamination]
+        additionalProperties: false
+        properties:
+          values: {type: array, items: {type: [string, number]}}
+          training_contamination: {type: [string, number, boolean, 'null']}
+      preprocessing:
+        type: object
+        required: [normalization, dimension_reduction, feature_source, backbone]
+        additionalProperties: false
+        properties:
+          normalization: {type: [string, boolean, 'null']}
+          dimension_reduction: {type: [string, boolean, 'null']}
+          feature_source: {type: [string, 'null']}
+          backbone: {type: [string, 'null']}
+      evaluation:
+        type: object
+        required: [metrics, repetitions, seeds, endpoint]
+        additionalProperties: false
+        properties:
+          metrics: {type: array, minItems: 1, items: {type: string}}
+          repetitions: {type: [string, integer, 'null']}
+          seeds: {type: [string, integer, array, 'null']}
+          endpoint: {type: array, minItems: 1, items: {type: string}}
+      data_setting:
+        type: object
+        required: [dataset_variants, train_split, test_split, normal_only_training]
+        additionalProperties: false
+        properties:
+          dataset_variants: {type: [string, object, array, 'null']}
+          train_split: {type: [string, 'null']}
+          test_split: {type: [string, 'null']}
+          normal_only_training: {type: [string, boolean, 'null']}
+      verification:
+        type: object
+        required: [sources, confidence]
+        additionalProperties: false
+        properties:
+          sources:
+            type: array
+            items: {type: string, format: uri}
+          confidence: {enum: [high, medium, low, unknown]}
+  baseline:
+    type: object
+    required: [roles, core_mechanism, closest_counterfactual, why_compare, why_not_directly_comparable, scalability_candidate, main_datasets, metrics, verification_status, sources]
+    additionalProperties: false
+    properties:
+      roles: {type: array, minItems: 1, items: {type: string}}
+      core_mechanism: {type: string}
+      closest_counterfactual: {type: string}
+      why_compare: {type: string}
+      why_not_directly_comparable: {type: string}
+      scalability_candidate: {type: boolean}
+      main_datasets: {type: array, minItems: 1, items: {type: string}}
+      metrics: {type: array, minItems: 1, items: {type: string}}
+      verification_status: {enum: [verified, partially_verified, uncertain]}
+      sources:
+        type: array
+        minItems: 1
+        items: {type: string, format: uri}
   notes:
     type: [string, 'null']
+
+$defs:
+  generation:
+    type: object
+    required: [mechanism, affected_views, ratio, verified]
+    additionalProperties: false
+    properties:
+      mechanism: {type: [string, 'null']}
+      affected_views: {type: [string, integer, array, 'null']}
+      ratio: {type: [string, number, array, 'null']}
+      verified: {type: boolean}

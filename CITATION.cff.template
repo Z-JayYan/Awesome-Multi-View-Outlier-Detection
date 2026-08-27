@@ -1,11 +1,17 @@
 cff-version: 1.2.0
 message: "If you use this registry, please cite the repository release."
-title: "Awesome Multi-View Anomaly Detection"
+title: "Awesome Multi-View Outlier Detection"
 type: dataset
 authors:
-  - family-names: "TODO"
-    given-names: "TODO"
-repository-code: "https://github.com/TODO/awesome-mvod"
+  # TODO(owner): replace with a verified personal or organizational identity.
+  - name: "TODO: repository owner or maintaining organization"
+repository-code: "https://github.com/Z-JayYan/Awesome-Multi-View-Outlier-Detection"
+url: "https://github.com/Z-JayYan/Awesome-Multi-View-Outlier-Detection"
 license: "TODO"
-version: "0.1.0"
-date-released: "TODO"
+version: "0.2.0"
+date-released: "2026-08-27"
+keywords:
+  - multi-view outlier detection
+  - multi-view anomaly detection
+  - protocol comparability
+  - research dataset

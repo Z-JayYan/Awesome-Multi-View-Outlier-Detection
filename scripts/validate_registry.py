@@ -1,25 +1,29 @@
 #!/usr/bin/env python3
-"""Validate Awesome-MVOD registries without network access."""
+"""Validate Awesome-MVOD registries, schemas, references, and internal links."""
 
 from __future__ import annotations
 
 import re
 import sys
 from pathlib import Path
-from urllib.parse import urlparse
+from urllib.parse import unquote, urlparse
 
 import yaml
+from jsonschema import Draft202012Validator, FormatChecker
 
 
 ROOT = Path(__file__).resolve().parents[1]
 CURRENT_YEAR = 2026
 ID_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*-[0-9]{4}$")
 GITHUB_RE = re.compile(r"^https://github\.com/[^/]+/[^/]+/?$")
+MARKDOWN_LINK_RE = re.compile(r"(?<!!)\[[^\]]*\]\(([^)]+)\)")
+DOI_RE = re.compile(r"10\.\d{4,9}/[-._;()/:a-z0-9]+", re.IGNORECASE)
 REQUIRED = {
     "id", "title", "year", "venue", "venue_type", "venue_status", "track",
-    "status", "tasks", "mechanisms", "anomaly_types", "evidence_levels",
-    "partial_view", "datasets", "summary", "links", "code_status",
-    "link_status", "verified_from", "reproducibility",
+    "view_setting", "training_paradigm", "status", "tasks", "mechanisms",
+    "anomaly_types", "evidence_levels", "partial_view", "datasets", "summary",
+    "links", "code_status", "link_status", "verified_from", "reproducibility",
+    "protocol",
 }
 
 
@@ -39,16 +43,61 @@ def valid_http_url(value: object) -> bool:
     return parsed.scheme in {"http", "https"} and bool(parsed.netloc)
 
 
+def extract_doi(url: object) -> str | None:
+    if not isinstance(url, str):
+        return None
+    match = DOI_RE.search(unquote(url))
+    return match.group(0).rstrip(".,;)").casefold() if match else None
+
+
+def schema_errors(schema_path: Path, entries: list[dict], label: str) -> list[str]:
+    schema = load_yaml(schema_path)
+    validator = Draft202012Validator(schema, format_checker=FormatChecker())
+    errors: list[str] = []
+    for index, entry in enumerate(entries, 1):
+        entry_label = entry.get("id") or entry.get("name") or f"{label}-{index}"
+        for error in sorted(validator.iter_errors(entry), key=lambda item: list(item.path)):
+            location = ".".join(str(part) for part in error.path) or "<entry>"
+            errors.append(f"{entry_label}: schema {location}: {error.message}")
+    return errors
+
+
+def internal_link_errors() -> list[str]:
+    errors: list[str] = []
+    for path in sorted(ROOT.rglob("*.md")):
+        if ".git" in path.parts:
+            continue
+        text = path.read_text(encoding="utf-8")
+        for raw_target in MARKDOWN_LINK_RE.findall(text):
+            target = raw_target.strip().strip("<>").split(" ", 1)[0]
+            if not target or target.startswith(("http://", "https://", "mailto:", "#")):
+                continue
+            relative = unquote(target.split("#", 1)[0])
+            if not relative:
+                continue
+            resolved = (path.parent / relative).resolve()
+            if not resolved.exists():
+                errors.append(f"{path.relative_to(ROOT)}: broken internal link {target!r}")
+    return errors
+
+
 def main() -> int:
     errors: list[str] = []
     warnings: list[str] = []
     taxonomy = load_yaml(ROOT / "data" / "taxonomy.yaml")
     papers = load_yaml(ROOT / "data" / "papers.yaml") or []
     datasets = load_yaml(ROOT / "data" / "datasets.yaml") or []
+    comparability = load_yaml(ROOT / "data" / "comparability.yaml") or {}
+
+    errors.extend(schema_errors(ROOT / "schemas" / "paper.schema.yaml", papers, "paper"))
+    errors.extend(schema_errors(ROOT / "schemas" / "dataset.schema.yaml", datasets, "dataset"))
 
     allowed = {
         "track": set(taxonomy["tracks"]),
         "status": set(taxonomy["statuses"]),
+        "view_setting": set(taxonomy["view_settings"]),
+        "training_paradigm": set(taxonomy["training_paradigms"]),
+        "protocol_confidence": set(taxonomy["protocol_confidence"]),
         "task": set(taxonomy["tasks"]),
         "mechanism": set(taxonomy["mechanisms"]),
         "anomaly": set(taxonomy["anomaly_types"]),
@@ -65,6 +114,13 @@ def main() -> int:
 
     seen_ids: set[str] = set()
     seen_title_year: set[tuple[str, int]] = set()
+    seen_dois: dict[str, str] = {}
+    track_view = {
+        "core_mvod": "complete",
+        "partial_mvod": "partial",
+        "related_natural_multimodal": "industrial",
+        "uncertain": "unknown",
+    }
     for index, paper in enumerate(papers, 1):
         label = paper.get("id", f"entry-{index}")
         missing = REQUIRED - set(paper)
@@ -86,9 +142,10 @@ def main() -> int:
         seen_title_year.add(key)
 
         for scalar_field, vocab_key in (
-            ("track", "track"), ("status", "status"),
-            ("venue_type", "venue_type"), ("venue_status", "venue_status"),
-            ("code_status", "code_status"), ("link_status", "link_status"),
+            ("track", "track"), ("status", "status"), ("view_setting", "view_setting"),
+            ("training_paradigm", "training_paradigm"), ("venue_type", "venue_type"),
+            ("venue_status", "venue_status"), ("code_status", "code_status"),
+            ("link_status", "link_status"),
         ):
             value = paper.get(scalar_field)
             if value not in allowed[vocab_key]:
@@ -105,6 +162,21 @@ def main() -> int:
             unknown = set(values) - allowed[vocab_key]
             if unknown:
                 errors.append(f"{label}: unknown {list_field}: {sorted(unknown)}")
+
+        expected_view = track_view.get(paper.get("track"))
+        if expected_view and paper.get("view_setting") != expected_view:
+            errors.append(f"{label}: track requires view_setting={expected_view!r}")
+        protocol = paper.get("protocol") or {}
+        protocol_view = (protocol.get("view_setting") or {}).get("type")
+        if protocol_view != paper.get("view_setting"):
+            errors.append(f"{label}: protocol view setting disagrees with top-level view_setting")
+        if protocol.get("anomaly_types") != paper.get("anomaly_types"):
+            errors.append(f"{label}: protocol anomaly_types must mirror the registry classification")
+        confidence = (protocol.get("verification") or {}).get("confidence")
+        if confidence not in allowed["protocol_confidence"]:
+            errors.append(f"{label}: unknown protocol verification confidence {confidence!r}")
+        if paper.get("partial_view") and paper.get("view_setting") not in {"partial", "industrial"}:
+            warnings.append(f"{label}: partial_view is true outside the partial/industrial tracks")
 
         for dataset in paper.get("datasets", []):
             if dataset not in dataset_names:
@@ -124,6 +196,12 @@ def main() -> int:
         if paper.get("code_status") != "official" and code_url is not None:
             warnings.append(f"{label}: code URL exists but code status is not official")
 
+        doi = extract_doi(paper_url)
+        if doi:
+            if doi in seen_dois:
+                errors.append(f"{label}: duplicate DOI with {seen_dois[doi]}: {doi}")
+            seen_dois[doi] = label
+
         sources = paper.get("verified_from") or []
         if not sources:
             errors.append(f"{label}: verified_from must not be empty")
@@ -141,6 +219,26 @@ def main() -> int:
             if repro.get(field) not in allowed["reproducibility"]:
                 errors.append(f"{label}: invalid reproducibility.{field}")
 
+    paper_ids = {paper["id"] for paper in papers}
+    for dataset in datasets:
+        label = dataset["name"]
+        declared = dataset.get("papers_using_dataset", [])
+        unknown_ids = set(declared) - paper_ids
+        if unknown_ids:
+            errors.append(f"{label}: unknown papers_using_dataset ids: {sorted(unknown_ids)}")
+        actual = sorted(paper["id"] for paper in papers if label in paper.get("datasets", []))
+        if sorted(declared) != actual:
+            errors.append(f"{label}: papers_using_dataset is stale; expected {actual}")
+
+    expected_statuses = {"DIRECTLY_COMPARABLE", "CONDITIONALLY_COMPARABLE", "NOT_DIRECTLY_COMPARABLE", "UNKNOWN"}
+    if set(comparability.get("statuses", [])) != expected_statuses:
+        errors.append("data/comparability.yaml must define the four conservative statuses exactly")
+    rule_ids = [rule.get("id") for rule in comparability.get("rules", [])]
+    if len(rule_ids) != len(set(rule_ids)):
+        errors.append("data/comparability.yaml contains duplicate rule ids")
+
+    errors.extend(internal_link_errors())
+
     if warnings:
         print("Warnings:")
         for warning in warnings:
@@ -150,7 +248,10 @@ def main() -> int:
         for error in errors:
             print(f"  - {error}")
         return 1
-    print(f"PASS: {len(papers)} papers, {len(datasets)} datasets; registries are internally consistent")
+    print(
+        f"PASS: {len(papers)} papers, {len(datasets)} datasets, "
+        f"{len(seen_dois)} unique DOIs; schemas, registries, references, and internal links are consistent"
+    )
     return 0
 
 

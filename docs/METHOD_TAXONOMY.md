@@ -2,6 +2,8 @@
 
 This is a multi-label mechanism taxonomy. It deliberately avoids a single “deep vs. non-deep” split: depth describes an implementation family, while the tags below describe the evidence used to score an instance.
 
+Task Track is orthogonal to this taxonomy. A deep or contrastive method may belong to CORE complete-view MVOD; a partial-view method is not a lesser method category; and industrial multi-view anomaly detection is a related protocol space rather than a chronological replacement for CORE.
+
 ## 1. Cluster and consensus disagreement
 
 Early methods compare cluster memberships or cross-view cluster structures. They are historically important but may rely on visible cluster structure and, in some formulations, pairwise-view processing.
@@ -60,4 +62,4 @@ RGB–depth, point-cloud, multi-camera, and multi-sensor systems may use spatial
 
 ## Tagging rule
 
-Assign the smallest set of tags that explains the scoring signal. Do not tag every architectural component. When only an abstract is accessible and the exact score is unclear, mark the entry `partially_verified` and describe the uncertainty in `notes`.
+Assign the smallest set of tags that explains the scoring signal. Do not tag every architectural component. Bibliographic verification, scope confidence, code availability, and protocol completeness are separate fields: a verified paper may still have `unknown` protocol details.

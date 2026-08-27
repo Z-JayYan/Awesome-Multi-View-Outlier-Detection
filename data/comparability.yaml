@@ -1,0 +1,58 @@
+version: 0.2
+statuses:
+  - DIRECTLY_COMPARABLE
+  - CONDITIONALLY_COMPARABLE
+  - NOT_DIRECTLY_COMPARABLE
+  - UNKNOWN
+
+required_factors:
+  - dataset_variant
+  - anomaly_generation
+  - view_completeness
+  - preprocessing
+  - contamination_ratio
+  - evaluation_metric
+  - evaluation_endpoint
+  - feature_or_backbone
+  - train_test_setting
+
+rules:
+  - id: cross-track-boundary
+    priority: 1
+    when: view_setting or evaluation endpoint is incompatible
+    result: NOT_DIRECTLY_COMPARABLE
+    rationale: Complete-view feature-level, partial-view, and industrial image/pixel protocols answer different questions.
+  - id: dataset-identity-is-insufficient
+    priority: 2
+    when: dataset names match but any variant, anomaly-generation, preprocessing, or split field differs
+    result: CONDITIONALLY_COMPARABLE
+    rationale: The same base dataset can be transformed into incompatible benchmarks.
+  - id: missing-essential-evidence
+    priority: 3
+    when: one or more required factors is unknown for either paper
+    result: UNKNOWN
+    rationale: Missing protocol evidence cannot be converted into assumed comparability.
+  - id: exact-fingerprint-match
+    priority: 4
+    when: all required factors are verified and match
+    result: DIRECTLY_COMPARABLE
+    rationale: A direct comparison is defensible only when the complete relevant fingerprint agrees.
+
+track_matrix:
+  core_mvod:
+    core_mvod: CONDITIONALLY_COMPARABLE
+    partial_mvod: NOT_DIRECTLY_COMPARABLE
+    related_natural_multimodal: NOT_DIRECTLY_COMPARABLE
+  partial_mvod:
+    core_mvod: NOT_DIRECTLY_COMPARABLE
+    partial_mvod: CONDITIONALLY_COMPARABLE
+    related_natural_multimodal: NOT_DIRECTLY_COMPARABLE
+  related_natural_multimodal:
+    core_mvod: NOT_DIRECTLY_COMPARABLE
+    partial_mvod: NOT_DIRECTLY_COMPARABLE
+    related_natural_multimodal: CONDITIONALLY_COMPARABLE
+
+leaderboard_policy:
+  allow_only_when: all required factors are verified and match
+  otherwise: Reported Result Context
+  warning: Reported numbers outside a verified matching fingerprint are not directly comparable.

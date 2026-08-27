@@ -1,16 +1,6 @@
-- name: 3Sources
-  aliases: [3Sources-text]
-  instances: 416
-  views: 3
-  feature_dimensions: variant-dependent
-  domain: multilingual/news text
-  classes: 6
-  source: http://erdos.ucd.ie/datasets/3sources.html
-  source_kind: dataset_homepage
-  notes: Article alignment and feature construction vary across redistributed benchmark files.
-
 - name: 100Leaves
-  aliases: [100 Leaves Plant Species]
+  aliases:
+  - 100 Leaves Plant Species
   instances: 1600
   views: 3
   feature_dimensions: 64/64/64 in the UCI feature files
@@ -19,9 +9,60 @@
   source: https://archive.ics.uci.edu/dataset/241/one-hundred-plant-species-leaves-data-set
   source_kind: official_dataset
   notes: Many MVOD studies subsample or corrupt the complete UCI feature set.
-
+  task_track: core_mvod
+  num_samples: 1600
+  num_views: 3
+  view_dimensions: 64/64/64 in the UCI feature files
+  modality: plant leaf shape, margin, and texture
+  feature_type: derived_features
+  labels:
+    class_count: 100
+    anomaly_labels: synthetic_by_paper_protocol
+    annotation_levels:
+    - unknown
+  commonly_used_for:
+  - unknown
+  known_variants:
+  - unknown
+  official_source: https://archive.ics.uci.edu/dataset/241/one-hundred-plant-species-leaves-data-set
+  common_preprocessing: paper_specific
+  protocol_notes: Many MVOD studies subsample or corrupt the complete UCI feature set.
+  papers_using_dataset: []
+  industrial_details: null
+- name: 3Sources
+  aliases:
+  - 3Sources-text
+  instances: 416
+  views: 3
+  feature_dimensions: variant-dependent
+  domain: multilingual/news text
+  classes: 6
+  source: http://erdos.ucd.ie/datasets/3sources.html
+  source_kind: dataset_homepage
+  notes: Article alignment and feature construction vary across redistributed benchmark files.
+  task_track: core_mvod
+  num_samples: 416
+  num_views: 3
+  view_dimensions: variant-dependent
+  modality: multilingual/news text
+  feature_type: derived_features
+  labels:
+    class_count: 6
+    anomaly_labels: synthetic_by_paper_protocol
+    annotation_levels:
+    - unknown
+  commonly_used_for:
+  - unknown
+  known_variants:
+  - unknown
+  official_source: http://erdos.ucd.ie/datasets/3sources.html
+  common_preprocessing: paper_specific
+  protocol_notes: Article alignment and feature construction vary across redistributed benchmark files.
+  papers_using_dataset: []
+  industrial_details: null
 - name: BBCSport
-  aliases: [BBC Sports]
+  aliases:
+  - BBC Sports
   instances: 544
   views: 2
   feature_dimensions: variant-dependent
@@ -30,9 +71,30 @@
   source: http://mlg.ucd.ie/datasets/segment.html
   source_kind: dataset_homepage
   notes: Multi-view versions use different vocabulary partitions or feature preprocessing.
-
+  task_track: core_mvod
+  num_samples: 544
+  num_views: 2
+  view_dimensions: variant-dependent
+  modality: news text
+  feature_type: derived_features
+  labels:
+    class_count: 5
+    anomaly_labels: synthetic_by_paper_protocol
+    annotation_levels:
+    - unknown
+  commonly_used_for:
+  - unknown
+  known_variants:
+  - unknown
+  official_source: http://mlg.ucd.ie/datasets/segment.html
+  common_preprocessing: paper_specific
+  protocol_notes: Multi-view versions use different vocabulary partitions or feature preprocessing.
+  papers_using_dataset: []
+  industrial_details: null
 - name: Caltech101
-  aliases: [Caltech-101, Caltech101-20]
+  aliases:
+  - Caltech-101
+  - Caltech101-20
   instances: null
   views: null
   feature_dimensions: variant-dependent
@@ -41,9 +103,29 @@
   source: https://data.caltech.edu/records/mzrjq-6wc02
   source_kind: official_dataset
   notes: MVOD papers usually use a derived multi-feature subset; class count, sample count, and views are paper-specific.
-
+  task_track: core_mvod
+  num_samples: unknown
+  num_views: unknown
+  view_dimensions: variant-dependent
+  modality: object images represented by multiple handcrafted or learned features
+  feature_type: derived_features
+  labels:
+    class_count: unknown
+    anomaly_labels: synthetic_by_paper_protocol
+    annotation_levels:
+    - unknown
+  commonly_used_for:
+  - unknown
+  known_variants:
+  - unknown
+  official_source: https://data.caltech.edu/records/mzrjq-6wc02
+  common_preprocessing: paper_specific
+  protocol_notes: MVOD papers usually use a derived multi-feature subset; class count, sample count, and views are paper-specific.
+  papers_using_dataset: []
+  industrial_details: null
 - name: CiteSeer
-  aliases: [Citeseer]
+  aliases:
+  - Citeseer
   instances: null
   views: null
   feature_dimensions: variant-dependent
@@ -52,9 +134,29 @@
   source: https://linqs-data.soe.ucsc.edu/public/lbc/citeseer.tgz
   source_kind: public_dataset
   notes: Text, citation, and label variants differ; record the exact preprocessing when reporting a result.
-
+  task_track: core_mvod
+  num_samples: unknown
+  num_views: unknown
+  view_dimensions: variant-dependent
+  modality: scientific documents/citation network
+  feature_type: derived_features
+  labels:
+    class_count: unknown
+    anomaly_labels: synthetic_by_paper_protocol
+    annotation_levels:
+    - unknown
+  commonly_used_for:
+  - unknown
+  known_variants:
+  - unknown
+  official_source: https://linqs-data.soe.ucsc.edu/public/lbc/citeseer.tgz
+  common_preprocessing: paper_specific
+  protocol_notes: Text, citation, and label variants differ; record the exact preprocessing when reporting a result.
+  papers_using_dataset: []
+  industrial_details: null
 - name: COIL-20
-  aliases: [COIL20]
+  aliases:
+  - COIL20
   instances: 1440
   views: null
   feature_dimensions: variant-dependent
@@ -63,9 +165,32 @@
   source: https://www.cs.columbia.edu/CAVE/software/softlib/coil-20.php
   source_kind: official_dataset
   notes: The base dataset has 72 poses per object; feature-view construction is paper-specific.
-
+  task_track: core_mvod
+  num_samples: 1440
+  num_views: unknown
+  view_dimensions: variant-dependent
+  modality: multi-angle object images
+  feature_type: derived_features
+  labels:
+    class_count: 20
+    anomaly_labels: synthetic_by_paper_protocol
+    annotation_levels:
+    - unknown
+  commonly_used_for:
+  - attribute
+  - class
+  - mixed
+  known_variants:
+  - unknown
+  official_source: https://www.cs.columbia.edu/CAVE/software/softlib/coil-20.php
+  common_preprocessing: paper_specific
+  protocol_notes: The base dataset has 72 poses per object; feature-view construction is paper-specific.
+  papers_using_dataset:
+  - dpoe-2023
+  industrial_details: null
 - name: Fashion-MNIST
-  aliases: [Fashion]
+  aliases:
+  - Fashion
   instances: 70000
   views: null
   feature_dimensions: variant-dependent
@@ -74,7 +199,73 @@
   source: https://github.com/zalandoresearch/fashion-mnist
   source_kind: official_dataset
   notes: Not inherently multi-view; views and anomaly corruption are constructed by each study.
-
+  task_track: core_mvod
+  num_samples: 70000
+  num_views: unknown
+  view_dimensions: variant-dependent
+  modality: clothing images represented by constructed feature views
+  feature_type: derived_features
+  labels:
+    class_count: 10
+    anomaly_labels: synthetic_by_paper_protocol
+    annotation_levels:
+    - unknown
+  commonly_used_for:
+  - attribute
+  - class
+  - mixed
+  known_variants:
+  - unknown
+  official_source: https://github.com/zalandoresearch/fashion-mnist
+  common_preprocessing: paper_specific
+  protocol_notes: Not inherently multi-view; views and anomaly corruption are constructed by each study.
+  papers_using_dataset:
+  - dpoe-2023
+  - rcpmod-2024
+  industrial_details: null
+- name: M2AD
+  aliases:
+  - Multi-View Multi-Illumination Anomaly Detection
+  instances: 119880
+  views: 12
+  feature_dimensions: RGB images; 1024x1024 and 256x256 public variants
+  domain: industrial multi-view and multi-illumination images
+  classes: 10
+  source: https://hustcyq.github.io/M2AD/
+  source_kind: official_dataset
+  notes: 999 specimens are captured with 12 synchronized views and 10 illumination settings; M2AD-Synergy and M2AD-Invariant
+    are distinct protocols.
+  task_track: related_natural_multimodal
+  num_samples: 119880
+  num_views: 12
+  view_dimensions: RGB images; 1024x1024 and 256x256 public variants
+  modality: industrial multi-view and multi-illumination images
+  feature_type: raw_images
+  labels:
+    class_count: 10
+    anomaly_labels: natural
+    annotation_levels:
+    - unknown
+  commonly_used_for:
+  - natural
+  known_variants:
+  - M2AD-1024
+  - M2AD-256
+  - M2AD-Synergy
+  - M2AD-Invariant
+  official_source: https://hustcyq.github.io/M2AD/
+  common_preprocessing: paper_specific
+  protocol_notes: 999 specimens are captured with 12 synchronized views and 10 illumination settings; M2AD-Synergy and M2AD-Invariant
+    are distinct protocols.
+  papers_using_dataset:
+  - m2ad-benchmark-2026
+  industrial_details:
+    camera_view_structure: 12 synchronized views x 10 illumination settings
+    annotation_levels:
+    - image
+    - pixel
+    normal_only_training: unknown
+    view_identity_correspondence: same specimen across synchronized views and illumination configurations
 - name: MNIST
   aliases: []
   instances: 70000
@@ -85,9 +276,72 @@
   source: http://yann.lecun.com/exdb/mnist/
   source_kind: official_dataset
   notes: Not inherently multi-view; view construction and sampling vary across papers.
-
+  task_track: core_mvod
+  num_samples: 70000
+  num_views: unknown
+  view_dimensions: variant-dependent
+  modality: handwritten digits represented by constructed feature views
+  feature_type: derived_features
+  labels:
+    class_count: 10
+    anomaly_labels: synthetic_by_paper_protocol
+    annotation_levels:
+    - unknown
+  commonly_used_for:
+  - attribute
+  - class
+  - mixed
+  known_variants:
+  - unknown
+  official_source: http://yann.lecun.com/exdb/mnist/
+  common_preprocessing: paper_specific
+  protocol_notes: Not inherently multi-view; view construction and sampling vary across papers.
+  papers_using_dataset:
+  - dpoe-2023
+  - ncmod-2021
+  industrial_details: null
+- name: MVTec 3D-AD
+  aliases:
+  - MVTec3D
+  instances: 4147
+  views: 2
+  feature_dimensions: RGB image and organized 3D point cloud
+  domain: multimodal industrial inspection
+  classes: 10
+  source: https://www.mvtec.com/company/research/datasets/mvtec-3d-ad
+  source_kind: official_dataset
+  notes: Related RGB+3D track; modalities are spatially registered but use natural-defect protocols.
+  task_track: related_natural_multimodal
+  num_samples: 4147
+  num_views: 2
+  view_dimensions: RGB image and organized 3D point cloud
+  modality: multimodal industrial inspection
+  feature_type: raw_images
+  labels:
+    class_count: 10
+    anomaly_labels: natural
+    annotation_levels:
+    - unknown
+  commonly_used_for:
+  - natural
+  known_variants:
+  - unknown
+  official_source: https://www.mvtec.com/company/research/datasets/mvtec-3d-ad
+  common_preprocessing: paper_specific
+  protocol_notes: Related RGB+3D track; modalities are spatially registered but use natural-defect protocols.
+  papers_using_dataset:
+  - diffusion-mvad-2024
+  industrial_details:
+    camera_view_structure: registered RGB and organized 3D point cloud
+    annotation_levels:
+    - image
+    - pixel
+    normal_only_training: 'yes'
+    view_identity_correspondence: spatially registered modalities
 - name: NUSWIDEOBJ
-  aliases: [NUS-WIDE-OBJ, NUS-WIDE]
+  aliases:
+  - NUS-WIDE-OBJ
+  - NUS-WIDE
   instances: null
   views: null
   feature_dimensions: variant-dependent
@@ -96,18 +350,26 @@
   source: https://lms.comp.nus.edu.sg/wp-content/uploads/2019/research/nuswide/NUS-WIDE.html
   source_kind: official_dataset
   notes: MVOD subsets differ in concepts, retained samples, visual descriptors, and tag features.
-
-- name: Reuters
-  aliases: [Reuters multilingual, Reuters-1200]
-  instances: null
-  views: null
-  feature_dimensions: variant-dependent
-  domain: multilingual/news text
-  classes: null
-  source: https://archive.ics.uci.edu/dataset/137/reuters+21578+text+categorization+collection
-  source_kind: official_dataset
-  notes: “Reuters” denotes several incompatible multi-view constructions; never assume one canonical shape.
-
+  task_track: core_mvod
+  num_samples: unknown
+  num_views: unknown
+  view_dimensions: variant-dependent
+  modality: web images with visual features and tags
+  feature_type: derived_features
+  labels:
+    class_count: unknown
+    anomaly_labels: synthetic_by_paper_protocol
+    annotation_levels:
+    - unknown
+  commonly_used_for:
+  - unknown
+  known_variants:
+  - unknown
+  official_source: https://lms.comp.nus.edu.sg/wp-content/uploads/2019/research/nuswide/NUS-WIDE.html
+  common_preprocessing: paper_specific
+  protocol_notes: MVOD subsets differ in concepts, retained samples, visual descriptors, and tag features.
+  papers_using_dataset: []
+  industrial_details: null
 - name: Real-IAD
   aliases: []
   instances: 150000
@@ -118,14 +380,70 @@
   source: https://realiad4ad.github.io/Real-IAD/
   source_kind: official_dataset
   notes: Related natural multi-view track; protocol and metrics are not comparable to tabular classical MVOD.
-
-- name: MVTec 3D-AD
-  aliases: [MVTec3D]
-  instances: 4147
-  views: 2
-  feature_dimensions: RGB image and organized 3D point cloud
-  domain: multimodal industrial inspection
-  classes: 10
-  source: https://www.mvtec.com/company/research/datasets/mvtec-3d-ad
+  task_track: related_natural_multimodal
+  num_samples: 150000
+  num_views: 5
+  view_dimensions: image pixels
+  modality: industrial multi-view images
+  feature_type: raw_images
+  labels:
+    class_count: 30
+    anomaly_labels: natural
+    annotation_levels:
+    - unknown
+  commonly_used_for:
+  - natural
+  known_variants:
+  - unknown
+  official_source: https://realiad4ad.github.io/Real-IAD/
+  common_preprocessing: paper_specific
+  protocol_notes: Related natural multi-view track; protocol and metrics are not comparable to tabular classical MVOD.
+  papers_using_dataset:
+  - idif-2025
+  - immoe-2026
+  - learning-mvad-2026
+  - match-2026
+  - multi-flow-2025
+  industrial_details:
+    camera_view_structure: five fixed camera viewpoints per object
+    annotation_levels:
+    - sample
+    - image
+    - pixel
+    normal_only_training: 'yes'
+    view_identity_correspondence: same object instance across five views
+- name: Reuters
+  aliases:
+  - Reuters multilingual
+  - Reuters-1200
+  instances: null
+  views: null
+  feature_dimensions: variant-dependent
+  domain: multilingual/news text
+  classes: null
+  source: https://archive.ics.uci.edu/dataset/137/reuters+21578+text+categorization+collection
   source_kind: official_dataset
-  notes: Related RGB+3D track; modalities are spatially registered but use natural-defect protocols.
+  notes: “Reuters” denotes several incompatible multi-view constructions; never assume one canonical shape.
+  task_track: core_mvod
+  num_samples: unknown
+  num_views: unknown
+  view_dimensions: variant-dependent
+  modality: multilingual/news text
+  feature_type: derived_features
+  labels:
+    class_count: unknown
+    anomaly_labels: synthetic_by_paper_protocol
+    annotation_levels:
+    - unknown
+  commonly_used_for:
+  - attribute
+  - class
+  - mixed
+  known_variants:
+  - unknown
+  official_source: https://archive.ics.uci.edu/dataset/137/reuters+21578+text+categorization+collection
+  common_preprocessing: paper_specific
+  protocol_notes: “Reuters” denotes several incompatible multi-view constructions; never assume one canonical shape.
+  papers_using_dataset:
+  - ncmod-2021
+  industrial_details: null

@@ -1,38 +1,33 @@
-# Quality Audit
+# v0.2 Quality Audit
 
-Audit date: 2026-08-27. Sampling seed: `20260827`.
+Audit date: 2026-08-27.
 
-## Method
+## Verification status
 
-The registry was shuffled with a fixed seed and the first 15 entries were checked again for title, publication year, venue/status, primary paper URL, code claim, and mechanism tags. Link checks used one low-frequency `HEAD` request per sampled paper. A 403 was recorded as publisher anti-bot behavior, not as a broken link.
+Before v0.2: 37 verified, 3 partially verified, 0 uncertain-status records.
+After v0.2: 42 verified, 0 partially verified, 0 uncertain-status records.
 
-## Sampled entries
+The three v0.1 partial records were resolved as follows:
 
-1. `mlra-2015`
-2. `bilateral-graph-filter-2026`
-3. `hbm-2020`
-4. `seem-2024`
-5. `multiview-group-anomaly-2018`
-6. `dpoe-2023`
-7. `granular-ball-2026`
-8. `mod-tdid-2026`
-9. `plvm-2016`
-10. `multi-flow-2025`
-11. `scone-2026`
-12. `sganet-2026`
-13. `moddis-2019`
-14. `lrtdm-2025`
-15. `srlsp-2023`
+1. `multi-flow-2025`: promoted using CVPR Open Access, the authors' institute page, and the official implementation.
+2. `bilateral-graph-filter-2026`: promoted using the official ICASSP 2026 schedule with the full author list.
+3. `multiview-group-anomaly-2018`: bibliography promoted using DBLP and the publisher DOI; Track remains `uncertain` because group-level detection differs from aligned-instance MVOD.
 
-## Findings and corrections
+RNAMOD and M2AD were added from official conference/author/arXiv/code evidence. Verification status describes bibliographic and classification confidence, not protocol completeness. Unknown protocol details remain visible in `docs/REMAINING_UNCERTAINTY.md`.
 
-- All 15 primary URLs returned an HTTP response. Eleven resolved with 2xx statuses; four DOI targets returned 403 to an automated `HEAD` request and were retained because DOI metadata and independent indexing support them.
-- Online-first vs. issue/proceedings years were kept separate for SRLSP and other affected records.
-- `Multi-View Group Anomaly Detection` remains `track: uncertain` because its group-level target differs from the core aligned-instance setting.
-- `Multi-Flow` and the bilateral graph-filter paper remain `partially_verified`; author/dataset/method metadata should be checked from stable proceedings full text before promotion.
-- SCoNE is recorded as AAAI 2026 proceedings, with its 2025 arXiv year stored separately.
-- No sampled missing-code entry was given a fabricated repository.
+## Neutrality checks
 
-## Remaining uncertainty
+- No method receives an affiliation-based marker or promotional badge.
+- Baseline roles are counterfactual/evidence descriptions, not performance judgments.
+- Missing code is recorded as `unknown` or `not_found`, never as ineffective.
+- Cross-Track methods may be methodologically relevant without being numerically comparable.
+- No reported AUROC leaderboard was created.
 
-Three of 40 records are `partially_verified`: `IMMoE` is no longer among them after arXiv/official-code verification; remaining partial records are `multi-flow-2025`, `bilateral-graph-filter-2026`, and `multiview-group-anomaly-2018`. A later audit should also expand dataset variants and exact complexity expressions, which are deliberately sparse in release 0.1.
+## Structural checks
+
+- Track and view setting agree for every paper.
+- Protocol anomaly types mirror the controlled registry classification.
+- Dataset reverse-usage maps agree with paper references.
+- Official code claims require a code URL and ownership evidence.
+- Duplicate IDs, normalized title-year pairs, and DOIs are rejected.
+- Internal Markdown links and generated-file freshness are checked in CI.

@@ -1,0 +1,61 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+title: Awesome-MVOD dataset entry
+type: object
+required:
+  - name
+  - aliases
+  - task_track
+  - num_samples
+  - num_views
+  - view_dimensions
+  - modality
+  - feature_type
+  - labels
+  - commonly_used_for
+  - known_variants
+  - official_source
+  - common_preprocessing
+  - protocol_notes
+  - papers_using_dataset
+additionalProperties: false
+properties:
+  name: {type: string, minLength: 2}
+  aliases: {type: array, items: {type: string}}
+  task_track: {enum: [core_mvod, partial_mvod, related_natural_multimodal, uncertain]}
+  num_samples: {type: [integer, string, 'null']}
+  num_views: {type: [integer, string, 'null']}
+  view_dimensions: {type: [string, array, object, 'null']}
+  modality: {type: [string, array]}
+  feature_type: {type: string}
+  labels:
+    type: object
+    required: [class_count, anomaly_labels, annotation_levels]
+    additionalProperties: false
+    properties:
+      class_count: {type: [integer, string, 'null']}
+      anomaly_labels: {type: string}
+      annotation_levels: {type: array, minItems: 1, items: {type: string}}
+  commonly_used_for: {type: array, minItems: 1, items: {type: string}}
+  known_variants: {type: array, minItems: 1, items: {type: string}}
+  official_source: {type: string, format: uri}
+  common_preprocessing: {type: string}
+  protocol_notes: {type: string}
+  papers_using_dataset: {type: array, items: {type: string}}
+  industrial_details:
+    type: [object, 'null']
+    properties:
+      camera_view_structure: {type: string}
+      annotation_levels: {type: array, minItems: 1, items: {type: string}}
+      normal_only_training: {type: [string, boolean]}
+      view_identity_correspondence: {type: string}
+    required: [camera_view_structure, annotation_levels, normal_only_training, view_identity_correspondence]
+    additionalProperties: false
+  # v0.1 compatibility aliases; canonical v0.2 consumers should use the fields above.
+  instances: {type: [integer, 'null']}
+  views: {type: [integer, 'null']}
+  feature_dimensions: {type: string}
+  domain: {type: string}
+  classes: {type: [integer, 'null']}
+  source: {type: string, format: uri}
+  source_kind: {type: string}
+  notes: {type: string}

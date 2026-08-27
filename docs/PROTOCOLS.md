@@ -1,6 +1,10 @@
 # Protocol Map
 
+> v0.2: narrative guidance is no longer the only protocol representation. Every paper has a machine-readable `protocol` fingerprint in `data/papers.yaml`, and conservative decision rules live in `data/comparability.yaml`. See [Protocol Comparability](COMPARABILITY.md).
+
 There is no field-wide, unique MVOD protocol. Results should be compared only after the following axes are matched.
+
+The fingerprint separates view setting, anomaly types and generation, contamination, preprocessing and backbone, metrics/repetitions/seeds/endpoints, train/test setting, normal-only training, and verification confidence. Most historical entries remain partly `unknown`; this is deliberate evidence preservation rather than missing-value imputation.
 
 ## Attribute anomaly generation
 
@@ -38,3 +42,5 @@ At minimum report AUROC computation unit, positive label, macro/micro aggregatio
 Two result rows are not directly comparable unless dataset variant, corruption code, view selection, preprocessing, contamination, metric, and repetition policy all match.
 
 > Same anomaly name does not necessarily mean identical corruption protocol.
+
+Only results with a verified matching dataset variant, task/view setting, anomaly generation, preprocessing, contamination, metric, endpoint, feature/backbone level, and train/test setting may enter a comparable-results table. All other values are **Reported Result Context — not directly comparable**.

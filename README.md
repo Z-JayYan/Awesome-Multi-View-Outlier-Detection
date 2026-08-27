@@ -1,67 +1,49 @@
-# Awesome Multi-View Anomaly Detection
+# Awesome Multi-View Outlier Detection
 
 [![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
-[![Registry validation](https://img.shields.io/badge/CI-registry%20validation-2ea44f)](.github/workflows/validate.yml)
-[![Papers](https://img.shields.io/badge/registry-machine--readable-4c1)](data/papers.yaml)
+[![Registry validation](https://github.com/Z-JayYan/Awesome-Multi-View-Outlier-Detection/actions/workflows/validate.yml/badge.svg)](https://github.com/Z-JayYan/Awesome-Multi-View-Outlier-Detection/actions/workflows/validate.yml)
+[![Papers](https://img.shields.io/badge/papers-42-4c1)](data/papers.yaml)
+[![Version](https://img.shields.io/badge/version-0.2.0-blue)](BUILD_REPORT.md)
 
-> A curated paper list, taxonomy, benchmark map, dataset registry, protocol guide, and reproducibility-oriented knowledge base for **Multi-View Anomaly/Outlier Detection (MVOD)**.
+> A curated, auditable, and machine-readable knowledge base for **Multi-View Outlier Detection (MVOD)** and carefully separated adjacent multi-view anomaly-detection settings.
 
-**Keywords:** multi-view anomaly detection · multi-view outlier detection · cross-view consistency · multimodal anomaly detection · partial multi-view
+**v0.2 theme:** Coverage + Comparability. Verified metadata is preferred to apparent completeness; protocol comparability is preferred to a cross-paper leaderboard.
 
-> Accuracy comes before coverage. A missing paper is preferable to a fabricated venue, code repository, or benchmark claim.
+## Why this repository
 
-## News
+This repository helps a researcher answer four practical questions: what task a paper actually studies, which baselines are methodologically relevant, whether two reported results are comparable, and what public evidence supports a paper/code claim. The single source of truth is [`data/papers.yaml`](data/papers.yaml), not a hand-maintained list of links.
 
-- **2026-08-27:** Initial public-ready registry, controlled vocabulary, protocol map, generators, and validation workflow created.
+## Scope and task tracks
 
-## What do we mean by MVOD?
+**Multi-View Outlier Detection (MVOD)** is overloaded. Track is a task setting—not a synonym for model age, “classical algorithm,” or “non-deep method.” A CORE method may be deep, contrastive, graph-based, or tensor-based.
 
-The name is overloaded. This repository keeps three settings visibly separate:
-
-| Track | Observations | Main question | Benchmark compatibility |
+| Track | Definition | Typical endpoint | Direct benchmark boundary |
 |---|---|---|---|
-| **CORE: classical MVOD** | The same instance has two or more aligned feature views, \(x_i^{(1)},\ldots,x_i^{(V)}\). | Is the instance unusual within views, inconsistent across views, or both? | Main registry and classical benchmark map |
-| **PARTIAL / INCOMPLETE MVOD** | Aligned instances exist, but one or more views are missing for some instances. | Can cross-view evidence remain reliable under missingness? | Separate track; missingness is part of the protocol |
-| **RELATED: natural multimodal / multi-view AD** | RGB–depth, RGB–point cloud, multiple cameras, or sensors observe a physical object or scene. | Is there a natural defect or semantic anomaly, possibly localized in space? | **Not pooled** with classical synthetic MVOD results |
+| **Track 1 — CORE: Classical / complete-view Multi-View Outlier Detection** | Each object has all aligned feature views and an explicit sample correspondence across views. | Object/sample outlier score | Main complete-view MVOD comparison space |
+| **Track 2 — PARTIAL / INCOMPLETE Multi-View Outlier Detection** | An aligned object may be missing one or more views; the method must handle incomplete observations as well as anomalies. | Object/sample score under a missing-view protocol | Separate from complete-view results; still methodologically relevant |
+| **Track 3 — INDUSTRIAL / NATURAL Multi-View Anomaly Detection** | Multiple cameras, RGB/depth, point clouds, or other sensors observe a physical object or scene with natural defects. | Sample, image, object, or pixel endpoint | Not pooled with feature-level classical MVOD |
 
-This repository uses **MVOD** as the umbrella term and treats classical aligned-instance outlier detection as its core. “MVAD” in a paper title does not by itself determine the track—the data model and evaluation protocol do.
+The industrial/natural track frequently uses normal-only training, frozen visual backbones, raw images, and image/pixel metrics. These choices differ fundamentally from complete-view feature-level MVOD. A paper title containing “multi-view anomaly detection” does not determine its track; the data model and evaluation protocol do.
 
-## Scope
+Ordinary multi-view clustering/classification, single-view anomaly detection, and systems that merely ensemble unrelated backbones are out of scope. Borderline records remain explicitly marked rather than being silently forced into CORE.
 
-A core paper must use at least two aligned views/modalities, make anomaly or outlier detection a primary task, and explicitly exploit cross-view relations. Single-view AD, ordinary multi-view clustering, ordinary multimodal classification, and systems that merely ensemble multiple backbones are excluded. Borderline works are retained only under `track: uncertain`.
+## Quick start
 
-No private reproduction results, unpublished methods, local paths, or internal audits are part of this public repository.
+- **I want papers:** browse the generated [complete paper registry](docs/PAPERS.md).
+- **I want datasets:** inspect [dataset cards](docs/DATASETS.md) and the machine-readable [dataset registry](data/datasets.yaml).
+- **I need baselines:** use the method-level [Baseline Evidence Map](docs/BASELINE_MAP.md).
+- **I need protocol information:** inspect each paper's `protocol` block and read [Protocol Comparability](docs/COMPARABILITY.md).
+- **I need reproducible code:** check `code_status`, `verified_from`, and `reproducibility` in the registry.
+- **I want to compare two papers:** run `python scripts/compare_protocols.py PAPER_ID_A PAPER_ID_B`.
 
-## Table of Contents
+## Recent research
 
-- [Getting Started](#-getting-started)
-- [Recent Research](#-recent-mvod-research)
-- [Paper Tree](#-paper-tree)
-- [Timeline](#-timeline)
-- [Method Taxonomy](#-method-taxonomy)
-- [Anomaly Taxonomy](#-anomaly-taxonomy)
-- [Paper List](#-paper-list)
-- [Benchmarks](#-benchmarks)
-- [Datasets](#-datasets)
-- [Protocols](#-protocols)
-- [Reproducibility](#-reproducibility)
-- [Resources](#-resources)
-- [Contributing](#contributing)
-
-## 🚀 Getting Started
-
-1. Learn why “attribute”, “class”, and “mixed” do not imply a universal corruption recipe in [Anomaly Taxonomy](docs/ANOMALY_TAXONOMY.md).
-2. Use the [Paper Tree](docs/PAPER_TREE.md) to locate the source of anomaly evidence.
-3. Follow the [recommended reading path](#recommended-reading-path), then inspect the complete [paper registry](docs/PAPERS.md).
-4. Before comparing numbers, read [Protocols](docs/PROTOCOLS.md) and [Datasets](docs/DATASETS.md).
-5. For a new study, choose defensible comparisons using the [Baseline Map](docs/BASELINE_MAP.md).
-
-## 🔥 Recent MVOD Research
-
-Only years and venues with verified entries are shown. An arXiv year is not silently promoted to a conference year.
+Recent work is ordered **Track → Year → Venue**. Placement in the same year is not a claim of benchmark compatibility.
 
 <!-- AUTO-GENERATED: RECENT START -->
-### 2026
+### Recent Classical Multi-View Outlier Detection
+
+#### 2026
 
 **AAAI**
 - **SCoNE: Spherical Consistent Neighborhoods Ensemble for Effective and Efficient Multi-View Anomaly Detection** [[paper]](https://doi.org/10.1609/AAAI.V40I19.38643)
@@ -69,27 +51,14 @@ Only years and venues with verified entries are shown. An arXiv year is not sile
 **Applied Intelligence**
 - **Multi-view outlier detection via tensor decomposition and information decoupling** [[paper]](https://doi.org/10.1007/s10489-026-07375-y) [[code]](https://github.com/YF-W/MOD-TDID)
 
-**ECCV**
-- **IMMoE: Incomplete Multi-View Anomaly Detection via Mixture of View Experts Fusion** (accepted; proceedings not yet verified) [[paper]](https://arxiv.org/abs/2607.19032) [[code]](https://github.com/HULEI7/IMMoE)
-
 **ICASSP**
 - **Bilateral Graph Filtering Framework with Alternating Optimization for Robust Multi-View Outlier Detection** [[paper]](https://doi.org/10.1109/ICASSP55912.2026.11460482)
 - **Granular-Ball Based Multi-View Outlier Detection** [[paper]](https://doi.org/10.1109/ICASSP55912.2026.11462415)
 
-**IEEE Transactions on Multimedia**
-- **Learning Multi-View Anomaly Detection With Efficient Adaptive Selection** [[paper]](https://doi.org/10.1109/TMM.2026.3660076)
+**ICML**
+- **Reliable Neighborhood-Aware Multi-View Outlier Detection** [[paper]](https://openreview.net/forum?id=mL4B6DdgPU)
 
-**arXiv**
-- **MATCH: Flow Matching for Multi-View Anomaly Detection** (preprint) [[paper]](https://arxiv.org/abs/2606.24375)
-- **SGANet: Semantic and Geometric Alignment for Multimodal Multi-view Anomaly Detection** (preprint) [[paper]](https://arxiv.org/abs/2604.05632)
-
-### 2025
-
-**AAAI**
-- **Unveiling Multi-View Anomaly Detection: Intra-view Decoupling and Inter-view Fusion** [[paper]](https://doi.org/10.1609/AAAI.V39I12.33349) [[code]](https://github.com/Kerio99/IDIF)
-
-**CVPR Workshops**
-- **Multi-Flow: Multi-View-Enriched Normalizing Flows for Industrial Anomaly Detection** [[paper]](https://doi.org/10.1109/CVPRW67362.2025.00378)
+#### 2025
 
 **ICASSP**
 - **Unsupervised Multi-View Outlier Detection via Optimal Graph Filtering** [[paper]](https://doi.org/10.1109/ICASSP49660.2025.10889803)
@@ -100,16 +69,10 @@ Only years and venues with verified entries are shown. An arXiv year is not sile
 **International Journal of Approximate Reasoning**
 - **Multi-view outlier detection based on multi-granularity fusion of fuzzy rough granules** [[paper]](https://doi.org/10.1016/j.ijar.2025.109402) [[code]](https://github.com/YF-W/MGFMOD)
 
-### 2024
-
-**ACM MM**
-- **Regularized Contrastive Partial Multi-view Outlier Detection** [[paper]](https://doi.org/10.1145/3664647.3681125)
+#### 2024
 
 **ACM TKDD**
 - **Information-aware Multi-view Outlier Detection** [[paper]](https://doi.org/10.1145/3638354) [[code]](https://github.com/GTML-LAB/IAMOD)
-
-**ECCV**
-- **Learning Diffusion Models for Multi-view Anomaly Detection** [[paper]](https://doi.org/10.1007/978-3-031-73414-4_19) [[code]](https://github.com/jayliu0313/Diffusion_Multi-View_AD)
 
 **Information Fusion**
 - **Multi-view Outlier Detection via Graphs Denoising** [[paper]](https://doi.org/10.1016/j.inffus.2023.102012) [[code]](http://Doctor-Nobody.github.io/codes/MODGD.zip)
@@ -119,149 +82,142 @@ Only years and venues with verified entries are shown. An arXiv year is not sile
 
 **PAKDD**
 - **SeeM: A Shared Latent Variable Model for Unsupervised Multi-view Anomaly Detection** [[paper]](https://doi.org/10.1007/978-981-97-2242-6_7) [[code]](https://github.com/thanhphuong163/SeeM)
+
+### Recent Partial / Incomplete Multi-View Outlier Detection
+
+#### 2024
+
+**ACM MM**
+- **Regularized Contrastive Partial Multi-view Outlier Detection** [[paper]](https://doi.org/10.1145/3664647.3681125)
+
+### Recent Industrial / Natural Multi-View Anomaly Detection
+
+#### 2026
+
+**ECCV**
+- **IMMoE: Incomplete Multi-View Anomaly Detection via Mixture of View Experts Fusion** (accepted; publisher record/DOI may still be pending) [[paper]](https://arxiv.org/abs/2607.19032) [[code]](https://github.com/HULEI7/IMMoE)
+
+**IEEE Transactions on Multimedia**
+- **Learning Multi-View Anomaly Detection With Efficient Adaptive Selection** [[paper]](https://doi.org/10.1109/TMM.2026.3660076)
+
+**Pattern Recognition**
+- **Visual Anomaly Detection under Complex View-Illumination Interplay: A Large-Scale Benchmark** (accepted; publisher record/DOI may still be pending) [[paper]](https://arxiv.org/abs/2505.10996) [[code]](https://github.com/hustCYQ/M2AD)
+
+**arXiv**
+- **MATCH: Flow Matching for Multi-View Anomaly Detection** (preprint) [[paper]](https://arxiv.org/abs/2606.24375)
+- **SGANet: Semantic and Geometric Alignment for Multimodal Multi-view Anomaly Detection** (preprint) [[paper]](https://arxiv.org/abs/2604.05632)
+
+#### 2025
+
+**AAAI**
+- **Unveiling Multi-View Anomaly Detection: Intra-view Decoupling and Inter-view Fusion** [[paper]](https://doi.org/10.1609/AAAI.V39I12.33349) [[code]](https://github.com/Kerio99/IDIF)
+
+**CVPR Workshops**
+- **Multi-Flow: Multi-View-Enriched Normalizing Flows for Industrial Anomaly Detection** [[paper]](https://doi.org/10.1109/CVPRW67362.2025.00378) [[code]](https://github.com/m-kruse98/Multi-Flow)
+
+#### 2024
+
+**ECCV**
+- **Learning Diffusion Models for Multi-view Anomaly Detection** [[paper]](https://doi.org/10.1007/978-3-031-73414-4_19) [[code]](https://github.com/jayliu0313/Diffusion_Multi-View_AD)
 <!-- AUTO-GENERATED: RECENT END -->
 
-## 🌳 Paper Tree
+## Taxonomy overview
 
-The tree is derived **after** registry tagging and is maintained as Mermaid source: [full paper tree](docs/PAPER_TREE.md). It separates representation evidence, relational evidence, partial views, and natural multimodal AD rather than forcing every paper into “deep/non-deep”.
+The registry uses orthogonal fields rather than one mutually exclusive category:
 
-```mermaid
-flowchart LR
-  A[Multi-View Anomaly Detection] --> B[Representation-based]
-  A --> C[Relation-based]
-  A --> D[Partial / incomplete]
-  A --> E[Related natural multimodal]
-  B --> B1[Subspace / low-rank]
-  B --> B2[Shared latent / generative]
-  C --> C1[Cross-view reconstruction]
-  C --> C2[Local structure / graph]
-  C --> C3[Contrastive / information]
-```
+- `track` and `view_setting` describe the task boundary;
+- `mechanisms` describe representation and evidence families such as graph, tensor, neighborhood, reconstruction, contrastive, or information-theoretic modeling;
+- `training_paradigm` records the learning regime when verified;
+- `anomaly_types` and `evidence_levels` describe what is scored and where evidence is gathered;
+- `protocol` records the known benchmark fingerprint without filling unreported fields by inference.
 
-## 🕒 Timeline
+See [Method Taxonomy](docs/METHOD_TAXONOMY.md), [Anomaly Taxonomy](docs/ANOMALY_TAXONOMY.md), [Evidence Levels](docs/EVIDENCE_LEVELS.md), and the [Paper Tree](docs/PAPER_TREE.md).
 
-The compact evolution is: early cluster and cross-view inconsistency models → low-rank/shared representations → local-neighborhood and deep reconstruction → probabilistic, contrastive, information-aware, graph-filtered, and partial-view models. See the evidence-qualified [Timeline](docs/TIMELINE.md); it is representative, not exhaustive.
-
-## 🧠 Method Taxonomy
-
-The primary question is: **where does anomaly evidence come from?**
-
-- Cluster or consensus disagreement
-- Subspace, low-rank, and self-representation residuals
-- Shared latent, shared/private, and probabilistic generative evidence
-- Cross-view mapping or reconstruction error
-- Local-neighborhood, graph, and high-order/tensor consistency
-- Contrastive and information-theoretic objectives
-- Partial-view relation transfer or missing-view modeling
-- Natural multimodal spatial, semantic, or geometric alignment (related track)
-
-Papers may have multiple tags. Definitions and boundary decisions are in [Method Taxonomy](docs/METHOD_TAXONOMY.md).
-
-## 🚨 Anomaly Taxonomy
-
-- **Attribute anomaly:** unusual within-view features; some protocols perturb or replace features.
-- **Class anomaly:** individually plausible views form an incompatible cross-view pairing.
-- **Mixed / class-attribute anomaly:** both signals are introduced.
-- **Generic multi-view outlier:** the paper does not commit to the above synthetic taxonomy.
-- **Natural anomaly:** a real defect or abnormal event in the related multimodal track.
-
-> Different MVOD papers use related terminology but may implement different anomaly-generation protocols.
-
-See [Anomaly Taxonomy](docs/ANOMALY_TAXONOMY.md) and [Evidence Levels](docs/EVIDENCE_LEVELS.md).
-
-## 📚 Paper List
-
-This is a representative subset. The complete generated list is in [docs/PAPERS.md](docs/PAPERS.md), and full metadata/evidence is in [data/papers.yaml](data/papers.yaml).
-
-<!-- AUTO-GENERATED: PAPERS START -->
-| Year | Method | Venue | Mechanism | Anomaly | Code |
-|---:|---|---|---|---|---|
-| 2026 | [MVAS](https://doi.org/10.1109/TMM.2026.3660076) | IEEE Transactions on Multimedia | local structure, shared latent | N | — |
-| 2026 | [MOD-TDID](https://doi.org/10.1007/s10489-026-07375-y) | Applied Intelligence | tensor, graph | A/C/M | [official](https://github.com/YF-W/MOD-TDID) |
-| 2026 | [SCoNE](https://doi.org/10.1609/AAAI.V40I19.38643) | AAAI | local structure, ensemble | G/C | — |
-| 2025 | [LRTDM](https://doi.org/10.1016/j.inffus.2025.103313) | Information Fusion | tensor, low rank | A/C/M | — |
-| 2025 | [MGFMOD](https://doi.org/10.1016/j.ijar.2025.109402) | International Journal of Approximate Reasoning | local structure, probabilistic neighborhood | A/C | [official](https://github.com/YF-W/MGFMOD) |
-| 2025 | [MODGF](https://doi.org/10.1109/ICASSP49660.2025.10889803) | ICASSP | graph, local structure | G/C | — |
-| 2025 | [IDIF](https://doi.org/10.1609/AAAI.V39I12.33349) | AAAI | shared private, information theoretic | N | [official](https://github.com/Kerio99/IDIF) |
-| 2024 | [IAMOD](https://doi.org/10.1145/3638354) | ACM TKDD | information theoretic, shared latent | A/C/M | [official](https://github.com/GTML-LAB/IAMOD) |
-| 2024 | [Learning Diffusion Models for Multi-view Anomaly Detection](https://doi.org/10.1007/978-3-031-73414-4_19) | ECCV | diffusion, shared latent | N | [official](https://github.com/jayliu0313/Diffusion_Multi-View_AD) |
-| 2024 | [MODGD](https://doi.org/10.1016/j.inffus.2023.102012) | Information Fusion | graph, local structure | A/C/M | [official](http://Doctor-Nobody.github.io/codes/MODGD.zip) |
-| 2024 | [RCPMOD](https://doi.org/10.1145/3664647.3681125) | ACM MM | partial view, contrastive | A/C/M | — |
-| 2024 | [SeeM](https://doi.org/10.1007/978-981-97-2242-6_7) | PAKDD | generative, shared latent | G/C | [official](https://github.com/thanhphuong163/SeeM) |
-| 2023 | [SRLSP](https://doi.org/10.1145/3532191) | ACM TKDD | self representation, local structure | A/C/M | [official](https://github.com/wy54224/SRLSP) |
-| 2023 | [dPoE](https://doi.org/10.1145/3581783.3612487) | ACM MM | generative, shared private | A/C/M | [official](https://github.com/cshaowang/dPoE) |
-| 2022 | [FMOD](https://doi.org/10.1109/TBDATA.2020.3004057) | IEEE Transactions on Big Data | subspace, low rank | A/C/M | — |
-| 2021 | [CGAEs](https://doi.org/10.1109/ICTAI52525.2021.00218) | ICTAI | reconstruction, cross view mapping | A/C | — |
-| 2021 | [NCMOD](https://doi.org/10.1609/AAAI.V35I8.16873) | AAAI | reconstruction, local structure | A/C/M | [official](https://github.com/auguscl/NCMOD) |
-| 2019 | [MUVAD](https://doi.org/10.1609/AAAI.V33I01.33014894) | AAAI | local structure | A/C | — |
-| 2019 | [MODDIS](https://doi.org/10.1109/ICDM.2019.00136) | ICDM | shared latent, reconstruction | A/C/M | [official](https://github.com/sigerma/ICDM-2019-MODDIS) |
-| 2018 | [LDSR](https://doi.org/10.1609/AAAI.V32I1.11826) | AAAI | subspace, low rank | A/C/M | [official](https://github.com/kailigo/mvod) |
-| 2018 | [Partial Multi-View Outlier Detection Based on Collective Learning](https://doi.org/10.1609/AAAI.V32I1.11278) | AAAI | partial view, self representation | C | — |
-| 2016 | [PLVM](https://proceedings.neurips.cc/paper/2016/hash/0f96613235062963ccde717b18f97592-Abstract.html) | NeurIPS | generative, shared latent | G/C | — |
-| 2015 | [DMOD](https://www.ijcai.org/Abstract/15/572) | IJCAI | shared latent, self representation | A/C | — |
-| 2015 | [MLRA](https://doi.org/10.1137/1.9781611974010.84) | SDM | low rank, subspace | A/C | [official](https://sheng-li.org/Codes/SDM15_MLRA_Code.zip) |
-| 2011 | [HOAD](https://ieeexplore.ieee.org/document/6137313) | ICDM | clustering, graph | C | — |
-<!-- AUTO-GENERATED: PAPERS END -->
-
-## Recommended Reading Path
-
-- **Foundations:** early cross-view inconsistency, robust probabilistic latent-variable MVAD, and DMOD establish the problem and anomaly semantics.
-- **Representation:** MLRA, LDSR, MODDIS, and shared-latent generative models show how global representations expose inconsistency.
-- **Local structure:** “Neighborhood in Locality Matters”, NCMOD, SRLSP, and graph-denoising methods move evidence toward neighborhoods and graphs.
-- **Deep / contrastive / information:** CGAEs, dPoE, RCPMOD, and information-aware models show different ways to prevent naïve fusion.
-- **Frontier:** use the generated 2024–2026 section, but check `venue_status` before citing a preprint as a proceedings paper.
-
-## 🧪 Benchmarks
-
-There is no single universally comparable MVOD leaderboard. A defensible experiment reports:
-
-1. the exact dataset variant and preprocessing;
-2. anomaly generation pseudocode, ratios, random seeds, and affected views;
-3. whether models see contaminated or clean training data;
-4. evaluation unit and metric definition;
-5. missing-view generation for partial MVOD;
-6. runtime/memory conditions for scalability claims.
-
-See [Baseline Map](docs/BASELINE_MAP.md) and [Scalability](docs/SCALABILITY.md).
-
-## 📊 Datasets
+## Benchmark and dataset overview
 
 <!-- AUTO-GENERATED: DATASETS START -->
-| Dataset | Instances | Views | Feature dimensions | Domain | Notes |
-|---|---:|---:|---|---|---|
-| [100Leaves](https://archive.ics.uci.edu/dataset/241/one-hundred-plant-species-leaves-data-set) | 1600 | 3 | 64/64/64 in the UCI feature files | plant leaf shape, margin, and texture | Many MVOD studies subsample or corrupt the complete UCI feature set. |
-| [3Sources](http://erdos.ucd.ie/datasets/3sources.html) | 416 | 3 | variant-dependent | multilingual/news text | Article alignment and feature construction vary across redistributed benchmark files. |
-| [BBCSport](http://mlg.ucd.ie/datasets/segment.html) | 544 | 2 | variant-dependent | news text | Multi-view versions use different vocabulary partitions or feature preprocessing. |
-| [Caltech101](https://data.caltech.edu/records/mzrjq-6wc02) | variant-dependent | variant-dependent | variant-dependent | object images represented by multiple handcrafted or learned features | MVOD papers usually use a derived multi-feature subset; class count, sample count, and views are paper-specific. |
-| [CiteSeer](https://linqs-data.soe.ucsc.edu/public/lbc/citeseer.tgz) | variant-dependent | variant-dependent | variant-dependent | scientific documents/citation network | Text, citation, and label variants differ; record the exact preprocessing when reporting a result. |
-| [COIL-20](https://www.cs.columbia.edu/CAVE/software/softlib/coil-20.php) | 1440 | variant-dependent | variant-dependent | multi-angle object images | The base dataset has 72 poses per object; feature-view construction is paper-specific. |
-| [Fashion-MNIST](https://github.com/zalandoresearch/fashion-mnist) | 70000 | variant-dependent | variant-dependent | clothing images represented by constructed feature views | Not inherently multi-view; views and anomaly corruption are constructed by each study. |
-| [MNIST](http://yann.lecun.com/exdb/mnist/) | 70000 | variant-dependent | variant-dependent | handwritten digits represented by constructed feature views | Not inherently multi-view; view construction and sampling vary across papers. |
-| [MVTec 3D-AD](https://www.mvtec.com/company/research/datasets/mvtec-3d-ad) | 4147 | 2 | RGB image and organized 3D point cloud | multimodal industrial inspection | Related RGB+3D track; modalities are spatially registered but use natural-defect protocols. |
-| [NUSWIDEOBJ](https://lms.comp.nus.edu.sg/wp-content/uploads/2019/research/nuswide/NUS-WIDE.html) | variant-dependent | variant-dependent | variant-dependent | web images with visual features and tags | MVOD subsets differ in concepts, retained samples, visual descriptors, and tag features. |
-| [Real-IAD](https://realiad4ad.github.io/Real-IAD/) | 150000 | 5 | image pixels | industrial multi-view images | Related natural multi-view track; protocol and metrics are not comparable to tabular classical MVOD. |
-| [Reuters](https://archive.ics.uci.edu/dataset/137/reuters+21578+text+categorization+collection) | variant-dependent | variant-dependent | variant-dependent | multilingual/news text | “Reuters” denotes several incompatible multi-view constructions; never assume one canonical shape. |
+| Dataset | Track | Samples | Views | Feature / modality | Variants |
+|---|---|---:|---:|---|---|
+| [100Leaves](https://archive.ics.uci.edu/dataset/241/one-hundred-plant-species-leaves-data-set) | CORE | 1600 | 3 | 64/64/64 in the UCI feature files | unknown |
+| [3Sources](http://erdos.ucd.ie/datasets/3sources.html) | CORE | 416 | 3 | variant-dependent | unknown |
+| [BBCSport](http://mlg.ucd.ie/datasets/segment.html) | CORE | 544 | 2 | variant-dependent | unknown |
+| [Caltech101](https://data.caltech.edu/records/mzrjq-6wc02) | CORE | unknown | unknown | variant-dependent | unknown |
+| [CiteSeer](https://linqs-data.soe.ucsc.edu/public/lbc/citeseer.tgz) | CORE | unknown | unknown | variant-dependent | unknown |
+| [COIL-20](https://www.cs.columbia.edu/CAVE/software/softlib/coil-20.php) | CORE | 1440 | unknown | variant-dependent | unknown |
+| [Fashion-MNIST](https://github.com/zalandoresearch/fashion-mnist) | CORE | 70000 | unknown | variant-dependent | unknown |
+| [M2AD](https://hustcyq.github.io/M2AD/) | industrial / natural | 119880 | 12 | RGB images; 1024x1024 and 256x256 public variants | M2AD-1024, M2AD-256, M2AD-Synergy, M2AD-Invariant |
+| [MNIST](http://yann.lecun.com/exdb/mnist/) | CORE | 70000 | unknown | variant-dependent | unknown |
+| [MVTec 3D-AD](https://www.mvtec.com/company/research/datasets/mvtec-3d-ad) | industrial / natural | 4147 | 2 | RGB image and organized 3D point cloud | unknown |
+| [NUSWIDEOBJ](https://lms.comp.nus.edu.sg/wp-content/uploads/2019/research/nuswide/NUS-WIDE.html) | CORE | unknown | unknown | variant-dependent | unknown |
+| [Real-IAD](https://realiad4ad.github.io/Real-IAD/) | industrial / natural | 150000 | 5 | image pixels | unknown |
+| [Reuters](https://archive.ics.uci.edu/dataset/137/reuters+21578+text+categorization+collection) | CORE | unknown | unknown | variant-dependent | unknown |
 <!-- AUTO-GENERATED: DATASETS END -->
 
-## ⚙️ Protocols
+Dataset names are labels, not protocol identifiers. BBCSport, Reuters, Caltech101, and other reused sources may have different feature partitions, subsets, preprocessing, or anomaly generation in different papers.
 
-“Same anomaly name” does not mean “same corruption”. View replacement, noise distribution, number of swapped views, anomaly ratio, class-pair sampling, normalization, train/test contamination, and metric computation can all differ. Start with [Protocols](docs/PROTOCOLS.md) and the cautiously named [Common Synthetic MVOD Protocols](docs/D1_D6_PROTOCOL.md).
+## Baseline selection guide
 
-## 🔁 Reproducibility
+The [Baseline Evidence Map](docs/BASELINE_MAP.md) provides method-level cards for Reliable Neighborhood-Aware Multi-View Outlier Detection (RNAMOD), Regularized Contrastive Partial Multi-view Outlier Detection (RCPMOD), Information-aware Multi-view Outlier Detection (IAMOD), Multi-view Outlier Detection via Graphs Denoising (MODGD), Low-rank Tucker Decomposition for Multi-view Outlier Detection based on Meta-learning (LRTDM), Self-Representation Learning with Local Similarity Preserving for Multi-View Outlier Detection (SRLSP), and other historical/frontier anchors.
 
-The registry records only observable public artifacts: official code, configs, dataset instructions, pretrained weights, environment, and license. Absence means “not found in the cited public sources”, not “the authors never released it”. See [Reproducibility](docs/REPRODUCIBILITY.md).
+Each card answers **why compare**, identifies the closest counterfactual, records artifact status, and states why the reported numbers may still not be directly comparable. Track mismatch does not erase methodological relevance: for example, RCPMOD is a strong contrastive baseline even when a new method uses complete views.
 
-## 📖 Resources
+## Protocol comparability warning
 
-- [Surveys, bibliography, and dataset resources](docs/RESOURCES.md)
-- [Related areas](docs/RELATED_AREAS.md)
-- [Reference repository analysis](docs/REFERENCE_REPO_ANALYSIS.md)
-- [Quality audit](docs/QUALITY_AUDIT.md)
+> **Same dataset name ≠ directly comparable results.**
+
+The conservative statuses are `DIRECTLY_COMPARABLE`, `CONDITIONALLY_COMPARABLE`, `NOT_DIRECTLY_COMPARABLE`, and `UNKNOWN`. Direct comparison requires matching dataset variant, anomaly generation, view completeness, preprocessing, contamination, metric, endpoint, feature/backbone level, train/test setting, and relevant repetition/seed details.
+
+This repository intentionally has no traditional cross-protocol leaderboard. Where evidence is incomplete, the correct label is **Reported Result Context — not directly comparable**. See [comparability rules](data/comparability.yaml) and the full [decision guide](docs/COMPARABILITY.md).
+
+## Representative registry snapshot
+
+This generated table is navigation, not a ranking. The Track column is part of every comparison decision.
+
+<!-- AUTO-GENERATED: PAPERS START -->
+| Year | Method | Track | Venue | Mechanism | Anomaly | Code |
+|---:|---|---|---|---|---|---|
+| 2026 | [MVAS](https://doi.org/10.1109/TMM.2026.3660076) | INDUSTRIAL / NATURAL | IEEE Transactions on Multimedia | local structure, shared latent | N | — |
+| 2026 | [MOD-TDID](https://doi.org/10.1007/s10489-026-07375-y) | CORE | Applied Intelligence | tensor, graph | A/C/M | [official](https://github.com/YF-W/MOD-TDID) |
+| 2026 | [RNAMOD](https://openreview.net/forum?id=mL4B6DdgPU) | CORE | ICML | local structure, graph | G | — |
+| 2026 | [SCoNE](https://doi.org/10.1609/AAAI.V40I19.38643) | CORE | AAAI | local structure, ensemble | G/C | — |
+| 2025 | [LRTDM](https://doi.org/10.1016/j.inffus.2025.103313) | CORE | Information Fusion | tensor, low rank | A/C/M | — |
+| 2025 | [MGFMOD](https://doi.org/10.1016/j.ijar.2025.109402) | CORE | International Journal of Approximate Reasoning | local structure, probabilistic neighborhood | A/C | [official](https://github.com/YF-W/MGFMOD) |
+| 2025 | [MODGF](https://doi.org/10.1109/ICASSP49660.2025.10889803) | CORE | ICASSP | graph, local structure | G/C | — |
+| 2025 | [IDIF](https://doi.org/10.1609/AAAI.V39I12.33349) | INDUSTRIAL / NATURAL | AAAI | shared private, information theoretic | N | [official](https://github.com/Kerio99/IDIF) |
+| 2024 | [IAMOD](https://doi.org/10.1145/3638354) | CORE | ACM TKDD | information theoretic, shared latent | A/C/M | [official](https://github.com/GTML-LAB/IAMOD) |
+| 2024 | [Learning Diffusion Models for Multi-view Anomaly Detection](https://doi.org/10.1007/978-3-031-73414-4_19) | INDUSTRIAL / NATURAL | ECCV | diffusion, shared latent | N | [official](https://github.com/jayliu0313/Diffusion_Multi-View_AD) |
+| 2024 | [MODGD](https://doi.org/10.1016/j.inffus.2023.102012) | CORE | Information Fusion | graph, local structure | A/C/M | [official](http://Doctor-Nobody.github.io/codes/MODGD.zip) |
+| 2024 | [RCPMOD](https://doi.org/10.1145/3664647.3681125) | PARTIAL | ACM MM | partial view, contrastive | A/C/M | — |
+| 2024 | [SeeM](https://doi.org/10.1007/978-981-97-2242-6_7) | CORE | PAKDD | generative, shared latent | G/C | [official](https://github.com/thanhphuong163/SeeM) |
+| 2023 | [SRLSP](https://doi.org/10.1145/3532191) | CORE | ACM TKDD | self representation, local structure | A/C/M | [official](https://github.com/wy54224/SRLSP) |
+| 2023 | [dPoE](https://doi.org/10.1145/3581783.3612487) | CORE | ACM MM | generative, shared private | A/C/M | [official](https://github.com/cshaowang/dPoE) |
+| 2022 | [FMOD](https://doi.org/10.1109/TBDATA.2020.3004057) | CORE | IEEE Transactions on Big Data | subspace, low rank | A/C/M | — |
+| 2021 | [CGAEs](https://doi.org/10.1109/ICTAI52525.2021.00218) | CORE | ICTAI | reconstruction, cross view mapping | A/C | — |
+| 2021 | [NCMOD](https://doi.org/10.1609/AAAI.V35I8.16873) | CORE | AAAI | reconstruction, local structure | A/C/M | [official](https://github.com/auguscl/NCMOD) |
+| 2019 | [MUVAD](https://doi.org/10.1609/AAAI.V33I01.33014894) | CORE | AAAI | local structure | A/C | — |
+| 2019 | [MODDIS](https://doi.org/10.1109/ICDM.2019.00136) | CORE | ICDM | shared latent, reconstruction | A/C/M | [official](https://github.com/sigerma/ICDM-2019-MODDIS) |
+| 2018 | [LDSR](https://doi.org/10.1609/AAAI.V32I1.11826) | CORE | AAAI | subspace, low rank | A/C/M | [official](https://github.com/kailigo/mvod) |
+| 2018 | [Partial Multi-View Outlier Detection Based on Collective Learning](https://doi.org/10.1609/AAAI.V32I1.11278) | PARTIAL | AAAI | partial view, self representation | C | — |
+| 2016 | [PLVM](https://proceedings.neurips.cc/paper/2016/hash/0f96613235062963ccde717b18f97592-Abstract.html) | CORE | NeurIPS | generative, shared latent | G/C | — |
+| 2015 | [DMOD](https://www.ijcai.org/Abstract/15/572) | CORE | IJCAI | shared latent, self representation | A/C | — |
+| 2015 | [MLRA](https://doi.org/10.1137/1.9781611974010.84) | CORE | SDM | low rank, subspace | A/C | [official](https://sheng-li.org/Codes/SDM15_MLRA_Code.zip) |
+| 2011 | [HOAD](https://ieeexplore.ieee.org/document/6137313) | CORE | ICDM | clustering, graph | C | — |
+<!-- AUTO-GENERATED: PAPERS END -->
+
+## Reproducibility overview
+
+Artifact claims are evidence-backed. `official` code requires a paper, author page, or official project source establishing ownership; a GitHub search hit alone is insufficient. `unknown` means the audit did not find enough official evidence, not that an artifact cannot exist.
+
+The registry separately records official code, configs, dataset instructions, pretrained weights, environment details, and repository license. See [Reproducibility](docs/REPRODUCIBILITY.md) and the [v0.2 coverage audit](docs/COVERAGE_AUDIT_V02.md).
 
 ## Contributing
 
-Corrections and carefully verified additions are welcome. Read [CONTRIBUTING.md](CONTRIBUTING.md), edit `data/papers.yaml`, use controlled tags from `data/taxonomy.yaml`, regenerate tables, and run the validator before opening a pull request.
+Corrections and carefully verified additions are welcome. Read [CONTRIBUTING.md](CONTRIBUTING.md), edit the registry, regenerate derived files, and run the validator and tests before opening a pull request.
+
+## Citation
+
+Repository metadata is prepared in [`CITATION.cff.template`](CITATION.cff.template). It remains a template until the repository owner supplies a verified personal or organizational author identity.
 
 ## License
 
-No license has been selected yet. The repository owner should choose a license appropriate for code and curated metadata before publication; see [BUILD_REPORT.md](BUILD_REPORT.md).
+No license has been selected. Choosing a legal license remains an explicit repository-owner decision; the v0.2 upgrade does not assume MIT, Apache, Creative Commons, or another license.

@@ -1,4 +1,4 @@
-version: 1
+version: 2
 tracks:
   - core_mvod
   - partial_mvod
@@ -9,6 +9,27 @@ statuses:
   - verified
   - partially_verified
   - uncertain
+
+view_settings:
+  - complete
+  - incomplete
+  - partial
+  - industrial
+  - unknown
+
+training_paradigms:
+  - unsupervised
+  - semi_supervised
+  - normal_only
+  - online
+  - transductive
+  - unknown
+
+protocol_confidence:
+  - high
+  - medium
+  - low
+  - unknown
 
 tasks:
   - multi_view_outlier_detection
@@ -79,7 +100,7 @@ link_statuses:
   - unverified
 
 reproducibility_values:
-  - yes
-  - no
+  - 'yes'
+  - 'no'
   - partial
   - unknown
