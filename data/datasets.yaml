@@ -1,0 +1,131 @@
+- name: 3Sources
+  aliases: [3Sources-text]
+  instances: 416
+  views: 3
+  feature_dimensions: variant-dependent
+  domain: multilingual/news text
+  classes: 6
+  source: http://erdos.ucd.ie/datasets/3sources.html
+  source_kind: dataset_homepage
+  notes: Article alignment and feature construction vary across redistributed benchmark files.
+
+- name: 100Leaves
+  aliases: [100 Leaves Plant Species]
+  instances: 1600
+  views: 3
+  feature_dimensions: 64/64/64 in the UCI feature files
+  domain: plant leaf shape, margin, and texture
+  classes: 100
+  source: https://archive.ics.uci.edu/dataset/241/one-hundred-plant-species-leaves-data-set
+  source_kind: official_dataset
+  notes: Many MVOD studies subsample or corrupt the complete UCI feature set.
+
+- name: BBCSport
+  aliases: [BBC Sports]
+  instances: 544
+  views: 2
+  feature_dimensions: variant-dependent
+  domain: news text
+  classes: 5
+  source: http://mlg.ucd.ie/datasets/segment.html
+  source_kind: dataset_homepage
+  notes: Multi-view versions use different vocabulary partitions or feature preprocessing.
+
+- name: Caltech101
+  aliases: [Caltech-101, Caltech101-20]
+  instances: null
+  views: null
+  feature_dimensions: variant-dependent
+  domain: object images represented by multiple handcrafted or learned features
+  classes: null
+  source: https://data.caltech.edu/records/mzrjq-6wc02
+  source_kind: official_dataset
+  notes: MVOD papers usually use a derived multi-feature subset; class count, sample count, and views are paper-specific.
+
+- name: CiteSeer
+  aliases: [Citeseer]
+  instances: null
+  views: null
+  feature_dimensions: variant-dependent
+  domain: scientific documents/citation network
+  classes: null
+  source: https://linqs-data.soe.ucsc.edu/public/lbc/citeseer.tgz
+  source_kind: public_dataset
+  notes: Text, citation, and label variants differ; record the exact preprocessing when reporting a result.
+
+- name: COIL-20
+  aliases: [COIL20]
+  instances: 1440
+  views: null
+  feature_dimensions: variant-dependent
+  domain: multi-angle object images
+  classes: 20
+  source: https://www.cs.columbia.edu/CAVE/software/softlib/coil-20.php
+  source_kind: official_dataset
+  notes: The base dataset has 72 poses per object; feature-view construction is paper-specific.
+
+- name: Fashion-MNIST
+  aliases: [Fashion]
+  instances: 70000
+  views: null
+  feature_dimensions: variant-dependent
+  domain: clothing images represented by constructed feature views
+  classes: 10
+  source: https://github.com/zalandoresearch/fashion-mnist
+  source_kind: official_dataset
+  notes: Not inherently multi-view; views and anomaly corruption are constructed by each study.
+
+- name: MNIST
+  aliases: []
+  instances: 70000
+  views: null
+  feature_dimensions: variant-dependent
+  domain: handwritten digits represented by constructed feature views
+  classes: 10
+  source: http://yann.lecun.com/exdb/mnist/
+  source_kind: official_dataset
+  notes: Not inherently multi-view; view construction and sampling vary across papers.
+
+- name: NUSWIDEOBJ
+  aliases: [NUS-WIDE-OBJ, NUS-WIDE]
+  instances: null
+  views: null
+  feature_dimensions: variant-dependent
+  domain: web images with visual features and tags
+  classes: null
+  source: https://lms.comp.nus.edu.sg/wp-content/uploads/2019/research/nuswide/NUS-WIDE.html
+  source_kind: official_dataset
+  notes: MVOD subsets differ in concepts, retained samples, visual descriptors, and tag features.
+
+- name: Reuters
+  aliases: [Reuters multilingual, Reuters-1200]
+  instances: null
+  views: null
+  feature_dimensions: variant-dependent
+  domain: multilingual/news text
+  classes: null
+  source: https://archive.ics.uci.edu/dataset/137/reuters+21578+text+categorization+collection
+  source_kind: official_dataset
+  notes: “Reuters” denotes several incompatible multi-view constructions; never assume one canonical shape.
+
+- name: Real-IAD
+  aliases: []
+  instances: 150000
+  views: 5
+  feature_dimensions: image pixels
+  domain: industrial multi-view images
+  classes: 30
+  source: https://realiad4ad.github.io/Real-IAD/
+  source_kind: official_dataset
+  notes: Related natural multi-view track; protocol and metrics are not comparable to tabular classical MVOD.
+
+- name: MVTec 3D-AD
+  aliases: [MVTec3D]
+  instances: 4147
+  views: 2
+  feature_dimensions: RGB image and organized 3D point cloud
+  domain: multimodal industrial inspection
+  classes: 10
+  source: https://www.mvtec.com/company/research/datasets/mvtec-3d-ad
+  source_kind: official_dataset
+  notes: Related RGB+3D track; modalities are spatially registered but use natural-defect protocols.

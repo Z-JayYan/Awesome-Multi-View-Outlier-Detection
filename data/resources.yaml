@@ -1,0 +1,25 @@
+- type: related_awesome_list
+  title: Awesome Industrial Anomaly Detection
+  url: https://github.com/Z-JayYan/awesome-industrial-anomaly-detection
+  scope: Industrial image, RGB-D, and 3D anomaly detection; related rather than core classical MVOD.
+
+- type: book_chapter
+  title: Multi-View Outlier Detection
+  url: https://doi.org/10.1007/978-3-030-00734-8_4
+  year: 2018
+  scope: Focused overview chapter on multi-view outlier detection.
+
+- type: dataset_hub
+  title: UCI Machine Learning Repository
+  url: https://archive.ics.uci.edu/
+  scope: Source for several base datasets; does not define one canonical MVOD corruption protocol.
+
+- type: bibliography
+  title: DBLP Computer Science Bibliography
+  url: https://dblp.org/
+  scope: Venue, year, author, and publication-record verification.
+
+- type: preprint_index
+  title: arXiv
+  url: https://arxiv.org/
+  scope: Preprint discovery and public full text; venue claims require separate verification.

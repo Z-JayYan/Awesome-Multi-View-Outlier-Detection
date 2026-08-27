@@ -1,0 +1,85 @@
+version: 1
+tracks:
+  - core_mvod
+  - partial_mvod
+  - related_natural_multimodal
+  - uncertain
+
+statuses:
+  - verified
+  - partially_verified
+  - uncertain
+
+tasks:
+  - multi_view_outlier_detection
+  - multi_view_anomaly_detection
+  - partial_multi_view_outlier_detection
+  - multi_view_group_anomaly_detection
+  - multimodal_industrial_anomaly_detection
+  - multi_view_visual_anomaly_detection
+  - multimodal_graph_anomaly_detection
+  - multi_view_time_series_anomaly_detection
+
+mechanisms:
+  subspace: Shared or view-specific subspace projection.
+  low_rank: Low-rank or low-rank-plus-sparse decomposition.
+  self_representation: Sample-to-sample self-representation.
+  reconstruction: Within-view or cross-view reconstruction error.
+  generative: Explicit probabilistic or neural generative modeling.
+  shared_latent: Common latent representation across views.
+  shared_private: Separation of view-common and view-specific factors.
+  cross_view_mapping: Prediction or mapping from one view to another.
+  local_structure: Neighborhood or local-manifold agreement.
+  graph: Graph construction, filtering, or graph fusion.
+  tensor: Tensorized cross-view or high-order relations.
+  contrastive: Contrastive or instance-discrimination objective.
+  information_theoretic: Mutual-information, bottleneck, or information-aware objective.
+  correspondence: Instance-level cross-view correspondence.
+  retrieval_rank: Retrieval or population-rank evidence.
+  clustering: Cluster assignment or consensus clustering.
+  ensemble: Aggregation across sampled models or neighborhoods.
+  probabilistic_neighborhood: Probabilistic modeling of local neighborhoods.
+  diffusion: Diffusion or flow-based generative process.
+  partial_view: Explicit missing-view or partial-view treatment.
+
+anomaly_types:
+  - attribute
+  - class
+  - mixed
+  - generic
+  - natural
+  - group
+
+evidence_levels:
+  - instance
+  - local
+  - global
+
+venue_types:
+  - conference
+  - journal
+  - workshop
+  - preprint
+  - book_chapter
+
+venue_statuses:
+  - proceedings
+  - published
+  - accepted
+  - preprint
+
+code_statuses:
+  - official
+  - third_party
+  - not_found
+  - unknown
+
+link_statuses:
+  - verified
+  - unverified
+
+reproducibility_values:
+  - yes
+  - no
+  - partial
+  - unknown

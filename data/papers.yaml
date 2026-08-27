@@ -1,0 +1,1186 @@
+- id: hoad-2011
+  title: A Spectral Framework for Detecting Inconsistency across Multi-Source Object Relationships
+  acronym: HOAD
+  authors: [Jing Gao, Wei Fan, Deepak S. Turaga, Srinivasan Parthasarathy, Jiawei Han]
+  year: 2011
+  online_year: null
+  venue: ICDM
+  venue_type: conference
+  venue_status: proceedings
+  track: core_mvod
+  status: verified
+  featured: true
+  tasks: [multi_view_outlier_detection]
+  mechanisms: [clustering, graph, subspace]
+  anomaly_types: [class]
+  evidence_levels: [global]
+  representation: {learned: true}
+  partial_view: false
+  datasets: []
+  summary: Fuses source-specific relationship graphs into a spectral embedding and flags objects whose embeddings disagree across sources.
+  links: {paper: https://ieeexplore.ieee.org/document/6137313, arxiv: null, code: null, project: null, dblp: null}
+  code_status: not_found
+  link_status: verified
+  verified_from:
+    - {kind: publisher, url: https://ieeexplore.ieee.org/document/6137313, facts: [title, authors, year, venue, method]}
+  complexity: &complexity_unknown {reported: null, provenance: unknown, notes: null}
+  reproducibility: &repro_unknown {official_code: unknown, official_config: unknown, dataset_instructions: unknown, pretrained_weights: unknown, environment: unknown, license: unknown}
+  notes: HOAD is a historical shorthand; acronym alone is not used as the record key.
+
+- id: consensus-clustering-2012
+  title: Using Consensus Clustering for Multi-view Anomaly Detection
+  acronym: null
+  authors: [Alexander Y. Liu, Dung N. Lam]
+  year: 2012
+  online_year: null
+  venue: IEEE S&P Workshops
+  venue_type: workshop
+  venue_status: proceedings
+  track: core_mvod
+  status: verified
+  featured: false
+  tasks: [multi_view_anomaly_detection]
+  mechanisms: [clustering]
+  anomaly_types: [class]
+  evidence_levels: [global]
+  representation: {learned: true}
+  partial_view: false
+  datasets: []
+  summary: Jointly learns consensus clusters and anomaly scores so unusual combinations of behavior across sources receive high scores.
+  links: {paper: https://doi.org/10.1109/SPW.2012.18, arxiv: null, code: null, project: null, dblp: https://dblp.org/rec/conf/sp/LiuL12}
+  code_status: not_found
+  link_status: verified
+  verified_from:
+    - {kind: publisher, url: https://doi.org/10.1109/SPW.2012.18, facts: [title, authors, year, venue]}
+    - {kind: dblp, url: https://dblp.org/rec/conf/sp/LiuL12, facts: [title, authors, year, venue]}
+  complexity: *complexity_unknown
+  reproducibility: *repro_unknown
+  notes: Evaluated on simulated insider-threat activity rather than a canonical named MVOD dataset.
+
+- id: dmod-2015
+  title: Dual-Regularized Multi-View Outlier Detection
+  acronym: DMOD
+  authors: [Handong Zhao, Yun Fu]
+  year: 2015
+  online_year: null
+  venue: IJCAI
+  venue_type: conference
+  venue_status: proceedings
+  track: core_mvod
+  status: verified
+  featured: true
+  tasks: [multi_view_outlier_detection]
+  mechanisms: [shared_latent, self_representation, low_rank]
+  anomaly_types: [attribute, class]
+  evidence_levels: [global, instance]
+  representation: {learned: true}
+  partial_view: false
+  datasets: []
+  summary: Jointly regularizes latent coefficients and sample-specific errors to separate cross-view inconsistency from shared abnormality.
+  links: {paper: https://www.ijcai.org/Abstract/15/572, arxiv: null, code: null, project: null, dblp: null}
+  code_status: not_found
+  link_status: verified
+  verified_from:
+    - {kind: conference, url: https://www.ijcai.org/Abstract/15/572, facts: [title, authors, year, venue, method]}
+  complexity: *complexity_unknown
+  reproducibility: *repro_unknown
+  notes: No official code repository was verified.
+
+- id: mlra-2015
+  title: Multi-View Low-Rank Analysis for Outlier Detection
+  acronym: MLRA
+  authors: [Sheng Li, Ming Shao, Yun Fu]
+  year: 2015
+  online_year: null
+  venue: SDM
+  venue_type: conference
+  venue_status: proceedings
+  track: core_mvod
+  status: verified
+  featured: true
+  tasks: [multi_view_outlier_detection]
+  mechanisms: [low_rank, subspace, shared_latent]
+  anomaly_types: [attribute, class]
+  evidence_levels: [global, instance]
+  representation: {learned: true}
+  partial_view: false
+  datasets: []
+  summary: Uses low-rank multi-view codes and their residual structure to expose both discordant and consistently abnormal samples.
+  links: {paper: https://doi.org/10.1137/1.9781611974010.84, arxiv: null, code: https://sheng-li.org/Codes/SDM15_MLRA_Code.zip, project: null, dblp: https://dblp.org/rec/conf/sdm/LiSF15}
+  code_status: official
+  link_status: verified
+  verified_from:
+    - {kind: publisher, url: https://doi.org/10.1137/1.9781611974010.84, facts: [title, authors, year, venue, method]}
+    - {kind: author_page, url: https://sites.google.com/view/shengli/home, facts: [code]}
+  complexity: *complexity_unknown
+  reproducibility: {official_code: yes, official_config: unknown, dataset_instructions: unknown, pretrained_weights: no, environment: unknown, license: unknown}
+  notes: Official code is an author-hosted archive rather than a GitHub repository.
+
+- id: plvm-2016
+  title: Multi-view Anomaly Detection via Robust Probabilistic Latent Variable Models
+  acronym: PLVM
+  authors: [Tomoharu Iwata, Makoto Yamada]
+  year: 2016
+  online_year: 2014
+  venue: NeurIPS
+  venue_type: conference
+  venue_status: proceedings
+  track: core_mvod
+  status: verified
+  featured: true
+  tasks: [multi_view_anomaly_detection]
+  mechanisms: [generative, shared_latent]
+  anomaly_types: [generic, class]
+  evidence_levels: [instance, global]
+  representation: {learned: true}
+  partial_view: false
+  datasets: []
+  summary: Models normal instances with one shared latent cause and anomalies with multiple latent causes, using posterior evidence as the score.
+  links: {paper: https://proceedings.neurips.cc/paper/2016/hash/0f96613235062963ccde717b18f97592-Abstract.html, arxiv: https://arxiv.org/abs/1411.3413, code: null, project: null, dblp: https://dblp.org/rec/conf/nips/IwataY16}
+  code_status: not_found
+  link_status: verified
+  verified_from:
+    - {kind: conference, url: https://proceedings.neurips.cc/paper/2016/hash/0f96613235062963ccde717b18f97592-Abstract.html, facts: [title, authors, year, venue, method]}
+    - {kind: arxiv, url: https://arxiv.org/abs/1411.3413, facts: [online_year, method]}
+  complexity: *complexity_unknown
+  reproducibility: *repro_unknown
+  notes: The 2014 arXiv version omits “Robust” from the title; the proceedings record is primary here.
+
+- id: crmod-2018
+  title: Consensus Regularized Multi-View Outlier Detection
+  acronym: CRMOD
+  authors: [Handong Zhao, Hongfu Liu, Zhengming Ding, Yun Fu]
+  year: 2018
+  online_year: 2017
+  venue: IEEE TIP
+  venue_type: journal
+  venue_status: published
+  track: core_mvod
+  status: verified
+  featured: false
+  tasks: [multi_view_outlier_detection]
+  mechanisms: [shared_latent, clustering, self_representation]
+  anomaly_types: [attribute, class]
+  evidence_levels: [global, instance]
+  representation: {learned: true}
+  partial_view: false
+  datasets: []
+  summary: Enforces consensus among view representations while retaining sample-specific errors for view disagreement and shared abnormality.
+  links: {paper: https://doi.org/10.1109/TIP.2017.2754942, arxiv: null, code: null, project: null, dblp: https://dblp.org/rec/journals/tip/ZhaoLDF18}
+  code_status: not_found
+  link_status: verified
+  verified_from:
+    - {kind: publisher, url: https://doi.org/10.1109/TIP.2017.2754942, facts: [title, authors, year, venue, method]}
+    - {kind: dblp, url: https://dblp.org/rec/journals/tip/ZhaoLDF18, facts: [year, venue]}
+  complexity: *complexity_unknown
+  reproducibility: *repro_unknown
+  notes: Online-first year is stored separately from the issue year.
+
+- id: mlra-plus-2018
+  title: Multi-View Low-Rank Analysis with Applications to Outlier Detection
+  acronym: MLRA+
+  authors: [Sheng Li, Ming Shao, Yun Fu]
+  year: 2018
+  online_year: null
+  venue: ACM TKDD
+  venue_type: journal
+  venue_status: published
+  track: core_mvod
+  status: verified
+  featured: false
+  tasks: [multi_view_outlier_detection]
+  mechanisms: [low_rank, subspace, shared_latent]
+  anomaly_types: [attribute, class]
+  evidence_levels: [global, instance]
+  representation: {learned: true}
+  partial_view: false
+  datasets: []
+  summary: Extends multi-view low-rank coding to recover shared structure and sample residuals that distinguish cross-view and shared abnormality.
+  links: {paper: https://doi.org/10.1145/3168363, arxiv: null, code: https://sheng-li.org/Codes/SDM15_MLRA_Code.zip, project: null, dblp: null}
+  code_status: official
+  link_status: verified
+  verified_from:
+    - {kind: publisher, url: https://doi.org/10.1145/3168363, facts: [title, authors, year, venue, method]}
+    - {kind: author_page, url: https://sites.google.com/view/shengli/home, facts: [code]}
+  complexity: *complexity_unknown
+  reproducibility: {official_code: yes, official_config: unknown, dataset_instructions: unknown, pretrained_weights: no, environment: unknown, license: unknown}
+  notes: Journal extension retained separately from the 2015 SDM paper; normalized title plus year prevents acronym-based merging.
+
+- id: ldsr-2018
+  title: Latent Discriminant Subspace Representations for Multi-View Outlier Detection
+  acronym: LDSR
+  authors: [Kai Li, Sheng Li, Zhengming Ding, Weidong Zhang, Yun Fu]
+  year: 2018
+  online_year: null
+  venue: AAAI
+  venue_type: conference
+  venue_status: proceedings
+  track: core_mvod
+  status: verified
+  featured: true
+  tasks: [multi_view_outlier_detection]
+  mechanisms: [subspace, low_rank, shared_private]
+  anomaly_types: [attribute, class, mixed]
+  evidence_levels: [global, instance]
+  representation: {learned: true}
+  partial_view: false
+  datasets: []
+  summary: Combines global low-rank structure with view-specific discriminant residuals to score class, attribute, and combined anomalies.
+  links: {paper: https://doi.org/10.1609/AAAI.V32I1.11826, arxiv: null, code: https://github.com/kailigo/mvod, project: null, dblp: null}
+  code_status: official
+  link_status: verified
+  verified_from:
+    - {kind: conference, url: https://doi.org/10.1609/AAAI.V32I1.11826, facts: [title, authors, year, venue, method]}
+    - {kind: official_code, url: https://github.com/kailigo/mvod, facts: [code]}
+  complexity: *complexity_unknown
+  reproducibility: {official_code: yes, official_config: partial, dataset_instructions: partial, pretrained_weights: no, environment: unknown, license: unknown}
+  notes: null
+
+- id: collective-learning-2018
+  title: Partial Multi-View Outlier Detection Based on Collective Learning
+  acronym: null
+  authors: [Jun Guo, Wenwu Zhu]
+  year: 2018
+  online_year: null
+  venue: AAAI
+  venue_type: conference
+  venue_status: proceedings
+  track: partial_mvod
+  status: verified
+  featured: true
+  tasks: [partial_multi_view_outlier_detection]
+  mechanisms: [partial_view, self_representation, cross_view_mapping]
+  anomaly_types: [class]
+  evidence_levels: [instance, global]
+  representation: {learned: true}
+  partial_view: true
+  datasets: []
+  summary: Reconstructs missing-view samples collectively using inter-view dependence and derives anomaly confidence from the recovered similarities.
+  links: {paper: https://doi.org/10.1609/AAAI.V32I1.11278, arxiv: null, code: null, project: null, dblp: https://dblp.org/rec/conf/aaai/GuoZ18}
+  code_status: not_found
+  link_status: verified
+  verified_from:
+    - {kind: conference, url: https://doi.org/10.1609/AAAI.V32I1.11278, facts: [title, authors, year, venue, method]}
+    - {kind: dblp, url: https://dblp.org/rec/conf/aaai/GuoZ18, facts: [year, venue]}
+  complexity: *complexity_unknown
+  reproducibility: *repro_unknown
+  notes: Missingness is treated as a data condition; it is not automatically an anomaly label.
+
+- id: muvad-2019
+  title: 'Multi-View Anomaly Detection: Neighborhood in Locality Matters'
+  acronym: MUVAD
+  authors: [Xiang-Rong Sheng, De-Chuan Zhan, Su Lu, Yuan Jiang]
+  year: 2019
+  online_year: null
+  venue: AAAI
+  venue_type: conference
+  venue_status: proceedings
+  track: core_mvod
+  status: verified
+  featured: true
+  tasks: [multi_view_anomaly_detection]
+  mechanisms: [local_structure]
+  anomaly_types: [attribute, class]
+  evidence_levels: [local]
+  representation: {learned: false}
+  partial_view: false
+  datasets: []
+  summary: Estimates normal neighbors without assuming global clusters and scores disagreement or shared abnormality through local relations.
+  links: {paper: https://doi.org/10.1609/AAAI.V33I01.33014894, arxiv: null, code: null, project: null, dblp: null}
+  code_status: not_found
+  link_status: verified
+  verified_from:
+    - {kind: conference, url: https://doi.org/10.1609/AAAI.V33I01.33014894, facts: [title, authors, year, venue, method]}
+  complexity: *complexity_unknown
+  reproducibility: *repro_unknown
+  notes: null
+
+- id: moddis-2019
+  title: Multi-view Outlier Detection in Deep Intact Space
+  acronym: MODDIS
+  authors: [Yu-Xuan Ji, Ling Huang, Heng-Ping He, Chang-Dong Wang, Guangqiang Xie, Wei Shi, Kun-Yu Lin]
+  year: 2019
+  online_year: null
+  venue: ICDM
+  venue_type: conference
+  venue_status: proceedings
+  track: core_mvod
+  status: verified
+  featured: true
+  tasks: [multi_view_outlier_detection]
+  mechanisms: [shared_latent, reconstruction, shared_private]
+  anomaly_types: [attribute, class, mixed]
+  evidence_levels: [global, instance]
+  representation: {learned: true}
+  partial_view: false
+  datasets: []
+  summary: Learns a nonlinear intact latent space shared by the views and scores deviations that cannot be explained by that common representation.
+  links: {paper: https://doi.org/10.1109/ICDM.2019.00136, arxiv: null, code: https://github.com/sigerma/ICDM-2019-MODDIS, project: null, dblp: https://dblp.org/rec/conf/icdm/JiHHWXSL19}
+  code_status: official
+  link_status: verified
+  verified_from:
+    - {kind: publisher, url: https://doi.org/10.1109/ICDM.2019.00136, facts: [title, authors, year, venue]}
+    - {kind: official_code, url: https://github.com/sigerma/ICDM-2019-MODDIS, facts: [code, method]}
+  complexity: *complexity_unknown
+  reproducibility: {official_code: yes, official_config: partial, dataset_instructions: partial, pretrained_weights: no, environment: partial, license: unknown}
+  notes: null
+
+- id: hbm-2020
+  title: Towards a Hierarchical Bayesian Model of Multi-View Anomaly Detection
+  acronym: HBM
+  authors: [Zhen Wang, Chao Lan]
+  year: 2020
+  online_year: null
+  venue: IJCAI
+  venue_type: conference
+  venue_status: proceedings
+  track: core_mvod
+  status: verified
+  featured: false
+  tasks: [multi_view_anomaly_detection]
+  mechanisms: [generative, shared_latent]
+  anomaly_types: [attribute, class, mixed]
+  evidence_levels: [instance, global]
+  representation: {learned: true}
+  partial_view: false
+  datasets: []
+  summary: Fits a hierarchical Bayesian normal-data model and scores instances whose aligned views have low posterior predictive support.
+  links: {paper: https://www.ijcai.org/proceedings/2020/335, arxiv: null, code: https://github.com/zwang-datascience/MVAD_Bayesian, project: null, dblp: null}
+  code_status: official
+  link_status: verified
+  verified_from:
+    - {kind: conference, url: https://www.ijcai.org/proceedings/2020/335, facts: [title, authors, year, venue, method]}
+    - {kind: official_code, url: https://github.com/zwang-datascience/MVAD_Bayesian, facts: [code]}
+  complexity: *complexity_unknown
+  reproducibility: {official_code: yes, official_config: partial, dataset_instructions: yes, pretrained_weights: no, environment: partial, license: unknown}
+  notes: HBM is a comparative shorthand, not the registry key.
+
+- id: ncmod-2021
+  title: Neighborhood Consensus Networks for Unsupervised Multi-view Outlier Detection
+  acronym: NCMOD
+  authors: [Li Cheng, Yijie Wang, Xinwang Liu]
+  year: 2021
+  online_year: null
+  venue: AAAI
+  venue_type: conference
+  venue_status: proceedings
+  track: core_mvod
+  status: verified
+  featured: true
+  tasks: [multi_view_outlier_detection]
+  mechanisms: [reconstruction, local_structure, graph]
+  anomaly_types: [attribute, class, mixed]
+  evidence_levels: [instance, local]
+  representation: {learned: true}
+  partial_view: false
+  datasets: [MNIST, Reuters]
+  summary: Combines within-view reconstruction with cross-view neighborhood consensus, scoring both feature deviation and neighbor disagreement.
+  links: {paper: https://doi.org/10.1609/AAAI.V35I8.16873, arxiv: null, code: https://github.com/auguscl/NCMOD, project: null, dblp: https://dblp.org/rec/conf/aaai/Cheng0L21}
+  code_status: official
+  link_status: verified
+  verified_from:
+    - {kind: conference, url: https://doi.org/10.1609/AAAI.V35I8.16873, facts: [title, authors, year, venue, method]}
+    - {kind: official_code, url: https://github.com/auguscl/NCMOD, facts: [code]}
+  complexity: *complexity_unknown
+  reproducibility: {official_code: yes, official_config: partial, dataset_instructions: partial, pretrained_weights: no, environment: partial, license: unknown}
+  notes: The official repository was verified independently from the paper metadata search.
+
+- id: cgaes-2021
+  title: Cross-aligned and Gumbel-refactored Autoencoders for Multi-view Anomaly Detection
+  acronym: CGAEs
+  authors: [Shaoshen Wang, Yanbin Liu, Ling Chen, Chengqi Zhang]
+  year: 2021
+  online_year: null
+  venue: ICTAI
+  venue_type: conference
+  venue_status: proceedings
+  track: core_mvod
+  status: verified
+  featured: true
+  tasks: [multi_view_anomaly_detection]
+  mechanisms: [reconstruction, cross_view_mapping, shared_latent]
+  anomaly_types: [attribute, class]
+  evidence_levels: [instance, global]
+  representation: {learned: true}
+  partial_view: false
+  datasets: []
+  summary: Uses cross-reconstruction to expose incompatible views and latent alignment distance to expose samples abnormal across views.
+  links: {paper: https://doi.org/10.1109/ICTAI52525.2021.00218, arxiv: null, code: null, project: null, dblp: https://dblp.org/rec/conf/ictai/WangLCZ21}
+  code_status: not_found
+  link_status: verified
+  verified_from:
+    - {kind: publisher, url: https://doi.org/10.1109/ICTAI52525.2021.00218, facts: [title, authors, year, venue, method]}
+  complexity: *complexity_unknown
+  reproducibility: *repro_unknown
+  notes: The paper said code would be released, but no official repository was verified in this audit.
+
+- id: multivae-2021
+  title: Semi-supervised Variational Multi-view Anomaly Detection
+  acronym: MultiVAE
+  authors: [Shaoshen Wang, Ling Chen, Farookh Khadeer Hussain, Chengqi Zhang]
+  year: 2021
+  online_year: null
+  venue: APWeb/WAIM
+  venue_type: conference
+  venue_status: proceedings
+  track: core_mvod
+  status: verified
+  featured: false
+  tasks: [multi_view_anomaly_detection]
+  mechanisms: [generative, reconstruction, cross_view_mapping]
+  anomaly_types: [attribute, class, mixed]
+  evidence_levels: [instance]
+  representation: {learned: true}
+  partial_view: false
+  datasets: []
+  summary: Learns cross-view dependency from normal data with a variational autoencoder and detects likelihood or cross-reconstruction deviations.
+  links: {paper: https://doi.org/10.1007/978-3-030-85896-4_10, arxiv: null, code: null, project: null, dblp: https://dblp.org/rec/conf/apweb/WangCHZ21}
+  code_status: not_found
+  link_status: verified
+  verified_from:
+    - {kind: publisher, url: https://doi.org/10.1007/978-3-030-85896-4_10, facts: [title, authors, year, venue]}
+    - {kind: author_page, url: https://opus.lib.uts.edu.au/handle/10453/157608, facts: [method]}
+  complexity: *complexity_unknown
+  reproducibility: *repro_unknown
+  notes: Semi-supervised normal-only training differs from the usual transductive contaminated-data setting.
+
+- id: latent-structure-2021
+  title: Learning Probabilistic Latent Structure for Outlier Detection from Multi-view Data
+  acronym: null
+  authors: [Zhen Wang, Ji Zhang, Yizheng Chen, Chenhao Lu, Jerry Chun-Wei Lin, Jing Xiao, Rage Uday Kiran]
+  year: 2021
+  online_year: null
+  venue: PAKDD
+  venue_type: conference
+  venue_status: proceedings
+  track: core_mvod
+  status: verified
+  featured: false
+  tasks: [multi_view_outlier_detection]
+  mechanisms: [generative, shared_latent]
+  anomaly_types: [generic, class]
+  evidence_levels: [instance, global]
+  representation: {learned: true}
+  partial_view: false
+  datasets: []
+  summary: Learns a probabilistic latent structure shared across views and scores instances that the joint latent explanation fits poorly.
+  links: {paper: https://doi.org/10.1007/978-3-030-75762-5_5, arxiv: null, code: null, project: null, dblp: null}
+  code_status: unknown
+  link_status: verified
+  verified_from:
+    - {kind: publisher, url: https://doi.org/10.1007/978-3-030-75762-5_5, facts: [title, authors, year, venue, method]}
+  complexity: *complexity_unknown
+  reproducibility: *repro_unknown
+  notes: Full experimental metadata remains to be expanded in a later registry pass.
+
+- id: fmod-2022
+  title: Fast Multi-View Outlier Detection via Deep Encoder
+  acronym: FMOD
+  authors: [Dongdong Hou, Yang Cong, Gan Sun, Jiahua Dong, Jun Li, Kai Li]
+  year: 2022
+  online_year: 2020
+  venue: IEEE Transactions on Big Data
+  venue_type: journal
+  venue_status: published
+  track: core_mvod
+  status: verified
+  featured: true
+  tasks: [multi_view_outlier_detection]
+  mechanisms: [subspace, low_rank, shared_private]
+  anomaly_types: [attribute, class, mixed]
+  evidence_levels: [global, instance]
+  representation: {learned: true}
+  partial_view: false
+  datasets: []
+  summary: Learns view-consistent and view-specific low-rank codes with encoders trained on samples, then applies them to large-scale scoring.
+  links: {paper: https://doi.org/10.1109/TBDATA.2020.3004057, arxiv: null, code: null, project: null, dblp: https://dblp.org/rec/journals/tbd/HouCSD0022}
+  code_status: not_found
+  link_status: verified
+  verified_from:
+    - {kind: publisher, url: https://doi.org/10.1109/TBDATA.2020.3004057, facts: [title, authors, online_year, method]}
+    - {kind: dblp, url: https://dblp.org/rec/journals/tbd/HouCSD0022, facts: [year, venue]}
+  complexity: {reported: Scoring is presented as a fast encoder-based alternative after sampled training., provenance: author_claim, notes: Exact asymptotic terms should be checked in the paper before reuse.}
+  reproducibility: *repro_unknown
+  notes: Issue year 2022 and early-access year 2020 are kept separate.
+
+- id: srlsp-2023
+  title: A Self-Representation Method with Local Similarity Preserving for Fast Multi-View Outlier Detection
+  acronym: SRLSP
+  authors: [Yu Wang, Chuan Chen, Jinrong Lai, Lele Fu, Yuren Zhou, Zibin Zheng]
+  year: 2023
+  online_year: 2022
+  venue: ACM TKDD
+  venue_type: journal
+  venue_status: published
+  track: core_mvod
+  status: verified
+  featured: true
+  tasks: [multi_view_outlier_detection]
+  mechanisms: [self_representation, local_structure, graph]
+  anomaly_types: [attribute, class, mixed]
+  evidence_levels: [local, global]
+  representation: {learned: true}
+  partial_view: false
+  datasets: []
+  summary: Preserves local similarity while learning a shared self-representation, exposing view-specific residuals and cross-view structural disagreement.
+  links: {paper: https://doi.org/10.1145/3532191, arxiv: null, code: https://github.com/wy54224/SRLSP, project: null, dblp: https://dblp.org/rec/journals/tkdd/WangCLFZZ23}
+  code_status: official
+  link_status: verified
+  verified_from:
+    - {kind: publisher, url: https://doi.org/10.1145/3532191, facts: [title, authors, year, venue, method]}
+    - {kind: official_code, url: https://github.com/wy54224/SRLSP, facts: [code]}
+  complexity: *complexity_unknown
+  reproducibility: {official_code: yes, official_config: partial, dataset_instructions: partial, pretrained_weights: no, environment: unknown, license: unknown}
+  notes: Crossref issue year and online year differ.
+
+- id: contrasting-representations-2023
+  title: Learning Enhanced Representations via Contrasting for Multi-view Outlier Detection
+  acronym: ECMOD
+  authors: [Xiaocong Chen, Xinye Wang, Yang Wang, Chao Han, Lei Duan]
+  year: 2023
+  online_year: null
+  venue: PAKDD
+  venue_type: conference
+  venue_status: proceedings
+  track: core_mvod
+  status: verified
+  featured: false
+  tasks: [multi_view_outlier_detection]
+  mechanisms: [contrastive, shared_latent]
+  anomaly_types: [generic, class]
+  evidence_levels: [instance, global]
+  representation: {learned: true}
+  partial_view: false
+  datasets: []
+  summary: Uses cross-view contrast to strengthen aligned representations and scores instances whose view representations fail to agree.
+  links: {paper: https://doi.org/10.1007/978-3-031-30678-5_9, arxiv: null, code: https://github.com/scu-kdde/OAM-ECMOD-2023, project: null, dblp: https://dblp.org/rec/conf/dasfaa/ChenWWHD23}
+  code_status: official
+  link_status: verified
+  verified_from:
+    - {kind: publisher, url: https://doi.org/10.1007/978-3-031-30678-5_9, facts: [title, authors, year, venue, method]}
+    - {kind: official_code, url: https://github.com/scu-kdde/OAM-ECMOD-2023, facts: [code, acronym]}
+  complexity: *complexity_unknown
+  reproducibility: {official_code: yes, official_config: partial, dataset_instructions: partial, pretrained_weights: no, environment: unknown, license: unknown}
+  notes: ECMOD is the method acronym; the publication title is retained as the primary identity.
+
+- id: dpoe-2023
+  title: 'Debunking Free Fusion Myth: Online Multi-view Anomaly Detection with Disentangled Product-of-Experts Modeling'
+  acronym: dPoE
+  authors: [Hao Wang, Zhi-Qi Cheng, Jingdong Sun, Xin Yang, Xiao Wu, Hongyang Chen, Yan Yang]
+  year: 2023
+  online_year: null
+  venue: ACM MM
+  venue_type: conference
+  venue_status: proceedings
+  track: core_mvod
+  status: verified
+  featured: true
+  tasks: [multi_view_anomaly_detection]
+  mechanisms: [generative, shared_private, information_theoretic]
+  anomaly_types: [attribute, class, mixed]
+  evidence_levels: [instance, global]
+  representation: {learned: true}
+  partial_view: false
+  datasets: [MNIST, Fashion-MNIST, COIL-20]
+  summary: A product-of-experts VAE disentangles view-common and view-specific factors, then scores new instances without retaining all training representations.
+  links: {paper: https://doi.org/10.1145/3581783.3612487, arxiv: https://arxiv.org/abs/2310.18728, code: https://github.com/cshaowang/dPoE, project: null, dblp: null}
+  code_status: official
+  link_status: verified
+  verified_from:
+    - {kind: publisher, url: https://doi.org/10.1145/3581783.3612487, facts: [title, authors, year, venue, method]}
+    - {kind: official_code, url: https://github.com/cshaowang/dPoE, facts: [code, datasets]}
+  complexity: *complexity_unknown
+  reproducibility: {official_code: yes, official_config: partial, dataset_instructions: partial, pretrained_weights: no, environment: partial, license: unknown}
+  notes: “Online” refers to post-deployment instance scoring and must not be conflated with streaming concept drift.
+
+- id: modgd-2024
+  title: Multi-view Outlier Detection via Graphs Denoising
+  acronym: MODGD
+  authors: [Boao Hu, Xu Wang, Peng Zhou, Liang Du]
+  year: 2024
+  online_year: 2023
+  venue: Information Fusion
+  venue_type: journal
+  venue_status: published
+  track: core_mvod
+  status: verified
+  featured: true
+  tasks: [multi_view_outlier_detection]
+  mechanisms: [graph, local_structure]
+  anomaly_types: [attribute, class, mixed]
+  evidence_levels: [local, global]
+  representation: {learned: true}
+  partial_view: false
+  datasets: []
+  summary: Denoises view-specific graphs while learning a consensus graph and extracts structured graph residuals as multi-view anomaly evidence.
+  links: {paper: https://doi.org/10.1016/j.inffus.2023.102012, arxiv: null, code: http://Doctor-Nobody.github.io/codes/MODGD.zip, project: https://doctor-nobody.github.io/, dblp: https://dblp.org/rec/journals/inffus/HuWZD24}
+  code_status: official
+  link_status: verified
+  verified_from:
+    - {kind: publisher, url: https://doi.org/10.1016/j.inffus.2023.102012, facts: [title, authors, year, venue, method, code]}
+  complexity: *complexity_unknown
+  reproducibility: {official_code: yes, official_config: unknown, dataset_instructions: partial, pretrained_weights: no, environment: unknown, license: unknown}
+  notes: Official code is an author-hosted ZIP cited by the publisher page.
+
+- id: iamod-2024
+  title: Information-aware Multi-view Outlier Detection
+  acronym: IAMOD
+  authors: [Jinrong Lai, Tong Wang, Chuan Chen, Zibin Zheng]
+  year: 2024
+  online_year: 2023
+  venue: ACM TKDD
+  venue_type: journal
+  venue_status: published
+  track: core_mvod
+  status: verified
+  featured: true
+  tasks: [multi_view_outlier_detection]
+  mechanisms: [information_theoretic, shared_latent, local_structure]
+  anomaly_types: [attribute, class, mixed]
+  evidence_levels: [instance, local]
+  representation: {learned: true}
+  partial_view: false
+  datasets: []
+  summary: Learns compact non-redundant view representations and compares both neighbor and view consistency to identify multiple outlier mechanisms.
+  links: {paper: https://doi.org/10.1145/3638354, arxiv: null, code: https://github.com/GTML-LAB/IAMOD, project: null, dblp: https://dblp.org/rec/journals/tkdd/LaiWCZ24}
+  code_status: official
+  link_status: verified
+  verified_from:
+    - {kind: publisher, url: https://doi.org/10.1145/3638354, facts: [title, authors, year, venue, method]}
+    - {kind: official_code, url: https://github.com/GTML-LAB/IAMOD, facts: [code]}
+  complexity: *complexity_unknown
+  reproducibility: {official_code: yes, official_config: partial, dataset_instructions: partial, pretrained_weights: no, environment: unknown, license: unknown}
+  notes: Online publication occurred in 2023; journal volume year is 2024.
+
+- id: seem-2024
+  title: 'SeeM: A Shared Latent Variable Model for Unsupervised Multi-view Anomaly Detection'
+  acronym: SeeM
+  authors: [Phuong Nguyen, Tuan M. V. Le]
+  year: 2024
+  online_year: null
+  venue: PAKDD
+  venue_type: conference
+  venue_status: proceedings
+  track: core_mvod
+  status: verified
+  featured: true
+  tasks: [multi_view_anomaly_detection]
+  mechanisms: [generative, shared_latent]
+  anomaly_types: [generic, class]
+  evidence_levels: [instance, global]
+  representation: {learned: true}
+  partial_view: false
+  datasets: []
+  summary: Generates all views from one neural shared latent variable and uses low joint likelihood when one code cannot explain the aligned views.
+  links: {paper: https://doi.org/10.1007/978-981-97-2242-6_7, arxiv: null, code: https://github.com/thanhphuong163/SeeM, project: null, dblp: https://dblp.org/rec/conf/pakdd/NguyenL24}
+  code_status: official
+  link_status: verified
+  verified_from:
+    - {kind: publisher, url: https://doi.org/10.1007/978-981-97-2242-6_7, facts: [title, authors, year, venue, method]}
+    - {kind: official_code, url: https://github.com/thanhphuong163/SeeM, facts: [code]}
+  complexity: *complexity_unknown
+  reproducibility: {official_code: yes, official_config: partial, dataset_instructions: yes, pretrained_weights: no, environment: yes, license: yes}
+  notes: null
+
+- id: rcpmod-2024
+  title: Regularized Contrastive Partial Multi-view Outlier Detection
+  acronym: RCPMOD
+  authors: [Yijia Wang, Qianqian Xu, Yangbangyan Jiang, Siran Dai, Qingming Huang]
+  year: 2024
+  online_year: null
+  venue: ACM MM
+  venue_type: conference
+  venue_status: proceedings
+  track: partial_mvod
+  status: verified
+  featured: true
+  tasks: [partial_multi_view_outlier_detection]
+  mechanisms: [partial_view, contrastive, local_structure, shared_latent]
+  anomaly_types: [attribute, class, mixed]
+  evidence_levels: [instance, local]
+  representation: {learned: true}
+  partial_view: true
+  datasets: [Fashion-MNIST]
+  summary: Regularized contrastive learning aligns reliable observed-view evidence while neighborhood and representation terms remain usable under missing views.
+  links: {paper: https://doi.org/10.1145/3664647.3681125, arxiv: https://arxiv.org/abs/2408.07819, code: null, project: null, dblp: null}
+  code_status: unknown
+  link_status: verified
+  verified_from:
+    - {kind: publisher, url: https://doi.org/10.1145/3664647.3681125, facts: [title, authors, year, venue, method]}
+  complexity: *complexity_unknown
+  reproducibility: *repro_unknown
+  notes: A same-named public repository exists, but official ownership was not established from the paper sources used in this audit.
+
+- id: ina-cr-2024
+  title: Multi-view anomaly detection via hybrid instance-neighborhood aligning and cross-view reasoning
+  acronym: INA-CR
+  authors: [Luo Tian, Shu-Juan Peng, Xin Liu, Yewang Chen, Jianjia Cao]
+  year: 2024
+  online_year: null
+  venue: Multimedia Systems
+  venue_type: journal
+  venue_status: published
+  track: core_mvod
+  status: verified
+  featured: false
+  tasks: [multi_view_anomaly_detection]
+  mechanisms: [reconstruction, local_structure, cross_view_mapping]
+  anomaly_types: [attribute, class, mixed]
+  evidence_levels: [instance, local]
+  representation: {learned: true}
+  partial_view: false
+  datasets: []
+  summary: Aligns latent instance neighborhoods and applies cross-view reasoning to expose both dependency violations and view-specific reconstruction errors.
+  links: {paper: https://doi.org/10.1007/s00530-024-01526-2, arxiv: null, code: https://github.com/tl-git320/INA-CR, project: null, dblp: null}
+  code_status: official
+  link_status: verified
+  verified_from:
+    - {kind: publisher, url: https://doi.org/10.1007/s00530-024-01526-2, facts: [title, authors, year, venue, method, code]}
+  complexity: *complexity_unknown
+  reproducibility: {official_code: yes, official_config: partial, dataset_instructions: partial, pretrained_weights: no, environment: unknown, license: unknown}
+  notes: null
+
+- id: idif-2025
+  title: 'Unveiling Multi-View Anomaly Detection: Intra-view Decoupling and Inter-view Fusion'
+  acronym: IDIF
+  authors: [Kai Mao, Yiyang Lian, Yangyang Wang, Meiqin Liu, Nanning Zheng, Ping Wei]
+  year: 2025
+  online_year: null
+  venue: AAAI
+  venue_type: conference
+  venue_status: proceedings
+  track: related_natural_multimodal
+  status: verified
+  featured: true
+  tasks: [multi_view_visual_anomaly_detection]
+  mechanisms: [shared_private, information_theoretic, reconstruction, partial_view]
+  anomaly_types: [natural]
+  evidence_levels: [instance, global]
+  representation: {learned: true}
+  partial_view: true
+  datasets: [Real-IAD]
+  summary: Separates shared information with an information bottleneck, fuses view features through implicit voxel structure, and reconstructs natural defects.
+  links: {paper: https://doi.org/10.1609/AAAI.V39I12.33349, arxiv: null, code: https://github.com/Kerio99/IDIF, project: null, dblp: null}
+  code_status: official
+  link_status: verified
+  verified_from:
+    - {kind: conference, url: https://doi.org/10.1609/AAAI.V39I12.33349, facts: [title, authors, year, venue, method, code]}
+    - {kind: official_code, url: https://github.com/Kerio99/IDIF, facts: [artifact_status]}
+  complexity: *complexity_unknown
+  reproducibility: {official_code: partial, official_config: no, dataset_instructions: no, pretrained_weights: no, environment: no, license: yes}
+  notes: The official repository existed at audit time but stated that code would be released later.
+
+- id: ogf-2025
+  title: Unsupervised Multi-View Outlier Detection via Optimal Graph Filtering
+  acronym: MODGF
+  authors: [Zhiguo Hu, Ning Wang, Peng Zhou, Liang Du, Yuhua Qian, Cheng Wang, Yanming Zhang]
+  year: 2025
+  online_year: null
+  venue: ICASSP
+  venue_type: conference
+  venue_status: proceedings
+  track: core_mvod
+  status: verified
+  featured: true
+  tasks: [multi_view_outlier_detection]
+  mechanisms: [graph, local_structure]
+  anomaly_types: [generic, class]
+  evidence_levels: [local, global]
+  representation: {learned: true}
+  partial_view: false
+  datasets: []
+  summary: Learns an optimal graph filter across view graphs and scores nodes whose filtered relational structure is inconsistent with the consensus.
+  links: {paper: https://doi.org/10.1109/ICASSP49660.2025.10889803, arxiv: null, code: null, project: null, dblp: https://dblp.org/rec/conf/icassp/HuW00QWZ25}
+  code_status: unknown
+  link_status: verified
+  verified_from:
+    - {kind: publisher, url: https://doi.org/10.1109/ICASSP49660.2025.10889803, facts: [title, authors, year, venue]}
+    - {kind: dblp, url: https://dblp.org/rec/conf/icassp/HuW00QWZ25, facts: [year, venue]}
+  complexity: *complexity_unknown
+  reproducibility: *repro_unknown
+  notes: Detailed datasets and code status remain unresolved.
+
+- id: lrtdm-2025
+  title: Low-rank Tucker decomposition for multi-view outlier detection based on meta-learning
+  acronym: LRTDM
+  authors: [Wei Lin, Kun Xie, Jiayin Li, Shiping Wang, Li Xu]
+  year: 2025
+  online_year: null
+  venue: Information Fusion
+  venue_type: journal
+  venue_status: published
+  track: core_mvod
+  status: verified
+  featured: true
+  tasks: [multi_view_outlier_detection]
+  mechanisms: [tensor, low_rank, self_representation, shared_latent]
+  anomaly_types: [attribute, class, mixed]
+  evidence_levels: [global, instance]
+  representation: {learned: true}
+  partial_view: false
+  datasets: []
+  summary: Tucker-decomposes a self-expressive view tensor and meta-learns latent-view fusion, scoring consensus and reconstruction residuals.
+  links: {paper: https://doi.org/10.1016/j.inffus.2025.103313, arxiv: null, code: null, project: null, dblp: null}
+  code_status: unknown
+  link_status: verified
+  verified_from:
+    - {kind: publisher, url: https://doi.org/10.1016/j.inffus.2025.103313, facts: [title, authors, year, venue, method, complexity]}
+  complexity: {reported: 'The paper reports update costs containing quadratic terms in the number of instances.', provenance: author_claim, notes: Consult the paper for the full rank/view-dependent expressions.}
+  reproducibility: *repro_unknown
+  notes: null
+
+- id: mgfmod-2025
+  title: Multi-view outlier detection based on multi-granularity fusion of fuzzy rough granules
+  acronym: MGFMOD
+  authors: [Siyi Qiu, Yuefei Wang, Zixu Wang, Jinyan Cao, Xi Yu]
+  year: 2025
+  online_year: null
+  venue: International Journal of Approximate Reasoning
+  venue_type: journal
+  venue_status: published
+  track: core_mvod
+  status: verified
+  featured: true
+  tasks: [multi_view_outlier_detection]
+  mechanisms: [local_structure, probabilistic_neighborhood, ensemble]
+  anomaly_types: [attribute, class]
+  evidence_levels: [local]
+  representation: {learned: false}
+  partial_view: false
+  datasets: []
+  summary: Fuses fuzzy-rough neighborhoods across granularities and compares mapped neighborhood consistency and distribution differences across views.
+  links: {paper: https://doi.org/10.1016/j.ijar.2025.109402, arxiv: null, code: https://github.com/YF-W/MGFMOD, project: null, dblp: https://dblp.org/rec/journals/ijar/QiuWWCY25}
+  code_status: official
+  link_status: verified
+  verified_from:
+    - {kind: publisher, url: https://doi.org/10.1016/j.ijar.2025.109402, facts: [title, authors, year, venue, method, code]}
+    - {kind: official_code, url: https://github.com/YF-W/MGFMOD, facts: [code]}
+  complexity: *complexity_unknown
+  reproducibility: {official_code: yes, official_config: partial, dataset_instructions: partial, pretrained_weights: no, environment: unknown, license: unknown}
+  notes: null
+
+- id: scone-2026
+  title: 'SCoNE: Spherical Consistent Neighborhoods Ensemble for Effective and Efficient Multi-View Anomaly Detection'
+  acronym: SCoNE
+  authors: [Yang Xu, Hang Zhang, Yixiao Ma, Ye Zhu, Kai Ming Ting]
+  year: 2026
+  online_year: 2025
+  venue: AAAI
+  venue_type: conference
+  venue_status: proceedings
+  track: core_mvod
+  status: verified
+  featured: true
+  tasks: [multi_view_anomaly_detection]
+  mechanisms: [local_structure, ensemble, probabilistic_neighborhood]
+  anomaly_types: [generic, class]
+  evidence_levels: [local]
+  representation: {learned: false}
+  partial_view: false
+  datasets: []
+  summary: Builds spherical neighborhood evidence and ensembles consistent neighborhoods across views to obtain effective, efficient anomaly scores.
+  links: {paper: https://doi.org/10.1609/AAAI.V40I19.38643, arxiv: https://arxiv.org/abs/2512.05540, code: null, project: null, dblp: null}
+  code_status: unknown
+  link_status: verified
+  verified_from:
+    - {kind: conference, url: https://doi.org/10.1609/AAAI.V40I19.38643, facts: [title, authors, year, venue, method]}
+    - {kind: arxiv, url: https://arxiv.org/abs/2512.05540, facts: [online_year]}
+  complexity: {reported: Described by the authors as effective and efficient., provenance: author_claim, notes: Exact complexity expression remains to be entered.}
+  reproducibility: *repro_unknown
+  notes: Proceedings status was verified from the AAAI 2026 article page.
+
+- id: mod-tdid-2026
+  title: Multi-view outlier detection via tensor decomposition and information decoupling
+  acronym: MOD-TDID
+  authors: [Yuefei Wang, Jiaying Mei, Zixu Wang, Jinyan Cao, Xinyuan Wang, Siyi Qiu, Binxiong Li, Xi Yu]
+  year: 2026
+  online_year: null
+  venue: Applied Intelligence
+  venue_type: journal
+  venue_status: published
+  track: core_mvod
+  status: verified
+  featured: true
+  tasks: [multi_view_outlier_detection]
+  mechanisms: [tensor, graph, shared_private, local_structure]
+  anomaly_types: [attribute, class, mixed]
+  evidence_levels: [local, global]
+  representation: {learned: true}
+  partial_view: false
+  datasets: []
+  summary: Decouples shared and view-specific graph information under tensor regularization and uses dual inconsistency scores for multiple anomaly types.
+  links: {paper: https://doi.org/10.1007/s10489-026-07375-y, arxiv: null, code: https://github.com/YF-W/MOD-TDID, project: null, dblp: https://dblp.org/rec/journals/apin/WangMWCWQLY26}
+  code_status: official
+  link_status: verified
+  verified_from:
+    - {kind: publisher, url: https://doi.org/10.1007/s10489-026-07375-y, facts: [title, year, venue]}
+    - {kind: dblp, url: https://dblp.org/rec/journals/apin/WangMWCWQLY26, facts: [authors, year, venue]}
+    - {kind: official_code, url: https://github.com/YF-W/MOD-TDID, facts: [code, method]}
+  complexity: *complexity_unknown
+  reproducibility: {official_code: yes, official_config: partial, dataset_instructions: yes, pretrained_weights: no, environment: unknown, license: unknown}
+  notes: null
+
+- id: granular-ball-2026
+  title: Granular-Ball Based Multi-View Outlier Detection
+  acronym: null
+  authors: [Ning Wang, Zhiguo Hu, Yan Chen, Xinye Wang, Cheng Wang, Liang Du]
+  year: 2026
+  online_year: null
+  venue: ICASSP
+  venue_type: conference
+  venue_status: proceedings
+  track: core_mvod
+  status: verified
+  featured: false
+  tasks: [multi_view_outlier_detection]
+  mechanisms: [clustering, local_structure, ensemble]
+  anomaly_types: [generic]
+  evidence_levels: [local, global]
+  representation: {learned: false}
+  partial_view: false
+  datasets: []
+  summary: Replaces point-wise relations with granular-ball structures and compares multi-view granules to detect instances inconsistent with collective structure.
+  links: {paper: https://doi.org/10.1109/ICASSP55912.2026.11462415, arxiv: null, code: null, project: null, dblp: null}
+  code_status: unknown
+  link_status: verified
+  verified_from:
+    - {kind: conference, url: 'https://www.cmsworkshops.com/ICASSP2026/view_paper.php?PaperNum=5709&bare=1', facts: [title, authors, year, venue]}
+    - {kind: publisher, url: https://doi.org/10.1109/ICASSP55912.2026.11462415, facts: [publication_record]}
+  complexity: *complexity_unknown
+  reproducibility: *repro_unknown
+  notes: Mechanism summary is abstract-level and should be deepened when a stable public manuscript is indexed.
+
+- id: immoe-2026
+  title: 'IMMoE: Incomplete Multi-View Anomaly Detection via Mixture of View Experts Fusion'
+  acronym: IMMoE
+  authors: [Lei Hu]
+  year: 2026
+  online_year: null
+  venue: ECCV
+  venue_type: conference
+  venue_status: accepted
+  track: related_natural_multimodal
+  status: verified
+  featured: false
+  tasks: [multi_view_visual_anomaly_detection]
+  mechanisms: [partial_view, ensemble, shared_latent]
+  anomaly_types: [natural]
+  evidence_levels: [instance, global]
+  representation: {learned: true}
+  partial_view: true
+  datasets: [Real-IAD]
+  summary: Masks unavailable views and fuses available view experts so anomaly evidence can be computed without treating missing inputs as observations.
+  links: {paper: https://arxiv.org/abs/2607.19032, arxiv: https://arxiv.org/abs/2607.19032, code: https://github.com/HULEI7/IMMoE, project: null, dblp: null}
+  code_status: official
+  link_status: verified
+  verified_from:
+    - {kind: arxiv, url: https://arxiv.org/abs/2607.19032, facts: [title, authors, year, accepted_venue, method]}
+    - {kind: official_code, url: https://github.com/HULEI7/IMMoE, facts: [code, datasets]}
+  complexity: *complexity_unknown
+  reproducibility: {official_code: yes, official_config: partial, dataset_instructions: partial, pretrained_weights: unknown, environment: partial, license: unknown}
+  notes: Accepted status is stated by the arXiv record; no proceedings DOI was available at audit time.
+
+- id: diffusion-mvad-2024
+  title: Learning Diffusion Models for Multi-view Anomaly Detection
+  acronym: null
+  authors: [Chieh Liu, Yu-Min Chu, Ting-I Hsieh, Hwann-Tzong Chen, Tyng-Luh Liu]
+  year: 2024
+  online_year: null
+  venue: ECCV
+  venue_type: conference
+  venue_status: proceedings
+  track: related_natural_multimodal
+  status: verified
+  featured: true
+  tasks: [multi_view_visual_anomaly_detection]
+  mechanisms: [diffusion, shared_latent, reconstruction]
+  anomaly_types: [natural]
+  evidence_levels: [instance, global]
+  representation: {learned: true}
+  partial_view: false
+  datasets: [MVTec 3D-AD]
+  summary: Trains a view-invariant diffusion/ControlNet representation and compares multi-lighting RGB and 3D-normal features for natural defect detection.
+  links: {paper: https://doi.org/10.1007/978-3-031-73414-4_19, arxiv: null, code: https://github.com/jayliu0313/Diffusion_Multi-View_AD, project: null, dblp: https://dblp.org/rec/conf/eccv/LiuCHCL24}
+  code_status: official
+  link_status: verified
+  verified_from:
+    - {kind: conference, url: https://www.ecva.net/papers/eccv_2024/papers_ECCV/papers/04907.pdf, facts: [title, authors, year, venue, method]}
+    - {kind: official_code, url: https://github.com/jayliu0313/Diffusion_Multi-View_AD, facts: [code, datasets]}
+  complexity: *complexity_unknown
+  reproducibility: {official_code: yes, official_config: partial, dataset_instructions: yes, pretrained_weights: no, environment: yes, license: unknown}
+  notes: Natural visual multi-view task; not comparable to classical feature-view synthetic outliers.
+
+- id: multi-flow-2025
+  title: 'Multi-Flow: Multi-View-Enriched Normalizing Flows for Industrial Anomaly Detection'
+  acronym: Multi-Flow
+  authors: []
+  year: 2025
+  online_year: null
+  venue: CVPR Workshops
+  venue_type: workshop
+  venue_status: proceedings
+  track: related_natural_multimodal
+  status: partially_verified
+  featured: false
+  tasks: [multi_view_visual_anomaly_detection]
+  mechanisms: [generative, shared_latent]
+  anomaly_types: [natural]
+  evidence_levels: [instance, global]
+  representation: {learned: true}
+  partial_view: false
+  datasets: []
+  summary: Enriches normalizing-flow density estimation with multiple visual views of an industrial object and uses low likelihood as anomaly evidence.
+  links: {paper: https://doi.org/10.1109/CVPRW67362.2025.00378, arxiv: null, code: null, project: null, dblp: null}
+  code_status: unknown
+  link_status: verified
+  verified_from:
+    - {kind: publisher, url: https://doi.org/10.1109/CVPRW67362.2025.00378, facts: [title, year, venue]}
+  complexity: *complexity_unknown
+  reproducibility: *repro_unknown
+  notes: Authors, datasets, and code require follow-up verification from the proceedings manuscript.
+
+- id: learning-mvad-2026
+  title: Learning Multi-View Anomaly Detection With Efficient Adaptive Selection
+  acronym: MVAS
+  authors: [Haoyang He, Jiangning Zhang, Guanzhong Tian, Chengjie Wang, Lei Xie]
+  year: 2026
+  online_year: 2024
+  venue: IEEE Transactions on Multimedia
+  venue_type: journal
+  venue_status: published
+  track: related_natural_multimodal
+  status: verified
+  featured: true
+  tasks: [multi_view_visual_anomaly_detection]
+  mechanisms: [local_structure, shared_latent]
+  anomaly_types: [natural]
+  evidence_levels: [local, global]
+  representation: {learned: true}
+  partial_view: false
+  datasets: [Real-IAD]
+  summary: Selects semantically correlated windows across camera views and fuses them to score and localize natural industrial defects.
+  links: {paper: https://doi.org/10.1109/TMM.2026.3660076, arxiv: https://arxiv.org/abs/2407.11935, code: null, project: null, dblp: https://dblp.org/rec/journals/corr/abs-2407-11935}
+  code_status: unknown
+  link_status: verified
+  verified_from:
+    - {kind: publisher, url: https://doi.org/10.1109/TMM.2026.3660076, facts: [title, year, venue]}
+    - {kind: arxiv, url: https://arxiv.org/abs/2407.11935, facts: [authors, online_year, method, datasets]}
+  complexity: {reported: The paper describes window selection designed for linear scaling in the number of windows under fixed top-k settings., provenance: author_claim, notes: Verify assumptions before comparing runtime.}
+  reproducibility: *repro_unknown
+  notes: The 2024 preprint title is shorter; the 2026 journal record is primary.
+
+- id: match-2026
+  title: 'MATCH: Flow Matching for Multi-View Anomaly Detection'
+  acronym: MATCH
+  authors: [Mathis Kruse, Melissa Schween, Bodo Rosenhahn]
+  year: 2026
+  online_year: null
+  venue: arXiv
+  venue_type: preprint
+  venue_status: preprint
+  track: related_natural_multimodal
+  status: verified
+  featured: false
+  tasks: [multi_view_visual_anomaly_detection]
+  mechanisms: [diffusion, generative]
+  anomaly_types: [natural]
+  evidence_levels: [instance, global]
+  representation: {learned: true}
+  partial_view: false
+  datasets: [Real-IAD]
+  summary: Fits flow-matching likelihood models to multi-view visual features and derives object-, image-, and pixel-level natural anomaly scores.
+  links: {paper: https://arxiv.org/abs/2606.24375, arxiv: https://arxiv.org/abs/2606.24375, code: null, project: null, dblp: null}
+  code_status: unknown
+  link_status: verified
+  verified_from:
+    - {kind: arxiv, url: https://arxiv.org/abs/2606.24375, facts: [title, authors, year, method, datasets]}
+  complexity: *complexity_unknown
+  reproducibility: *repro_unknown
+  notes: Preprint; no formal venue is claimed.
+
+- id: sganet-2026
+  title: 'SGANet: Semantic and Geometric Alignment for Multimodal Multi-view Anomaly Detection'
+  acronym: SGANet
+  authors: [Letian Bai, Chengyu Tao, Juan Du]
+  year: 2026
+  online_year: null
+  venue: arXiv
+  venue_type: preprint
+  venue_status: preprint
+  track: related_natural_multimodal
+  status: verified
+  featured: false
+  tasks: [multi_view_visual_anomaly_detection, multimodal_industrial_anomaly_detection]
+  mechanisms: [correspondence, local_structure, graph, shared_latent]
+  anomaly_types: [natural]
+  evidence_levels: [instance, local, global]
+  representation: {learned: true}
+  partial_view: false
+  datasets: []
+  summary: Aligns semantic, structural, and geometric patch correspondence across viewpoints and modalities before scoring natural anomalies.
+  links: {paper: https://arxiv.org/abs/2604.05632, arxiv: https://arxiv.org/abs/2604.05632, code: null, project: null, dblp: null}
+  code_status: unknown
+  link_status: verified
+  verified_from:
+    - {kind: arxiv, url: https://arxiv.org/abs/2604.05632, facts: [title, authors, year, method]}
+  complexity: *complexity_unknown
+  reproducibility: *repro_unknown
+  notes: Preprint and related natural multimodal track; formal venue is not claimed.
+
+- id: multiview-group-anomaly-2018
+  title: Multi-View Group Anomaly Detection
+  acronym: null
+  authors: []
+  year: 2018
+  online_year: null
+  venue: CIKM
+  venue_type: conference
+  venue_status: proceedings
+  track: uncertain
+  status: partially_verified
+  featured: false
+  tasks: [multi_view_group_anomaly_detection]
+  mechanisms: [generative, shared_latent]
+  anomaly_types: [group]
+  evidence_levels: [global]
+  representation: {learned: true}
+  partial_view: false
+  datasets: []
+  summary: Models groups through multiple views and identifies collections whose joint cross-view behavior is improbable rather than scoring only individual instances.
+  links: {paper: https://doi.org/10.1145/3269206.3271770, arxiv: null, code: null, project: null, dblp: null}
+  code_status: unknown
+  link_status: verified
+  verified_from:
+    - {kind: publisher, url: https://doi.org/10.1145/3269206.3271770, facts: [title, year, venue]}
+  complexity: *complexity_unknown
+  reproducibility: *repro_unknown
+  notes: Retained as uncertain because group-level detection differs from the core aligned-instance setting.
+
+- id: bilateral-graph-filter-2026
+  title: Bilateral Graph Filtering Framework with Alternating Optimization for Robust Multi-View Outlier Detection
+  acronym: null
+  authors: [Jinzhao Zhang, Yan Chen, Jiaxuan Xu]
+  year: 2026
+  online_year: null
+  venue: ICASSP
+  venue_type: conference
+  venue_status: proceedings
+  track: core_mvod
+  status: partially_verified
+  featured: false
+  tasks: [multi_view_outlier_detection]
+  mechanisms: [graph, local_structure]
+  anomaly_types: [generic]
+  evidence_levels: [local, global]
+  representation: {learned: true}
+  partial_view: false
+  datasets: []
+  summary: Alternates bilateral graph-filter updates and consensus optimization to suppress view-specific noise while retaining relational outlier evidence.
+  links: {paper: https://doi.org/10.1109/ICASSP55912.2026.11460482, arxiv: null, code: null, project: null, dblp: null}
+  code_status: unknown
+  link_status: verified
+  verified_from:
+    - {kind: publisher, url: https://doi.org/10.1109/ICASSP55912.2026.11460482, facts: [title, year, venue]}
+  complexity: *complexity_unknown
+  reproducibility: *repro_unknown
+  notes: Author list and mechanism summary are only partially verified from public indexing; recheck before promotion to fully verified.
