@@ -1,5 +1,9 @@
 # Protocol Comparability
 
+v0.3 compares experiment records from `data/protocols.yaml` and resolves their dataset identities through `data/dataset_variants.yaml`. The CLI reports matched, mismatched, unknown, and blocking fields plus warnings and a recommendation; the final status remains one of the four conservative v0.2 statuses.
+
+Scientific relevance and experimental comparability are separate axes. RCPMOD can be a highly relevant representation-learning comparator while remaining `NOT_DIRECTLY_COMPARABLE` to a complete-view CORE setting.
+
 Two papers using the same dataset name are **not automatically comparable**. In particular, “BBCSport” may refer to different feature partitions, preprocessing, anomaly construction, contamination ratios, repetitions, or sample selections.
 
 The machine-readable rules are in [`data/comparability.yaml`](../data/comparability.yaml), and each paper's known protocol evidence is stored under `protocol` in [`data/papers.yaml`](../data/papers.yaml).

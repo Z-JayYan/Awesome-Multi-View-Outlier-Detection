@@ -101,7 +101,8 @@ def dataset_table(datasets: list[dict]) -> str:
     return "\n".join(lines)
 
 
-def baseline_cards(papers: list[dict]) -> str:
+def baseline_cards(papers: list[dict], protocols: list[dict] | None = None) -> str:
+    protocol_by_paper = {item["paper_id"]: item for item in (protocols or [])}
     tracks = [
         ("CORE / complete-view baselines", "core_mvod"),
         ("Partial / incomplete methodological baselines", "partial_mvod"),
@@ -118,6 +119,9 @@ def baseline_cards(papers: list[dict]) -> str:
         sections.extend([f"## {heading}", ""])
         for paper in sorted(selected, key=lambda item: (-item["year"], item["title"].casefold())):
             card = paper["baseline"]
+            experiment = protocol_by_paper.get(paper["id"])
+            reconstructed_datasets = experiment["dataset_variants"] if experiment else card["main_datasets"]
+            reconstructed_metrics = experiment["evaluation"]["metrics"] if experiment else card["metrics"]
             code = f"[official code]({paper['links']['code']})" if paper["links"].get("code") else f"{paper['code_status']}"
             sources = ", ".join(f"[source {i + 1}]({url})" for i, url in enumerate(card["sources"]))
             sections.extend([
@@ -127,7 +131,8 @@ def baseline_cards(papers: list[dict]) -> str:
                 f"- **Track / view setting:** `{paper['track']}` / `{paper['view_setting']}`",
                 f"- **Core mechanism:** {card['core_mechanism']}",
                 f"- **Artifact status:** {code}; registry status `{paper['status']}`",
-                f"- **Main datasets / metrics:** {', '.join(card['main_datasets'])} / {', '.join(card['metrics'])}",
+                f"- **Main dataset variants / metrics:** {', '.join(reconstructed_datasets)} / {', '.join(reconstructed_metrics)}",
+                f"- **Protocol reconstruction:** {experiment['id'] if experiment else 'not in v0.3 priority set'}",
                 f"- **Baseline roles:** {', '.join(role.replace('_', ' ') for role in card['roles'])}",
                 f"- **Closest counterfactual:** {card['closest_counterfactual']}",
                 f"- **Why compare:** {card['why_compare']}",
@@ -145,6 +150,78 @@ def contains_unknown(value) -> bool:
     if isinstance(value, list):
         return any(contains_unknown(item) for item in value)
     return value in {None, "unknown"}
+
+
+COMPLETENESS_SECTIONS = ("dataset_variants", "preprocessing", "anomaly_generation", "ratios", "training", "evaluation", "code_evidence")
+
+
+def completeness(protocol: dict) -> tuple[int, dict[str, int]]:
+    def leaves(value):
+        if isinstance(value, dict):
+            return [item for child in value.values() for item in leaves(child)]
+        if isinstance(value, list):
+            return [item for child in value for item in leaves(child)] or ["unknown"]
+        return [value]
+    scores = {}
+    for name in COMPLETENESS_SECTIONS:
+        values = leaves(protocol[name])
+        scores[name] = round(100 * sum(not contains_unknown(value) for value in values) / len(values))
+    return round(sum(scores.values()) / len(scores)), scores
+
+
+def write_protocol_docs(protocols: list[dict], papers: list[dict]) -> None:
+    by_id = {paper["id"]: paper for paper in papers}
+    lines = ["# Experiment-Level Protocol Reconstructions", "",
+             "Generated from `data/protocols.yaml`. Completeness is a maintenance signal, not a paper-quality score. Unknown primary-source facts remain unknown.", ""]
+    for protocol in protocols:
+        paper = by_id[protocol["paper_id"]]
+        score, sections = completeness(protocol)
+        lines.extend([f"## {paper.get('acronym') or paper['title']} — {paper['title']}", "",
+                      f"- **Record / track:** `{protocol['id']}` / `{protocol['track']}`",
+                      f"- **Dataset variants:** {', '.join(f'`{item}`' for item in protocol['dataset_variants'])}",
+                      f"- **View / training:** `{protocol['view_setting']}` / `{protocol['training']['paradigm']}`",
+                      f"- **Anomaly operators:** attribute — {protocol['anomaly_generation']['attribute']['operator']}; class — {protocol['anomaly_generation']['class']['operator']}; mixed — {protocol['anomaly_generation']['mixed']['operator']}",
+                      f"- **Ratios:** {protocol['ratios']['settings']} ({protocol['ratios']['denominator']})",
+                      f"- **Evaluation:** {', '.join(protocol['evaluation']['metrics'])}; {protocol['evaluation']['repetitions']} repetitions; {protocol['evaluation']['reporting']}",
+                      f"- **Code match:** `{protocol['code_evidence']['protocol_matches_paper']}` — {protocol['code_evidence']['discrepancy']}",
+                      f"- **Completeness:** **{score}%** (dataset {sections['dataset_variants']}%, preprocessing {sections['preprocessing']}%, anomaly {sections['anomaly_generation']}%, evaluation {sections['evaluation']}%, code {sections['code_evidence']}%)",
+                      f"- **Remaining blockers:** {', '.join(protocol['unresolved']) or 'none'}", ""])
+    (ROOT / "docs" / "PROTOCOLS.md").write_text("\n".join(lines).rstrip() + "\n", encoding="utf-8")
+
+
+def write_variant_doc(variants: list[dict]) -> None:
+    grouped = defaultdict(list)
+    for variant in variants:
+        grouped[variant["canonical_dataset"]].append(variant)
+    lines = ["# Dataset Variant Registry", "",
+             "Generated from `data/dataset_variants.yaml`. A common dataset label is not evidence of a common N × V × feature × preprocessing protocol.", ""]
+    for canonical in sorted(grouped, key=str.casefold):
+        lines.extend([f"## {canonical}", ""])
+        for item in grouped[canonical]:
+            lines.extend([f"### `{item['id']}`", "",
+                          f"- **Used by:** {', '.join(f'`{paper}`' for paper in item['papers']) or 'none (audit-only record)'}",
+                          f"- **N / views / dimensions:** {item['samples']} / {item['views']} / {item['view_dimensions']}",
+                          f"- **Features:** {item['feature_source']}",
+                          f"- **Preprocessing:** {item['preprocessing']}",
+                          f"- **Resolution:** `{item['resolution']}`", ""])
+    (ROOT / "docs" / "DATASET_VARIANTS.md").write_text("\n".join(lines).rstrip() + "\n", encoding="utf-8")
+
+
+def write_uncertainty_queue(protocols: list[dict], papers: list[dict]) -> None:
+    by_id = {paper["id"]: paper for paper in papers}
+    lines = ["# Remaining Uncertainty", "",
+             "Generated evidence queue. P0 gaps block baseline comparison; P1 gaps materially affect reproduction; P2 gaps refine metadata. Unknown is preferred to unsupported inference.", ""]
+    for protocol in protocols:
+        if not protocol["unresolved"]:
+            continue
+        paper = by_id[protocol["paper_id"]]
+        priority = "P0" if contains_unknown(protocol["dataset_variants"]) or contains_unknown(protocol["ratios"]) else "P1"
+        checked = sorted({item["source_type"] for item in protocol["provenance"]})
+        lines.extend([f"## {priority} — {paper.get('acronym') or paper['title']} / `{protocol['id']}`", "",
+                      "**Unknown / unresolved:**", ""] + [f"- {item}" for item in protocol["unresolved"]] +
+                     ["", f"**Evidence checked:** {', '.join(checked)}", "",
+                      "**Next source:** author supplement, versioned official code/config, or dataset-generation artifact.", ""])
+    (ROOT / "docs" / "REMAINING_UNCERTAINTY.md").write_text("\n".join(lines).rstrip() + "\n", encoding="utf-8")
 
 
 def uncertainty_report(papers: list[dict]) -> str:
@@ -206,17 +283,21 @@ The same base dataset is often converted into different multi-view feature sets 
 def main() -> None:
     papers = load_yaml("papers.yaml")
     datasets = load_yaml("datasets.yaml")
+    protocols = load_yaml("protocols.yaml")
+    variants = load_yaml("dataset_variants.yaml")
     write_papers_doc(papers)
     write_dataset_doc(datasets, papers)
-    (ROOT / "docs" / "BASELINE_MAP.md").write_text(baseline_cards(papers), encoding="utf-8")
-    (ROOT / "docs" / "REMAINING_UNCERTAINTY.md").write_text(uncertainty_report(papers), encoding="utf-8")
+    (ROOT / "docs" / "BASELINE_MAP.md").write_text(baseline_cards(papers, protocols), encoding="utf-8")
+    write_protocol_docs(protocols, papers)
+    write_variant_doc(variants)
+    write_uncertainty_queue(protocols, papers)
     readme = ROOT / "README.md"
     replace_region(readme, "RECENT", recent_research(papers))
     representative = [paper for paper in papers if paper.get("featured")]
     replace_region(readme, "PAPERS", compact_papers(representative))
     replace_region(readme, "DATASETS", dataset_table(datasets))
     counts = Counter(paper["track"] for paper in papers)
-    print(f"Generated tables for {len(papers)} papers and {len(datasets)} datasets: {dict(counts)}")
+    print(f"Generated tables for {len(papers)} papers, {len(datasets)} datasets, {len(variants)} variants, and {len(protocols)} protocols: {dict(counts)}")
 
 
 if __name__ == "__main__":

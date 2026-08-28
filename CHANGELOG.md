@@ -1,5 +1,14 @@
 # Changelog
 
+## v0.3.0 — Protocol Reconstruction
+
+- Moved the repository from paper-level comparability metadata toward experiment-level protocol reconstruction and dataset-variant-aware comparison.
+- Added 11 evidence-provenanced priority protocol records and 18 dataset-variant/audit records without increasing the paper count.
+- Added explicit anomaly operators, ratio semantics, transductive/training contamination fields, evaluation aggregation, and official-code commit evidence.
+- Upgraded the comparator to report matched, mismatched, unknown, blocking, warning, and recommendation sections while preserving the four conservative statuses.
+- Added generated protocol cards, a dataset-variant registry, a prioritized unresolved-evidence queue, and maintenance-only completeness scores.
+- Added schema, reference, ratio, semantic consistency, and richer comparability tests.
+
 ## v0.2.1 — Public Release Cleanup
 
 - Renamed the synthetic-protocol guide so local D1–D6 configuration labels are not presented as a field-wide naming system.

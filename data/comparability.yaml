@@ -1,4 +1,4 @@
-version: 0.2.1
+version: 0.3.0
 statuses:
   - DIRECTLY_COMPARABLE
   - CONDITIONALLY_COMPARABLE
@@ -15,6 +15,9 @@ required_factors:
   - evaluation_endpoint
   - feature_or_backbone
   - train_test_setting
+  - anomaly_operator
+  - affected_views
+  - random_repetition_protocol
 
 rules:
   - id: cross-track-boundary

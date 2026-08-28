@@ -6,7 +6,7 @@ additionalProperties: false
 properties:
   version:
     type: string
-    pattern: '^0\.2\.1$'
+    pattern: '^0\.3\.0$'
   statuses:
     type: array
     uniqueItems: true

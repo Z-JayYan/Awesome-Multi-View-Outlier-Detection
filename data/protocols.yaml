@@ -1,0 +1,201 @@
+- id: dmod-main-uci
+  paper_id: dmod-2015
+  priority: P0
+  track: core_mvod
+  dataset_variants: [uci-feature-split-dmod]
+  view_setting: complete
+  preprocessing: {normalization: per-sample L2 normalization in each view, dimensionality_reduction: false, feature_construction: original feature vector split into two views, order: split and corrupt before model-side normalization; exact corruption/normalization order is not explicit}
+  anomaly_generation:
+    attribute: {enabled: true, operator: replace selected sample features in every view with random values, affected_views: all, ratio: [0.08, 0.05, 0.02], implementation_notes: random-value distribution and overlap policy are not reported}
+    class: {enabled: true, operator: select objects from different classes and swap one view while leaving the other unchanged, affected_views: 1, ratio: [0.02, 0.05, 0.08], implementation_notes: pairing is cross-class}
+    mixed: {enabled: false, operator: none in the reported main protocol, affected_views: none, ratio: 0, implementation_notes: not evaluated as a separate type}
+  ratios: {settings: [[0.08, 0.02, 0], [0.05, 0.05, 0], [0.02, 0.08, 0]], denominator: total samples; tuple order is attribute/class/mixed, overlap_allowed: unknown, total_contamination: 0.10}
+  training: {paradigm: unsupervised, transductive: true, train_test_split: no split reported; detector fits and scores the corrupted set, training_contamination: 0.10, uses_test_instances: true, hyperparameter_selection: several baselines are fine-tuned and best results reported; DMOD selection endpoint is not fully specified}
+  evaluation: {metrics: [AUROC], aggregation: per-injection AUROC averaged over regenerated corruptions, repetitions: 50, seeds: unknown, reporting: mean and standard deviation, endpoint: sample}
+  code_evidence: {official_repository: null, commit_or_release: unknown, dataset_loader: unknown, anomaly_generator: unknown, preprocessing_script: unknown, evaluation_script: unknown, protocol_matches_paper: unknown, discrepancy: no official code verified}
+  provenance:
+    - {fields: [dataset_variants, preprocessing, anomaly_generation, ratios, training, evaluation], source_type: paper, source: 'https://www.ijcai.org/Proceedings/15/Papers/572.pdf', locator: 'Section 5, pp. 4079-4080', note: 'Experiment prose, Algorithm 2 and Table 2.', confidence: high}
+  unresolved: [random-value distribution, view split boundary, overlap policy, random seeds]
+- id: ldsr-main
+  paper_id: ldsr-2018
+  priority: P0
+  track: core_mvod
+  dataset_variants: [uci-feature-split-ldsr]
+  view_setting: complete
+  preprocessing: {normalization: unknown, dimensionality_reduction: PCA to 100 dimensions for BUAA VisNir only, feature_construction: UCI feature vectors split into V subsets; BUAA naturally has two sources, order: split then anomaly injection; exact normalization unknown}
+  anomaly_generation:
+    attribute: {enabled: true, operator: replace a selected sample's features in every view with random values, affected_views: all, ratio: [0.05, 0.10], implementation_notes: paper and official generator agree on total-sample count semantics}
+    class: {enabled: true, operator: cross-class pair swap in ceil(V/2) views, affected_views: ceil(V/2), ratio: [0.05, 0.10], implementation_notes: remaining views unchanged}
+    mixed: {enabled: true, operator: cross-class pair swap in ceil(V/2) views and random replacement in remaining views, affected_views: all, ratio: [0.05], implementation_notes: mixed type is separately sampled in official generator}
+  ratios: {settings: [[0.05, 0.05, 0.05], [0.10, 0.10, 0]], denominator: total samples; tuple order is attribute/class/mixed, overlap_allowed: false, total_contamination: [0.15, 0.20]}
+  training: {paradigm: unsupervised, transductive: true, train_test_split: no split; fit and score same corrupted set, training_contamination: [0.15, 0.20], uses_test_instances: true, hyperparameter_selection: grid search and best mean AUC in official demo; paper says parameters are tuned}
+  evaluation: {metrics: [AUROC], aggregation: AUROC per regenerated corruption then average, repetitions: 50, seeds: unknown, reporting: mean and standard deviation, endpoint: sample}
+  code_evidence: {official_repository: 'https://github.com/kailigo/mvod', commit_or_release: 833544be1688c56bb9f20176f0688680317aa0b2, dataset_loader: data/gen_outliers_zoo.m, anomaly_generator: data/gen_outliers_multiview.m, preprocessing_script: data/gen_outliers_multiview.m, evaluation_script: LDSR.m and demo_zoo.m, protocol_matches_paper: partial, discrepancy: 'official demo selects the best mean AUC across parameter combinations; paper only states tuning and best results, and random seeds are unset'}
+  provenance:
+    - {fields: [dataset_variants, preprocessing, anomaly_generation, ratios, training, evaluation], source_type: paper, source: 'https://ojs.aaai.org/index.php/AAAI/article/download/11826/11685', locator: 'Experimental Results, pp. 3525-3528', note: 'Primary experiment description and tables.', confidence: high}
+    - {fields: [anomaly_generation, ratios, code_evidence], source_type: official_code, source: 'https://github.com/kailigo/mvod', locator: 'audited commit; demo_zoo.m and data/gen_outliers_multiview.m', note: 'Confirms disjoint label construction and count rounding.', confidence: high}
+  unresolved: [random-value distribution, exact feature split boundaries, seeds, normalization]
+- id: moddis-official-code
+  paper_id: moddis-2019
+  priority: P0
+  track: core_mvod
+  dataset_variants: [unresolved-moddis]
+  view_setting: complete
+  preprocessing: {normalization: per-feature min-max scaling in each view, dimensionality_reduction: PCA imported but its experiment use is unclear, feature_construction: unknown because repository data are absent, order: load generated data then normalize before training}
+  anomaly_generation:
+    attribute: {enabled: true, operator: 'generate random Uniform(0,1) feature vectors', affected_views: all, ratio: 0.05, implementation_notes: generator appends synthetic points rather than replacing selected originals}
+    class: {enabled: true, operator: swap feature blocks between randomly selected pairs, affected_views: unknown, ratio: 0.05, implementation_notes: exact pair/view semantics require paper or generator-level line audit}
+    mixed: {enabled: true, operator: combines swap and random-value blocks, affected_views: unknown, ratio: 0.05, implementation_notes: official repository states three outlier types}
+  ratios: {settings: [[0.05, 0.05, 0.05]], denominator: base data_num in official code, overlap_allowed: false, total_contamination: 0.15}
+  training: {paradigm: unsupervised, transductive: true, train_test_split: no held-out split in runner, training_contamination: 0.15, uses_test_instances: true, hyperparameter_selection: fixed globals in GlobalVariable.py; paper-level selection unresolved}
+  evaluation: {metrics: [AUROC], aggregation: mean of runner loop, repetitions: 10, seeds: unknown, reporting: mean and standard deviation printed by code, endpoint: sample}
+  code_evidence: {official_repository: 'https://github.com/sigerma/ICDM-2019-MODDIS', commit_or_release: 1d7335a10c212c610e962aec4b9bd503f38567fe, dataset_loader: MODDIS.py, anomaly_generator: Methods.py, preprocessing_script: Methods.data_normalization, evaluation_script: Methods.evaluate_auc and MODDIS.py, protocol_matches_paper: unknown, discrepancy: 'public data directory is empty, preventing dataset and paper/code result reproduction'}
+  provenance:
+    - {fields: [preprocessing, anomaly_generation, ratios, training, evaluation, code_evidence], source_type: official_code, source: 'https://github.com/sigerma/ICDM-2019-MODDIS', locator: 'audited commit; GlobalVariable.py, Methods.py, MODDIS.py', note: 'Executable protocol facts; paper PDF was not publicly recoverable in this audit.', confidence: high}
+  unresolved: [dataset identities and variants, paper/code match, exact class and mixed affected-view rule, seeds]
+- id: ncmod-main
+  paper_id: ncmod-2021
+  priority: P0
+  track: core_mvod
+  dataset_variants: [ncmod-mnist-1000, ncmod-reuters-1000, ncmod-ttc-1000]
+  view_setting: complete
+  preprocessing: {normalization: unknown, dimensionality_reduction: false, feature_construction: choose N samples from 2/3 inlier classes then contiguous feature splits into 2/3 views, order: class selection then view split and anomaly generation}
+  anomaly_generation:
+    attribute: {enabled: true, operator: replace all-view features with an object sampled from outlier classes, affected_views: all, ratio: [0.02, 0.05, 0.08], implementation_notes: deliberate change from random-value replacement}
+    class: {enabled: true, operator: randomly pair samples and swap feature vectors in floor(V/2) views, affected_views: floor(V/2), ratio: [0.02, 0.05, 0.08], implementation_notes: remaining views unchanged}
+    mixed: {enabled: true, operator: swap in floor(V/2) views and use outlier-class object features in remaining views, affected_views: all, ratio: [0.02, 0.05, 0.08], implementation_notes: separately generated type}
+  ratios: {settings: [[0.02, 0.05, 0.08], [0.02, 0.08, 0.05], [0.05, 0.02, 0.08], [0.05, 0.08, 0.02], [0.08, 0.02, 0.05], [0.08, 0.05, 0.02]], denominator: total N=1000; tuple order attribute/class/mixed, overlap_allowed: false, total_contamination: 0.15}
+  training: {paradigm: unsupervised, transductive: true, train_test_split: no split; full corrupted set is trained and scored, training_contamination: 0.15, uses_test_instances: true, hyperparameter_selection: fixed runner arguments; full paper selection policy unknown}
+  evaluation: {metrics: [AUROC, F1], aggregation: one generated dataset per named setting in official runner, repetitions: unknown, seeds: unknown, reporting: scalar AUC/F1; paper tables do not report deviation, endpoint: sample}
+  code_evidence: {official_repository: 'https://github.com/auguscl/NCMOD', commit_or_release: 0acbe6011a8fd9fbe0b8def7d41467b98fa83398, dataset_loader: my_dataset.py, anomaly_generator: generated CSV files expected but generation script not present, preprocessing_script: unknown, evaluation_script: utils.py and total_run.py, protocol_matches_paper: partial, discrepancy: 'paper says source including dataset generation is supplied, but audited repository expects pre-generated CSVs and contains no generator'}
+  provenance:
+    - {fields: [dataset_variants, preprocessing, anomaly_generation, ratios, training, evaluation], source_type: paper, source: 'https://doi.org/10.1609/AAAI.V35I8.16873', locator: 'Experiments / Setup', note: 'Primary experiment protocol.', confidence: high}
+    - {fields: [code_evidence, ratios, training], source_type: official_code, source: 'https://github.com/auguscl/NCMOD', locator: 'audited commit; total_run.py, utils.py, my_dataset.py', note: 'Runner and evaluation behavior.', confidence: high}
+  unresolved: [repetitions and seeds, normalization, inlier class choices, missing official generation script]
+- id: srlsp-public-artifact
+  paper_id: srlsp-2023
+  priority: P0
+  track: core_mvod
+  dataset_variants: [unresolved-srlsp]
+  view_setting: complete
+  preprocessing: {normalization: unknown, dimensionality_reduction: unknown, feature_construction: unknown, order: unknown}
+  anomaly_generation:
+    attribute: {enabled: unknown, operator: unknown, affected_views: unknown, ratio: unknown, implementation_notes: public algorithm takes already prepared X and labels}
+    class: {enabled: unknown, operator: unknown, affected_views: unknown, ratio: unknown, implementation_notes: public algorithm takes already prepared X and labels}
+    mixed: {enabled: unknown, operator: unknown, affected_views: unknown, ratio: unknown, implementation_notes: public algorithm takes already prepared X and labels}
+  ratios: {settings: unknown, denominator: unknown, overlap_allowed: unknown, total_contamination: unknown}
+  training: {paradigm: unsupervised, transductive: true, train_test_split: no split inside published MATLAB function, training_contamination: unknown, uses_test_instances: true, hyperparameter_selection: parameters are caller supplied; selection protocol absent}
+  evaluation: {metrics: [AUROC], aggregation: single call, repetitions: unknown, seeds: unknown, reporting: AUROC returned by perfcurve, endpoint: sample}
+  code_evidence: {official_repository: 'https://github.com/wy54224/SRLSP', commit_or_release: 7322485aa2538970f49be83934861b8861279c65, dataset_loader: absent, anomaly_generator: absent, preprocessing_script: absent, evaluation_script: SRLSP.m, protocol_matches_paper: unknown, discrepancy: official repository exposes only the core algorithm and cannot reconstruct paper experiments}
+  provenance:
+    - {fields: [training, evaluation, code_evidence], source_type: official_code, source: 'https://github.com/wy54224/SRLSP', locator: 'audited commit; SRLSP.m', note: 'Only code-verifiable fields are asserted.', confidence: high}
+  unresolved: [paper datasets, feature variants, all anomaly operators and ratios, preprocessing, repetitions and seeds]
+- id: iamod-public-artifact
+  paper_id: iamod-2024
+  priority: P0
+  track: core_mvod
+  dataset_variants: [iamod-caltech7-code]
+  view_setting: complete
+  preprocessing: {normalization: row normalization of every view in loader, dimensionality_reduction: unknown, feature_construction: caltech7.mat not distributed, order: normalize after loading}
+  anomaly_generation:
+    attribute: {enabled: unknown, operator: pre-generated files referenced, affected_views: unknown, ratio: unknown, implementation_notes: repository paths mention separate anomaly-type files but data are absent}
+    class: {enabled: unknown, operator: pre-generated files referenced, affected_views: unknown, ratio: unknown, implementation_notes: repository paths mention separate anomaly-type files but data are absent}
+    mixed: {enabled: unknown, operator: pre-generated files referenced, affected_views: unknown, ratio: unknown, implementation_notes: repository paths mention separate anomaly-type files but data are absent}
+  ratios: {settings: unknown, denominator: unknown, overlap_allowed: unknown, total_contamination: unknown}
+  training: {paradigm: unsupervised, transductive: true, train_test_split: no held-out split in run.py, training_contamination: unknown, uses_test_instances: true, hyperparameter_selection: code evaluates every epoch and returns maximum AUROC}
+  evaluation: {metrics: [AUROC], aggregation: maximum AUROC over training epochs then mean/std across outer runs, repetitions: 10, seeds: unknown, reporting: mean and standard deviation, endpoint: sample}
+  code_evidence: {official_repository: 'https://github.com/GTML-LAB/IAMOD', commit_or_release: 442643ec4a6f977bc10141ff3715be2e9b54eedc, dataset_loader: datasets.py, anomaly_generator: absent; expects prepared files, preprocessing_script: datasets.py and util.normalize, evaluation_script: model.py and util.py, protocol_matches_paper: unknown, discrepancy: public runner selects the best test AUROC across epochs and uses absolute author-local data paths; dataset files are not distributed}
+  provenance:
+    - {fields: [dataset_variants, preprocessing, training, evaluation, code_evidence], source_type: official_code, source: 'https://github.com/GTML-LAB/IAMOD', locator: 'audited commit; run.py, datasets.py, model.py, util.py', note: 'Code-level facts and reproducibility discrepancies.', confidence: high}
+  unresolved: [paper experiment tables, dataset dimensions, anomaly operators and ratios, epoch selection correspondence to paper, seeds]
+- id: modgd-main
+  paper_id: modgd-2024
+  priority: P0
+  track: core_mvod
+  dataset_variants: [modgd-caltech101-six-view]
+  view_setting: complete
+  preprocessing: {normalization: KNN adjacency matrices are normalized before consensus learning, dimensionality_reduction: unknown, feature_construction: six published multi-view benchmark matrices, order: construct KNN graphs then graph normalization}
+  anomaly_generation:
+    attribute: {enabled: true, operator: random feature alteration, affected_views: all, ratio: [0.02, 0.05, 0.08], implementation_notes: exact distribution is not explicit in accessible experiment text}
+    class: {enabled: true, operator: swap paired sample features in a partial set of views, affected_views: partial, ratio: [0.02, 0.05, 0.08], implementation_notes: exact number of views is not explicit in accessible experiment text}
+    mixed: {enabled: true, operator: combine partial-view swapping with random replacement in remaining views, affected_views: all, ratio: [0.02, 0.05, 0.08], implementation_notes: six settings D1-D6}
+  ratios: {settings: [[0.02, 0.05, 0.08], [0.02, 0.08, 0.05], [0.05, 0.02, 0.08], [0.05, 0.08, 0.02], [0.08, 0.02, 0.05], [0.08, 0.05, 0.02]], denominator: total instances; tuple order attribute/class/mixed, overlap_allowed: false, total_contamination: 0.15}
+  training: {paradigm: unsupervised, transductive: true, train_test_split: no held-out split reported, training_contamination: 0.15, uses_test_instances: true, hyperparameter_selection: beta and lambda sensitivity reported; selection for main tables not fully explicit}
+  evaluation: {metrics: [AUROC], aggregation: per-run AUROC, repetitions: 5, seeds: unknown, reporting: mean and standard deviation, endpoint: sample}
+  code_evidence: {official_repository: 'http://Doctor-Nobody.github.io/codes/MODGD.zip', commit_or_release: unversioned author ZIP, dataset_loader: unknown, anomaly_generator: unknown, preprocessing_script: unknown, evaluation_script: unknown, protocol_matches_paper: unknown, discrepancy: unversioned ZIP prevents commit-level provenance; paper Table 2 labels six views but prints seven Caltech dimension values}
+  provenance:
+    - {fields: [dataset_variants, preprocessing, anomaly_generation, ratios, training, evaluation, code_evidence], source_type: paper, source: 'https://doctor-nobody.github.io/papers/if2024.pdf', locator: 'Sections 3 and 4.2-4.4, Tables 2-3', note: 'Author-hosted accepted paper.', confidence: high}
+  unresolved: [Caltech dimension inconsistency, exact random replacement distribution, exact swapped-view count, seeds, ZIP commit identity]
+- id: rcpmod-main
+  paper_id: rcpmod-2024
+  priority: P1
+  track: partial_mvod
+  dataset_variants: [rcpmod-four-benchmarks]
+  view_setting: partial
+  preprocessing: {normalization: unknown, dimensionality_reduction: learned autoencoders, feature_construction: complete benchmark followed by random removal of one view, order: inject outliers and independently construct partial-view condition; exact order unknown}
+  anomaly_generation:
+    attribute: {enabled: true, operator: replace selected instance features in all views with random values, affected_views: all, ratio: [0.02, 0.05, 0.08], implementation_notes: source distribution unknown}
+    class: {enabled: true, operator: swap paired samples in floor(V/2) views, affected_views: floor(V/2), ratio: [0.02, 0.05, 0.08], implementation_notes: remaining views unchanged}
+    mixed: {enabled: true, operator: swap in floor(V/2) views and replace remaining views with random values, affected_views: all, ratio: [0.02, 0.05, 0.08], implementation_notes: separately generated type}
+  ratios: {settings: [[0.02, 0.05, 0.08], [0.02, 0.08, 0.05], [0.05, 0.02, 0.08], [0.05, 0.08, 0.02], [0.08, 0.02, 0.05], [0.08, 0.05, 0.02]], denominator: total samples; tuple order attribute/class/mixed, overlap_allowed: unknown, total_contamination: 0.15}
+  training: {paradigm: unsupervised, transductive: true, train_test_split: full partial/corrupted set used for representation learning and scoring, training_contamination: 0.15, uses_test_instances: true, hyperparameter_selection: dataset-specific architecture and scheduler; sensitivity analysis reported}
+  evaluation: {metrics: [AUROC], aggregation: per generated condition, repetitions: unknown, seeds: unknown, reporting: mean and standard deviation in tables, endpoint: sample}
+  code_evidence: {official_repository: null, commit_or_release: unknown, dataset_loader: unknown, anomaly_generator: unknown, preprocessing_script: unknown, evaluation_script: unknown, protocol_matches_paper: unknown, discrepancy: no author-verified official repository established}
+  provenance:
+    - {fields: [dataset_variants, preprocessing, anomaly_generation, ratios, training, evaluation], source_type: paper, source: 'https://arxiv.org/pdf/2408.07819', locator: 'Section 4.1, Tables 1-2', note: 'Primary protocol and missing-view rates.', confidence: high}
+  unresolved: [random-value distribution, anomaly/view-removal ordering, repetitions, seeds, official code]
+- id: lrtdm-accessible-evidence
+  paper_id: lrtdm-2025
+  priority: P0
+  track: core_mvod
+  dataset_variants: [unresolved-lrtdm]
+  view_setting: complete
+  preprocessing: {normalization: unknown, dimensionality_reduction: unknown, feature_construction: unknown, order: unknown}
+  anomaly_generation:
+    attribute: {enabled: unknown, operator: unknown, affected_views: unknown, ratio: unknown, implementation_notes: inaccessible at dataset-setting resolution}
+    class: {enabled: unknown, operator: unknown, affected_views: unknown, ratio: unknown, implementation_notes: inaccessible at dataset-setting resolution}
+    mixed: {enabled: unknown, operator: unknown, affected_views: unknown, ratio: unknown, implementation_notes: inaccessible at dataset-setting resolution}
+  ratios: {settings: unknown, denominator: unknown, overlap_allowed: unknown, total_contamination: unknown}
+  training: {paradigm: unsupervised, transductive: unknown, train_test_split: unknown, training_contamination: unknown, uses_test_instances: unknown, hyperparameter_selection: unknown}
+  evaluation: {metrics: [unknown], aggregation: unknown, repetitions: unknown, seeds: unknown, reporting: unknown, endpoint: unknown}
+  code_evidence: {official_repository: null, commit_or_release: unknown, dataset_loader: unknown, anomaly_generator: unknown, preprocessing_script: unknown, evaluation_script: unknown, protocol_matches_paper: unknown, discrepancy: no official code verified}
+  provenance:
+    - {fields: [view_setting], source_type: paper, source: 'https://doi.org/10.1016/j.inffus.2025.103313', locator: 'publisher abstract and metadata', note: 'Only method-level facts are asserted; protocol details remain queued.', confidence: medium}
+  unresolved: [all dataset variants, anomaly generation and ratios, preprocessing, training endpoint, evaluation, code]
+- id: scone-main
+  paper_id: scone-2026
+  priority: P0
+  track: core_mvod
+  dataset_variants: [scone-uci-three-view, scone-caltech-six-view]
+  view_setting: complete
+  preprocessing: {normalization: unknown, dimensionality_reduction: false, feature_construction: UCI features split into three views; AWA/Caltech retain original six views, order: view construction then anomaly injection}
+  anomaly_generation:
+    attribute: {enabled: true, operator: randomly alter features of selected samples, affected_views: all, ratio: [0.02, 0.05, 0.08], implementation_notes: exact random distribution not reported}
+    class: {enabled: true, operator: exchange features between selected sample pairs in a partial set of views, affected_views: partial, ratio: [0.02, 0.05, 0.08], implementation_notes: exact pair constraints and view count not reported}
+    mixed: {enabled: true, operator: partial-view pair swap followed by random data in remaining views, affected_views: all, ratio: [0.02, 0.05, 0.08], implementation_notes: 'table label order is attribute/mixed/class, unlike several earlier papers'}
+  ratios: {settings: [[0.02, 0.08, 0.05], [0.05, 0.05, 0.05], [0.08, 0.02, 0.05]], denominator: total samples; tuple order attribute/class/mixed normalized by registry, overlap_allowed: unknown, total_contamination: 0.15}
+  training: {paradigm: unsupervised, transductive: true, train_test_split: no held-out split; ensemble built and scored on benchmark set, training_contamination: 0.15, uses_test_instances: true, hyperparameter_selection: psi and k searched; t fixed at 200 for main experiments}
+  evaluation: {metrics: [AUROC], aggregation: per regenerated corruption then aggregate, repetitions: 20, seeds: unknown, reporting: mean plus/minus 2 standard errors, endpoint: sample}
+  code_evidence: {official_repository: null, commit_or_release: unknown, dataset_loader: unknown, anomaly_generator: unknown, preprocessing_script: unknown, evaluation_script: unknown, protocol_matches_paper: unknown, discrepancy: no official code linked by primary sources}
+  provenance:
+    - {fields: [dataset_variants, preprocessing, anomaly_generation, ratios, training, evaluation], source_type: paper, source: 'https://arxiv.org/pdf/2512.05540', locator: 'Experiment, Tables 2-4', note: 'Primary experiment protocol.', confidence: high}
+  unresolved: [normalization, exact corruption operators, overlap policy, seeds, official code]
+- id: rnamod-public-record
+  paper_id: rnamod-2026
+  priority: P0
+  track: core_mvod
+  dataset_variants: [unresolved-rnamod]
+  view_setting: complete
+  preprocessing: {normalization: unknown, dimensionality_reduction: unknown, feature_construction: unknown, order: unknown}
+  anomaly_generation:
+    attribute: {enabled: unknown, operator: unknown, affected_views: unknown, ratio: unknown, implementation_notes: full paper attachment was inaccessible during audit}
+    class: {enabled: unknown, operator: unknown, affected_views: unknown, ratio: unknown, implementation_notes: full paper attachment was inaccessible during audit}
+    mixed: {enabled: unknown, operator: unknown, affected_views: unknown, ratio: unknown, implementation_notes: full paper attachment was inaccessible during audit}
+  ratios: {settings: unknown, denominator: unknown, overlap_allowed: unknown, total_contamination: unknown}
+  training: {paradigm: unsupervised, transductive: unknown, train_test_split: unknown, training_contamination: unknown, uses_test_instances: unknown, hyperparameter_selection: unknown}
+  evaluation: {metrics: [unknown], aggregation: unknown, repetitions: unknown, seeds: unknown, reporting: unknown, endpoint: sample}
+  code_evidence: {official_repository: null, commit_or_release: unknown, dataset_loader: unknown, anomaly_generator: unknown, preprocessing_script: unknown, evaluation_script: unknown, protocol_matches_paper: unknown, discrepancy: author page exposes placeholder paper/code links and no verified artifact}
+  provenance:
+    - {fields: [view_setting, evaluation.endpoint], source_type: official_project, source: 'https://icml.cc/virtual/2026/poster/61856', locator: 'ICML 2026 poster record and abstract', note: 'Confirms complete-view method context and six-benchmark claim, not dataset protocol.', confidence: medium}
+    - {fields: [dataset_variants, preprocessing, anomaly_generation, ratios, training, evaluation], source_type: unknown, source: null, locator: 'primary attachment inaccessible', note: 'Unknown is intentionally retained.', confidence: unknown}
+  unresolved: [dataset names and variants, all corruption operators and ratios, preprocessing, training/evaluation protocol, official code]

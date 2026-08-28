@@ -10,7 +10,8 @@ Generated from the `baseline` blocks in `data/papers.yaml`. A card explains why 
 - **Track / view setting:** `core_mvod` / `complete`
 - **Core mechanism:** tensor, graph, shared private, local structure
 - **Artifact status:** [official code](https://github.com/YF-W/MOD-TDID); registry status `verified`
-- **Main datasets / metrics:** unknown / unknown
+- **Main dataset variants / metrics:** unknown / unknown
+- **Protocol reconstruction:** not in v0.3 priority set
 - **Baseline roles:** tensor information decoupling, standard mvod
 - **Closest counterfactual:** Does the new mechanism improve on tensor-regularized shared/view-specific graph decoupling?
 - **Why compare:** MOD-TDID is a recent high-order information-decoupling baseline with official code and dataset instructions.
@@ -24,7 +25,8 @@ Generated from the `baseline` blocks in `data/papers.yaml`. A card explains why 
 - **Track / view setting:** `core_mvod` / `complete`
 - **Core mechanism:** local structure, graph, correspondence
 - **Artifact status:** unknown; registry status `verified`
-- **Main datasets / metrics:** unknown / unknown
+- **Main dataset variants / metrics:** unresolved-rnamod / unknown
+- **Protocol reconstruction:** rnamod-public-record
 - **Baseline roles:** strong frontier, neighborhood reliability representative, standard mvod, scalability candidate
 - **Closest counterfactual:** Can a new method outperform reliable-neighborhood and scale-invariant directional consensus under the same complete-view protocol?
 - **Why compare:** RNAMOD is a 2026 complete-view frontier method explicitly designed to prevent outlier propagation through unreliable neighborhoods.
@@ -38,7 +40,8 @@ Generated from the `baseline` blocks in `data/papers.yaml`. A card explains why 
 - **Track / view setting:** `core_mvod` / `complete`
 - **Core mechanism:** local structure, ensemble, probabilistic neighborhood
 - **Artifact status:** unknown; registry status `verified`
-- **Main datasets / metrics:** unknown / unknown
+- **Main dataset variants / metrics:** scone-uci-three-view, scone-caltech-six-view / AUROC
+- **Protocol reconstruction:** scone-main
 - **Baseline roles:** efficient neighborhood ensemble, standard mvod, scalability candidate
 - **Closest counterfactual:** Can the proposed model beat a nonparametric spherical consistent-neighborhood ensemble at comparable cost?
 - **Why compare:** SCoNE is an efficiency-oriented 2026 neighborhood ensemble and a useful counterpoint to learned deep models.
@@ -52,7 +55,8 @@ Generated from the `baseline` blocks in `data/papers.yaml`. A card explains why 
 - **Track / view setting:** `core_mvod` / `complete`
 - **Core mechanism:** tensor, low rank, self representation, shared latent
 - **Artifact status:** unknown; registry status `verified`
-- **Main datasets / metrics:** unknown / unknown
+- **Main dataset variants / metrics:** unresolved-lrtdm / unknown
+- **Protocol reconstruction:** lrtdm-accessible-evidence
 - **Baseline roles:** tensor low rank representative, standard mvod, scalability candidate
 - **Closest counterfactual:** Does the method improve on high-order low-rank self-expression and meta-learned view fusion?
 - **Why compare:** LRTDM is a recent tensor baseline and exposes the cost/benefit of quadratic sample interactions.
@@ -66,7 +70,8 @@ Generated from the `baseline` blocks in `data/papers.yaml`. A card explains why 
 - **Track / view setting:** `core_mvod` / `complete`
 - **Core mechanism:** local structure, probabilistic neighborhood, ensemble
 - **Artifact status:** [official code](https://github.com/YF-W/MGFMOD); registry status `verified`
-- **Main datasets / metrics:** unknown / unknown
+- **Main dataset variants / metrics:** unknown / unknown
+- **Protocol reconstruction:** not in v0.3 priority set
 - **Baseline roles:** multi granularity neighborhood, standard mvod
 - **Closest counterfactual:** Does the method remain stronger than fuzzy-rough evidence fused across neighborhood granularities?
 - **Why compare:** MGFMOD tests whether gains persist against a non-neural, multi-granularity local baseline with official code.
@@ -80,7 +85,8 @@ Generated from the `baseline` blocks in `data/papers.yaml`. A card explains why 
 - **Track / view setting:** `core_mvod` / `complete`
 - **Core mechanism:** graph, local structure
 - **Artifact status:** unknown; registry status `verified`
-- **Main datasets / metrics:** unknown / unknown
+- **Main dataset variants / metrics:** unknown / unknown
+- **Protocol reconstruction:** not in v0.3 priority set
 - **Baseline roles:** graph filtering representative, standard mvod, scalability candidate
 - **Closest counterfactual:** Does the method improve on graph-frequency filtering of multi-view outlier evidence?
 - **Why compare:** Optimal Graph Filtering is a recent signal-processing baseline for relational structure.
@@ -94,7 +100,8 @@ Generated from the `baseline` blocks in `data/papers.yaml`. A card explains why 
 - **Track / view setting:** `core_mvod` / `complete`
 - **Core mechanism:** information theoretic, shared latent, local structure
 - **Artifact status:** [official code](https://github.com/GTML-LAB/IAMOD); registry status `verified`
-- **Main datasets / metrics:** unknown / unknown
+- **Main dataset variants / metrics:** iamod-caltech7-code / AUROC
+- **Protocol reconstruction:** iamod-public-artifact
 - **Baseline roles:** information theoretic representative, standard mvod
 - **Closest counterfactual:** Does the new evidence model add value beyond compact, non-redundant information-aware representations?
 - **Why compare:** IAMOD represents information-structure reasoning without relying only on a shallow cluster or subspace assumption.
@@ -108,7 +115,8 @@ Generated from the `baseline` blocks in `data/papers.yaml`. A card explains why 
 - **Track / view setting:** `core_mvod` / `complete`
 - **Core mechanism:** graph, local structure
 - **Artifact status:** [official code](http://Doctor-Nobody.github.io/codes/MODGD.zip); registry status `verified`
-- **Main datasets / metrics:** unknown / unknown
+- **Main dataset variants / metrics:** modgd-caltech101-six-view / AUROC
+- **Protocol reconstruction:** modgd-main
 - **Baseline roles:** graph denoising representative, standard mvod
 - **Closest counterfactual:** Can the new method improve on explicit view-graph denoising and consensus-graph residual evidence?
 - **Why compare:** MODGD is a modern graph baseline that separates attribute evidence from structured cross-view graph disagreement.
@@ -122,7 +130,8 @@ Generated from the `baseline` blocks in `data/papers.yaml`. A card explains why 
 - **Track / view setting:** `core_mvod` / `complete`
 - **Core mechanism:** self representation, local structure, graph
 - **Artifact status:** [official code](https://github.com/wy54224/SRLSP); registry status `verified`
-- **Main datasets / metrics:** unknown / unknown
+- **Main dataset variants / metrics:** unresolved-srlsp / AUROC
+- **Protocol reconstruction:** srlsp-public-artifact
 - **Baseline roles:** self representation representative, local similarity representative, scalability candidate
 - **Closest counterfactual:** Does the new model add evidence beyond fast self-representation with local similarity preservation?
 - **Why compare:** SRLSP is a reproducible bridge between self-representation and local-neighborhood evidence.
@@ -136,7 +145,8 @@ Generated from the `baseline` blocks in `data/papers.yaml`. A card explains why 
 - **Track / view setting:** `core_mvod` / `complete`
 - **Core mechanism:** generative, shared private, information theoretic
 - **Artifact status:** [official code](https://github.com/cshaowang/dPoE); registry status `verified`
-- **Main datasets / metrics:** MNIST, Fashion-MNIST, COIL-20 / unknown
+- **Main dataset variants / metrics:** MNIST, Fashion-MNIST, COIL-20 / unknown
+- **Protocol reconstruction:** not in v0.3 priority set
 - **Baseline roles:** online deep generative anchor, shared private representative
 - **Closest counterfactual:** Does the method improve on disentangled product-of-experts fusion for post-deployment scoring?
 - **Why compare:** dPoE is an official-code deep generative anchor that challenges naïve free fusion.
@@ -150,7 +160,8 @@ Generated from the `baseline` blocks in `data/papers.yaml`. A card explains why 
 - **Track / view setting:** `core_mvod` / `complete`
 - **Core mechanism:** subspace, low rank, shared private
 - **Artifact status:** not_found; registry status `verified`
-- **Main datasets / metrics:** unknown / unknown
+- **Main dataset variants / metrics:** unknown / unknown
+- **Protocol reconstruction:** not in v0.3 priority set
 - **Baseline roles:** fast encoder anchor, scalability candidate, standard mvod
 - **Closest counterfactual:** Does the new scalable method improve on sampled training followed by encoder-based scoring?
 - **Why compare:** FMOD is an explicit speed-oriented deep encoder baseline.
@@ -164,7 +175,8 @@ Generated from the `baseline` blocks in `data/papers.yaml`. A card explains why 
 - **Track / view setting:** `core_mvod` / `complete`
 - **Core mechanism:** reconstruction, local structure, graph
 - **Artifact status:** [official code](https://github.com/auguscl/NCMOD); registry status `verified`
-- **Main datasets / metrics:** MNIST, Reuters / unknown
+- **Main dataset variants / metrics:** ncmod-mnist-1000, ncmod-reuters-1000, ncmod-ttc-1000 / AUROC, F1
+- **Protocol reconstruction:** ncmod-main
 - **Baseline roles:** deep neighborhood consensus anchor, standard mvod
 - **Closest counterfactual:** Is the new cross-view relation mechanism stronger than learned neighborhood consensus plus reconstruction?
 - **Why compare:** NCMOD is a historical deep local-structure anchor with an official implementation.
@@ -178,7 +190,8 @@ Generated from the `baseline` blocks in `data/papers.yaml`. A card explains why 
 - **Track / view setting:** `core_mvod` / `complete`
 - **Core mechanism:** shared latent, reconstruction, shared private
 - **Artifact status:** [official code](https://github.com/sigerma/ICDM-2019-MODDIS); registry status `verified`
-- **Main datasets / metrics:** unknown / unknown
+- **Main dataset variants / metrics:** unresolved-moddis / AUROC
+- **Protocol reconstruction:** moddis-official-code
 - **Baseline roles:** deep intact space anchor, standard mvod
 - **Closest counterfactual:** Does the representation improve on nonlinear intact-space modeling of shared and inconsistent factors?
 - **Why compare:** MODDIS is an official-code historical deep baseline for complete-view MVOD.
@@ -192,7 +205,8 @@ Generated from the `baseline` blocks in `data/papers.yaml`. A card explains why 
 - **Track / view setting:** `core_mvod` / `complete`
 - **Core mechanism:** subspace, low rank, shared private
 - **Artifact status:** [official code](https://github.com/kailigo/mvod); registry status `verified`
-- **Main datasets / metrics:** unknown / unknown
+- **Main dataset variants / metrics:** uci-feature-split-ldsr / AUROC
+- **Protocol reconstruction:** ldsr-main
 - **Baseline roles:** low rank subspace anchor, standard mvod
 - **Closest counterfactual:** Does the method add value beyond view-consistent and view-specific discriminant subspaces?
 - **Why compare:** LDSR is a widely reused official-code low-rank baseline covering attribute, class, and mixed anomalies.
@@ -206,7 +220,8 @@ Generated from the `baseline` blocks in `data/papers.yaml`. A card explains why 
 - **Track / view setting:** `core_mvod` / `complete`
 - **Core mechanism:** shared latent, self representation, low rank
 - **Artifact status:** not_found; registry status `verified`
-- **Main datasets / metrics:** unknown / unknown
+- **Main dataset variants / metrics:** uci-feature-split-dmod / AUROC
+- **Protocol reconstruction:** dmod-main-uci
 - **Baseline roles:** historical structured anchor, standard mvod
 - **Closest counterfactual:** Does the method improve beyond dual-regularized shared coefficients and sample-specific errors?
 - **Why compare:** DMOD is a foundational complete-view reference for jointly modeling cross-view inconsistency and abnormality.
@@ -222,7 +237,8 @@ Generated from the `baseline` blocks in `data/papers.yaml`. A card explains why 
 - **Track / view setting:** `partial_mvod` / `partial`
 - **Core mechanism:** partial view, contrastive, local structure, shared latent
 - **Artifact status:** unknown; registry status `verified`
-- **Main datasets / metrics:** Fashion-MNIST / unknown
+- **Main dataset variants / metrics:** rcpmod-four-benchmarks / AUROC
+- **Protocol reconstruction:** rcpmod-main
 - **Baseline roles:** closest contrastive methodological, partial view representative
 - **Closest counterfactual:** Does the proposed cross-view representation improve on outlier-aware contrastive learning and neighbor relation transfer?
 - **Why compare:** RCPMOD is a strong conceptual baseline for contrastive cross-view relation modeling and explicitly handles missing views.
@@ -238,7 +254,8 @@ Generated from the `baseline` blocks in `data/papers.yaml`. A card explains why 
 - **Track / view setting:** `related_natural_multimodal` / `industrial`
 - **Core mechanism:** generative, shared latent
 - **Artifact status:** [official code](https://github.com/m-kruse98/Multi-Flow); registry status `verified`
-- **Main datasets / metrics:** Real-IAD / unknown
+- **Main dataset variants / metrics:** Real-IAD / unknown
+- **Protocol reconstruction:** not in v0.3 priority set
 - **Baseline roles:** industrial normalizing flow, industrial multiview representative
 - **Closest counterfactual:** Does the industrial method improve on cross-view message passing inside an exact-likelihood flow?
 - **Why compare:** Multi-Flow is a reproducible Real-IAD baseline for sample-, image-, and pixel-level industrial endpoints.
@@ -252,7 +269,8 @@ Generated from the `baseline` blocks in `data/papers.yaml`. A card explains why 
 - **Track / view setting:** `related_natural_multimodal` / `industrial`
 - **Core mechanism:** shared private, information theoretic, reconstruction, partial view
 - **Artifact status:** [official code](https://github.com/Kerio99/IDIF); registry status `verified`
-- **Main datasets / metrics:** Real-IAD / unknown
+- **Main dataset variants / metrics:** Real-IAD / unknown
+- **Protocol reconstruction:** not in v0.3 priority set
 - **Baseline roles:** industrial intra inter view fusion, industrial multiview representative
 - **Closest counterfactual:** Does the method improve on decoupled intra-view modeling followed by inter-view fusion?
 - **Why compare:** IDIF is an official-code industrial multi-view anomaly-detection baseline on Real-IAD.

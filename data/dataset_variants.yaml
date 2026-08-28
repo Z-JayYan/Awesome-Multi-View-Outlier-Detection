@@ -1,0 +1,201 @@
+- id: uci-feature-split-dmod
+  canonical_dataset: UCI tabular benchmarks
+  papers: [dmod-2015]
+  samples: [150, 569, 351, 20000]
+  views: 2
+  view_dimensions: feature vector split into two subsets; exact boundary unknown
+  feature_source: iris, breast, ionosphere, and letter from UCI
+  preprocessing: per-sample L2 normalization after view construction
+  resolution: partially_resolved
+  evidence:
+    - {source_type: paper, source: 'https://www.ijcai.org/Proceedings/15/Papers/572.pdf', locator: 'Section 5, Table 1, Algorithm 2', note: 'Paper gives datasets, sizes, feature counts, view splitting and normalization.', confidence: high}
+- id: uci-feature-split-ldsr
+  canonical_dataset: UCI tabular benchmarks
+  papers: [ldsr-2018]
+  samples: [101, 1300, 178, 569, 768]
+  views: [2, 3]
+  view_dimensions: contiguous feature subsets; exact boundaries unknown
+  feature_source: zoo, letter subset, wine, wdbc, and pima from UCI
+  preprocessing: letter subsampled to 50 examples per class; features split into V subsets
+  resolution: partially_resolved
+  evidence:
+    - {source_type: paper, source: 'https://ojs.aaai.org/index.php/AAAI/article/download/11826/11685', locator: 'Experimental Results, Table 1', note: 'Paper reports dataset construction and sizes.', confidence: high}
+    - {source_type: official_code, source: 'https://github.com/kailigo/mvod', locator: 'data/gen_outliers_multiview.m', note: 'Official generator confirms ratios are converted to counts over total sample size.', confidence: high}
+- id: ncmod-mnist-1000
+  canonical_dataset: MNIST
+  papers: [ncmod-2021]
+  samples: 1000
+  views: [2, 3]
+  view_dimensions: original 784 dimensions split into contiguous subsets
+  feature_source: class-labelled benchmark features
+  preprocessing: select inlier classes, sample N=1000, then split the original feature vector by view
+  resolution: resolved
+  evidence:
+    - {source_type: paper, source: 'https://doi.org/10.1609/AAAI.V35I8.16873', locator: 'Experiments / Setup', note: 'Paper specifies dimensions, sample size and view construction.', confidence: high}
+    - {source_type: official_code, source: 'https://github.com/auguscl/NCMOD', locator: 'total_run.py', note: 'Official runner enumerates MNIST with 1000 samples and 2/3 views.', confidence: high}
+- id: ncmod-reuters-1000
+  canonical_dataset: Reuters
+  papers: [ncmod-2021]
+  samples: 1000
+  views: [2, 3]
+  view_dimensions: original 2000 dimensions split into contiguous subsets
+  feature_source: class-labelled Reuters benchmark features; exact corpus preprocessing upstream is unknown
+  preprocessing: select inlier classes, sample N=1000, then split the feature vector by view
+  resolution: partially_resolved
+  evidence:
+    - {source_type: paper, source: 'https://doi.org/10.1609/AAAI.V35I8.16873', locator: 'Experiments / Setup', note: 'Paper specifies 2000 dimensions, N=1000 and 2/3-view construction.', confidence: high}
+    - {source_type: official_code, source: 'https://github.com/auguscl/NCMOD', locator: 'total_run.py', note: 'Runner confirms the Reuters setting names but not upstream text features.', confidence: high}
+- id: ncmod-ttc-1000
+  canonical_dataset: TTC
+  papers: [ncmod-2021]
+  samples: 1000
+  views: [2, 3]
+  view_dimensions: original 7507 dimensions split into contiguous subsets
+  feature_source: class-labelled TTC benchmark features
+  preprocessing: select inlier classes, sample N=1000, then split the feature vector by view
+  resolution: partially_resolved
+  evidence:
+    - {source_type: paper, source: 'https://doi.org/10.1609/AAAI.V35I8.16873', locator: 'Experiments / Setup', note: 'Paper specifies 7507 dimensions, N=1000 and 2/3-view construction.', confidence: high}
+- id: modgd-caltech101-six-view
+  canonical_dataset: Caltech101
+  papers: [modgd-2024]
+  samples: 9144
+  views: 6
+  view_dimensions: [48, 40, 254, 1984, 512, 680, 32]
+  feature_source: published six-view feature benchmark; paper table prints seven dimension values, an unresolved inconsistency
+  preprocessing: KNN graphs normalized in the method; raw feature scaling not reported
+  resolution: partially_resolved
+  evidence:
+    - {source_type: paper, source: 'https://doctor-nobody.github.io/papers/if2024.pdf', locator: 'Section 4.2, Table 2', note: 'Paper reports 9144 instances, six views and the printed dimensions.', confidence: high}
+- id: scone-caltech-six-view
+  canonical_dataset: Caltech101
+  papers: [scone-2026]
+  samples: 1474
+  views: 6
+  view_dimensions: total dimension 3766; per-view dimensions unknown
+  feature_source: original six-view Caltech variant used by IAMOD lineage
+  preprocessing: unknown
+  resolution: partially_resolved
+  evidence:
+    - {source_type: paper, source: 'https://arxiv.org/pdf/2512.05540', locator: 'Benchmark Datasets, Table 3', note: 'Paper reports 1474 instances, six views, seven clusters and total dimension 3766.', confidence: high}
+- id: iamod-caltech7-code
+  canonical_dataset: Caltech101
+  papers: [iamod-2024]
+  samples: unknown
+  views: unknown
+  view_dimensions: unknown
+  feature_source: caltech7.mat, absent from the public repository
+  preprocessing: row normalization applied independently to every loaded view
+  resolution: unresolved
+  evidence:
+    - {source_type: official_code, source: 'https://github.com/GTML-LAB/IAMOD', locator: 'datasets.py:20-29', note: 'Public code names caltech7.mat and normalizes each view but does not ship data.', confidence: high}
+- id: rcpmod-four-benchmarks
+  canonical_dataset: BDGP / Scene15 / LandUse21 / Fashion-MNIST
+  papers: [rcpmod-2024]
+  samples: [2500, 4568, 2100, 10000]
+  views: [2, 3, 3, 3]
+  view_dimensions: unknown
+  feature_source: four complete multi-view benchmarks transformed into partial-view data
+  preprocessing: randomly remove one view from selected instances at missing rates 0, 0.15, 0.30, 0.45
+  resolution: partially_resolved
+  evidence:
+    - {source_type: paper, source: 'https://arxiv.org/pdf/2408.07819', locator: 'Section 4.1, Tables 1-2', note: 'Paper reports dataset sizes/views/classes and missing-view construction.', confidence: high}
+- id: scone-uci-three-view
+  canonical_dataset: Zoo / Parkinson / Wdbc / MNIST
+  papers: [scone-2026]
+  samples: [101, 197, 569, 70000]
+  views: 3
+  view_dimensions: original features split into three subsets
+  feature_source: UCI benchmark features
+  preprocessing: feature splitting; exact split boundaries and scaling unknown
+  resolution: partially_resolved
+  evidence:
+    - {source_type: paper, source: 'https://arxiv.org/pdf/2512.05540', locator: 'Benchmark Datasets, Table 3', note: 'Paper gives construction and dataset characteristics.', confidence: high}
+- id: unresolved-srlsp
+  canonical_dataset: unresolved
+  papers: [srlsp-2023]
+  samples: unknown
+  views: unknown
+  view_dimensions: unknown
+  feature_source: unknown
+  preprocessing: official repository contains only the algorithm, not experiment data or runner
+  resolution: unresolved
+  evidence:
+    - {source_type: official_code, source: 'https://github.com/wy54224/SRLSP', locator: 'repository root', note: 'Code inspection cannot recover dataset construction.', confidence: high}
+- id: unresolved-lrtdm
+  canonical_dataset: unresolved
+  papers: [lrtdm-2025]
+  samples: unknown
+  views: unknown
+  view_dimensions: unknown
+  feature_source: unknown
+  preprocessing: unknown
+  resolution: unresolved
+  evidence:
+    - {source_type: paper, source: 'https://doi.org/10.1016/j.inffus.2025.103313', locator: 'publisher record available to audit', note: 'Accessible primary metadata did not expose dataset-level protocol details.', confidence: low}
+- id: unresolved-rnamod
+  canonical_dataset: unresolved
+  papers: [rnamod-2026]
+  samples: unknown
+  views: unknown
+  view_dimensions: unknown
+  feature_source: unknown
+  preprocessing: unknown
+  resolution: unresolved
+  evidence:
+    - {source_type: official_project, source: 'https://icml.cc/virtual/2026/poster/61856', locator: 'ICML abstract page', note: 'Official page states six benchmarks but does not identify their variants.', confidence: medium}
+- id: unresolved-moddis
+  canonical_dataset: unresolved
+  papers: [moddis-2019]
+  samples: unknown
+  views: unknown
+  view_dimensions: unknown
+  feature_source: official repository data directory is empty in the audited commit
+  preprocessing: min-max scaling per feature is implemented in Methods.py
+  resolution: unresolved
+  evidence:
+    - {source_type: official_code, source: 'https://github.com/sigerma/ICDM-2019-MODDIS', locator: 'Methods.py; data/', note: 'Code exposes scaling and anomaly generator, but not dataset files/identity.', confidence: high}
+- id: audit-bbcsport-unresolved
+  canonical_dataset: BBCSport
+  papers: []
+  samples: unknown
+  views: unknown
+  view_dimensions: unknown
+  feature_source: unknown
+  preprocessing: no Priority Paper primary source in this audit established an attributable BBCSport variant
+  resolution: unresolved
+  evidence:
+    - {source_type: unknown, source: null, locator: 'v0.3 priority-source audit', note: 'Name-level mentions are insufficient to create a paper-linked variant.', confidence: unknown}
+- id: audit-citeseer-unresolved
+  canonical_dataset: CiteSeer
+  papers: []
+  samples: unknown
+  views: unknown
+  view_dimensions: unknown
+  feature_source: unknown
+  preprocessing: a bibliography citation is not evidence of an experiment variant
+  resolution: unresolved
+  evidence:
+    - {source_type: unknown, source: null, locator: 'v0.3 priority-source audit', note: 'No attributable N × V × feature construction was recovered.', confidence: unknown}
+- id: audit-100leaves-unresolved
+  canonical_dataset: 100Leaves
+  papers: []
+  samples: unknown
+  views: unknown
+  view_dimensions: unknown
+  feature_source: IAMOD code references a generic leaf path but does not establish this canonical dataset identity
+  preprocessing: unknown
+  resolution: unresolved
+  evidence:
+    - {source_type: official_code, source: 'https://github.com/GTML-LAB/IAMOD', locator: 'datasets.py near default leaf config', note: 'Insufficient to attribute the paper experiment to 100Leaves.', confidence: low}
+- id: audit-nuswideobj-unresolved
+  canonical_dataset: NUSWIDEOBJ
+  papers: []
+  samples: unknown
+  views: unknown
+  view_dimensions: unknown
+  feature_source: unknown
+  preprocessing: no Priority Paper primary source in this audit resolved the feature/view construction
+  resolution: unresolved
+  evidence:
+    - {source_type: unknown, source: null, locator: 'v0.3 priority-source audit', note: 'Variant remains an explicit evidence queue item.', confidence: unknown}

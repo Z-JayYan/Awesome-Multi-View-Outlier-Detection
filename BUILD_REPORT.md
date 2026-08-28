@@ -1,84 +1,82 @@
-# Awesome-MVOD v0.2.1 Public Release Cleanup Report
+# Awesome-MVOD v0.3.0 Build Report
 
 Build date: 2026-08-28
-Release theme: **Public Release Cleanup**
+Release theme: **Protocol Reconstruction**
 
-The v0.2 **Coverage + Comparability** research structure remains intact. v0.2.1 adds release-facing consistency, tests, licensing, citation, and naming cleanup without expanding the literature registry.
+v0.3 keeps the 42-paper scope stable and adds a machine-readable `Paper → Dataset Variant → Experimental Protocol` layer. Completeness below measures registry maintenance only; it does not rank paper quality.
 
-## Repository audit
+## Registry statistics
 
-| Metric | v0.1 | v0.2 / v0.2.1 |
-|---|---:|---:|
-| Total papers | 40 | 42 |
-| CORE complete-view | 30 | 31 |
-| Partial / incomplete | 2 | 2 |
-| Industrial / natural | 7 | 8 |
-| Uncertain-scope | 1 | 1 |
-| Dataset cards | 12 | 13 |
-| Verified records | 37 | 42 |
-| Partially verified records | 3 | 0 |
-| Official-code entries | 18 | 20 |
+| Measure | v0.3.0 |
+|---|---:|
+| Papers | 42 |
+| CORE / PARTIAL / INDUSTRIAL / UNCERTAIN | 31 / 2 / 8 / 1 |
+| Priority papers reconstructed | 11 |
+| Experiment protocol records | 11 |
+| Dataset variants | 18 |
+| Resolved / partially resolved / unresolved variants | 1 / 8 / 9 |
+| Official-code-backed protocol records | 5 |
+| Paper-only or official-page protocol records | 6 |
+| Explicit paper/code or artifact discrepancies | 6 |
+| Priority protocol pairs: direct / conditional / not direct / unknown | 0 / 3 / 10 / 42 |
 
-### Added
+## Priority reconstruction
 
-- Reliable Neighborhood-Aware Multi-View Outlier Detection (RNAMOD), ICML 2026, CORE.
-- Visual Anomaly Detection under Complex View-Illumination Interplay / Multi-View Multi-Illumination Anomaly Detection (M2AD), industrial/natural benchmark.
-- M2AD dataset card with synchronized view/illumination structure and named protocols.
+| Paper | Track | Approx. completeness | Variant status | Anomaly protocol | Evaluation | Code verified | Main blocker |
+|---|---|---:|---|---|---|---|---|
+| DMOD — Dual-Regularized Multi-View Outlier Detection | CORE | 84% | partial | resolved | resolved | no | split boundary, seeds |
+| LDSR — Latent Discriminant Subspace Representations for Multi-View Outlier Detection | CORE | 94% | partial | resolved | resolved | yes | scaling and seeds |
+| MODDIS — Multi-view Outlier Detection in Deep Intact Space | CORE | 94% | unresolved | code-level partial | resolved | yes | empty public data directory |
+| NCMOD — Neighborhood Consensus Networks for Unsupervised Multi-view Outlier Detection | CORE | 91% | resolved | resolved | partial | yes | missing advertised generator |
+| SRLSP — A Self-Representation Method with Local Similarity Preserving for Fast Multi-View Outlier Detection | CORE | 51% | unresolved | unresolved | partial | yes | algorithm-only artifact |
+| IAMOD — Information-aware Multi-view Outlier Detection | CORE | 67% | unresolved | unresolved | code-level resolved | yes | absent data; test-AUROC epoch selection |
+| MODGD — Multi-view Outlier Detection via Graphs Denoising | CORE | 85% | partial | resolved | resolved | artifact URL | Caltech dimension inconsistency |
+| LRTDM — Low-rank Tucker decomposition for multi-view outlier detection based on meta-learning | CORE | 21% | unresolved | unresolved | unresolved | no | full protocol unavailable |
+| SCoNE — Spherical Consistent Neighborhoods Ensemble for Effective and Efficient Multi-View Anomaly Detection | CORE | 80% | partial | resolved | resolved | no | operator details, seeds |
+| RNAMOD — Reliable Neighborhood-Aware Multi-View Outlier Detection | CORE | 24% | unresolved | unresolved | unresolved | no | primary attachment/code unavailable |
+| RCPMOD — Regularized Contrastive Partial Multi-view Outlier Detection | PARTIAL | 78% | partial | resolved | partial | no | seeds, official code |
 
-### Corrected
+Exact generated category scores are in `docs/PROTOCOLS.md`.
 
-- Multi-Flow: complete authors, Real-IAD dataset, official author/institute/code evidence, and reproducibility metadata.
-- Bilateral Graph Filtering Framework: complete author list and official ICASSP schedule evidence.
-- Multi-View Group Anomaly Detection: complete authors and DBLP evidence; scope remains explicitly uncertain.
+## Dataset-variant audit
 
-No valid paper was removed or downgraded.
+- **BBCSport:** no priority primary source recovered a verifiable BBCSport construction; it remains an explicit P0 gap rather than an assumed shared benchmark.
+- **CiteSeer:** no priority record established a reusable CiteSeer variant. The audit found a historical citation but no N × V × feature protocol.
+- **Reuters:** NCMOD uses a 1,000-sample, 2/3-view contiguous split of 2,000-dimensional features. This must not be equated with other Reuters variants by name.
+- **Caltech101:** confirmed incompatible variants: MODGD reports 9,144 samples while SCoNE reports 1,474; IAMOD code names an undistributed `caltech7.mat`. Direct reuse is blocked.
+- **100Leaves:** IAMOD code references a leaf dataset family but lacks distributed data and experiment construction; no resolved cross-paper variant exists.
+- **NUSWIDEOBJ:** no priority primary source resolved its feature/view construction; remains queued.
 
-## Critical fixes
+## Comparator audit
 
-- Track definitions now identify task settings rather than model age or deep/shallow categories.
-- README recent research is generated in Track → Year → Venue order.
-- `docs/BASELINE_MAP.md` is generated as method-level evidence cards answering why a comparison is useful and when it is invalid.
-- Every paper has a flexible machine-readable protocol fingerprint with explicit unknown values.
-- `data/comparability.yaml`, `docs/COMPARABILITY.md`, and `scripts/compare_protocols.py` implement conservative comparison statuses without a leaderboard.
-- Dataset cards include canonical v0.2 fields plus v0.1 compatibility aliases.
-- Record-level verification debt is reduced from three partial records to zero.
+The comparator now reports field-level matches, mismatches, unknowns, blocking differences, warnings, and a recommendation.
 
-## Engineering checks
+- RNAMOD vs IAMOD: `UNKNOWN` — RNAMOD variant, corruption, preprocessing, ratios, repetitions, and metric remain unavailable.
+- RNAMOD vs SCoNE: `UNKNOWN` — complete-view/sample context matches, but RNAMOD's experimental fingerprint is missing.
+- RNAMOD vs NCMOD: `UNKNOWN` — insufficient RNAMOD primary evidence.
+- RNAMOD vs MODGD: `UNKNOWN` — insufficient RNAMOD primary evidence.
+- RNAMOD vs RCPMOD: `NOT_DIRECTLY_COMPARABLE` — complete-view CORE versus partial-view protocol; methodological relevance remains high.
+- NCMOD vs SCoNE: `CONDITIONALLY_COMPARABLE` where normalized to a matched setting; captured variants, operators/aggregation, and repetitions differ.
 
-- JSON Schema validation for paper and dataset entries.
-- Duplicate ID/title-year/DOI detection.
-- Required-field, vocabulary, dataset-reference, reverse-usage, protocol-coherence, URL, and internal Markdown-link checks.
-- Generated-file freshness check in CI.
-- Unit tests for conservative comparability decisions.
-- Monthly, non-blocking external-link audit separated from per-commit CI to reduce publisher anti-bot false failures.
-- Formal tests cover registry validation, duplicate identities, dataset references, taxonomy values, generated-file freshness, and documented internal paths.
-- `data/comparability.yaml` is validated against `schemas/comparability.schema.yaml`.
+Pair counts over all 11 priority records are generated by the final audit command rather than presented as a leaderboard; an `UNKNOWN` result is a scientific finding, not a validation failure.
 
-## v0.2.1 release cleanup
+## Paper/code discrepancies
 
-- Published the synthetic-protocol guide as `docs/COMMON_SYNTHETIC_PROTOCOLS.md`; D1–D6 remain explicitly source-local configuration identifiers.
-- Replaced the citation template with a public `CITATION.cff` using the verified GitHub maintainer identity.
-- Added scoped MIT and CC BY 4.0 license files.
-- Added `CHANGELOG.md` and normalized current version markers to v0.2.1.
+- LDSR's demo selects the best mean AUROC over a parameter grid; the paper describes tuning but does not expose seeds.
+- MODDIS's official repository has an empty data directory, so the paper tables cannot be reproduced from the public artifact alone.
+- NCMOD states that dataset generation code is supplied, while the audited repository expects pre-generated CSV files and contains no generator.
+- IAMOD uses absolute author-local data paths, omits dataset files, evaluates every epoch, and returns maximum test AUROC.
+- MODGD's Table 2 labels Caltech101 as six-view but prints seven dimension values; the author ZIP is unversioned.
+- SRLSP's official repository contains only the core MATLAB algorithm, without loaders, generation, runner, or configs.
 
-## Publication status
+## Validation
 
-- **License:** code is MIT; original documentation and curated metadata are CC BY 4.0.
-- **Citation:** `CITATION.cff` identifies the maintainer as `Z-JayYan`, the identity supported by repository ownership and Git metadata. No unverified real name is asserted.
+- JSON Schema validation covers papers, datasets, resources, taxonomy, comparability rules, experiment protocols, and dataset variants.
+- Semantic validation covers dangling references, priority coverage, paper/protocol track consistency, complete/partial consistency, disabled anomaly ratios, and probability bounds.
+- Comparator fixtures cover exact match, convertible/different metric, complete-vs-partial, same dataset name with different variants, unknown critical fields, and ratio mismatch.
+- Generated-document freshness covers README, papers, datasets, baseline map, protocols, variants, and remaining uncertainty.
+- CI runs validation, generation, full unit tests, Python compilation, and a clean generated diff check.
 
-## v0.2.1 validation result
+## Compatibility
 
-Executed on 2026-08-28:
-
-```text
-PASS: 42 papers, 13 datasets, 5 resources, 33 unique DOIs
-PASS: paper, dataset, resource, taxonomy, and comparability schemas
-PASS: generated tables are fresh under both generator entry points
-PASS: 13 unit tests
-PASS: Citation File Format 1.2.0 schema validation
-PASS: Python compilation and git diff --check
-```
-
-## Remaining uncertainty
-
-Bibliographic status is verified for all 42 records, but many protocol fields and artifact claims remain explicitly unknown. The generated, paper-by-paper list is in `docs/REMAINING_UNCERTAINTY.md`. RNAMOD in particular still lacks verified dataset names, detailed benchmark protocol, final PMLR/DOI metadata, and an official-code conclusion beyond `unknown`.
+This is an additive schema evolution. Existing `data/papers.yaml` and paper-level `protocol` blocks remain valid; new consumers may join through `paper_id` and `dataset_variants`. No paper or source file was deleted, and there is no breaking change for v0.2.1 registry readers.

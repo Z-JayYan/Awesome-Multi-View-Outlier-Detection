@@ -3,11 +3,15 @@
 [![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
 [![Registry validation](https://github.com/Z-JayYan/Awesome-Multi-View-Outlier-Detection/actions/workflows/validate.yml/badge.svg)](https://github.com/Z-JayYan/Awesome-Multi-View-Outlier-Detection/actions/workflows/validate.yml)
 [![Papers](https://img.shields.io/badge/papers-42-4c1)](data/papers.yaml)
-[![Version](https://img.shields.io/badge/version-0.2.1-blue)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-0.3.0-blue)](CHANGELOG.md)
 
 > A curated, auditable, and machine-readable knowledge base for **Multi-View Outlier Detection (MVOD)** and carefully separated adjacent multi-view anomaly-detection settings.
 
-**v0.2.1 — Public Release Cleanup.** The v0.2 Coverage + Comparability foundation is retained; this release formalizes consistency checks, licensing, citation, and release-facing documentation.
+**v0.3.0 — Protocol Reconstruction.** This release moves from paper-level comparability metadata toward evidence-backed experiment records and dataset-variant-aware comparison.
+
+> **Same dataset name does not imply the same benchmark protocol.** Protocol reconstruction follows primary evidence and may remain incomplete when papers, supplements, or official code do not disclose a field.
+
+`Paper → Dataset Variant → Protocol Fingerprint → Comparability`
 
 ## Why this repository
 
@@ -32,7 +36,7 @@ Ordinary multi-view clustering/classification, single-view anomaly detection, an
 - **I want papers:** browse the generated [complete paper registry](docs/PAPERS.md).
 - **I want datasets:** inspect [dataset cards](docs/DATASETS.md) and the machine-readable [dataset registry](data/datasets.yaml).
 - **I need baselines:** use the method-level [Baseline Evidence Map](docs/BASELINE_MAP.md).
-- **I need protocol information:** inspect each paper's `protocol` block, read [Protocol Comparability](docs/COMPARABILITY.md), and consult [Common Synthetic MVOD Protocols](docs/COMMON_SYNTHETIC_PROTOCOLS.md) for locally named synthetic configurations.
+- **I need protocol information:** read the generated [protocol cards](docs/PROTOCOLS.md), inspect [dataset variants](docs/DATASET_VARIANTS.md), and use [Protocol Comparability](docs/COMPARABILITY.md).
 - **I need reproducible code:** check `code_status`, `verified_from`, and `reproducibility` in the registry.
 - **I want to compare two papers:** run `python scripts/compare_protocols.py PAPER_ID_A PAPER_ID_B`.
 

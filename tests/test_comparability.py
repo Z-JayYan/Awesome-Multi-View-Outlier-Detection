@@ -6,7 +6,7 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
-from compare_protocols import compare, load_papers  # noqa: E402
+from compare_protocols import compare, compare_experiments, load_papers  # noqa: E402
 
 
 class ComparabilityRulesTest(unittest.TestCase):
@@ -67,6 +67,42 @@ class ComparabilityRulesTest(unittest.TestCase):
         left = self.known_protocol_paper("synthetic-left-2026")
         right = self.known_protocol_paper("synthetic-right-2026", metric="AUPRC")
         self.assertEqual(compare(left, right)[0], "CONDITIONALLY_COMPARABLE")
+
+    @staticmethod
+    def experiment(experiment_id, variant="v1", ratio=0.15, metric="AUROC", view="complete"):
+        return {
+            "id": experiment_id, "view_setting": view, "dataset_variants": [variant],
+            "preprocessing": {"feature_construction": "fixed features", "normalization": "z-score"},
+            "anomaly_generation": {
+                "attribute": {"operator": "random replacement"},
+                "class": {"operator": "cross-class view swap"},
+                "mixed": {"operator": "swap plus replacement"},
+            },
+            "ratios": {"settings": [[ratio, 0, 0]]},
+            "training": {"training_contamination": ratio},
+            "evaluation": {"metrics": [metric], "aggregation": "mean", "repetitions": 10, "endpoint": "sample"},
+        }
+
+    def test_same_name_different_variant_is_conditional(self):
+        result = compare_experiments(self.experiment("left", "bbc-a"), self.experiment("right", "bbc-b"))
+        self.assertEqual(result["status"], "CONDITIONALLY_COMPARABLE")
+        self.assertTrue(any("dataset variant" in item for item in result["mismatched"]))
+
+    def test_unknown_critical_field_is_unknown(self):
+        right = self.experiment("right")
+        right["preprocessing"]["normalization"] = "unknown"
+        result = compare_experiments(self.experiment("left"), right)
+        self.assertEqual(result["status"], "UNKNOWN")
+        self.assertIn("normalization", result["unknown"])
+
+    def test_ratio_difference_is_conditional(self):
+        result = compare_experiments(self.experiment("left", ratio=0.10), self.experiment("right", ratio=0.15))
+        self.assertEqual(result["status"], "CONDITIONALLY_COMPARABLE")
+
+    def test_complete_vs_partial_is_blocking(self):
+        result = compare_experiments(self.experiment("left"), self.experiment("right", view="partial"))
+        self.assertEqual(result["status"], "NOT_DIRECTLY_COMPARABLE")
+        self.assertTrue(result["blocking"])
 
 
 if __name__ == "__main__":

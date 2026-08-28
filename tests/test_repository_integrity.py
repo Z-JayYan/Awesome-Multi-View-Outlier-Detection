@@ -88,6 +88,8 @@ class RepositoryIntegrityTest(unittest.TestCase):
             ROOT / "docs/DATASETS.md",
             ROOT / "docs/BASELINE_MAP.md",
             ROOT / "docs/REMAINING_UNCERTAINTY.md",
+            ROOT / "docs/PROTOCOLS.md",
+            ROOT / "docs/DATASET_VARIANTS.md",
         ]
         before = {path: normalized_text(path) for path in generated}
         result = subprocess.run(
@@ -115,7 +117,7 @@ class RepositoryIntegrityTest(unittest.TestCase):
             "date-released", "repository-code", "url", "license",
         ):
             self.assertIn(field, citation)
-        self.assertEqual(citation["version"], "0.2.1")
+        self.assertEqual(citation["version"], "0.3.0")
         self.assertEqual(citation["authors"], [{"name": "Z-JayYan"}])
         self.assertEqual(citation["license"], "CC-BY-4.0")
         self.assertFalse((ROOT / "CITATION.cff.template").exists())

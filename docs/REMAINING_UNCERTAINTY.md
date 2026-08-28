@@ -1,48 +1,154 @@
 # Remaining Uncertainty
 
-Generated from explicit registry uncertainty. These gaps are preserved rather than inferred. `not_found` means no official artifact was found in the cited audit; it is not proof that none exists.
+Generated evidence queue. P0 gaps block baseline comparison; P1 gaps materially affect reproduction; P2 gaps refine metadata. Unknown is preferred to unsupported inference.
 
-| Paper | Unresolved fields | Reason | Missing evidence needed |
-|---|---|---|---|
-| [Bilateral Graph Filtering Framework with Alternating Optimization for Robust Multi-View Outlier Detection](https://doi.org/10.1109/ICASSP55912.2026.11460482) | protocol.anomaly_generation, protocol.contamination, protocol.preprocessing, protocol.evaluation, protocol.data_setting, protocol.verification, code_status=unknown | The currently cited official sources do not expose every required protocol/artifact field. | Official full text/supplement or author-owned code/config with the missing protocol and artifact provenance. |
-| [Granular-Ball Based Multi-View Outlier Detection](https://doi.org/10.1109/ICASSP55912.2026.11462415) | protocol.anomaly_generation, protocol.contamination, protocol.preprocessing, protocol.evaluation, protocol.data_setting, protocol.verification, code_status=unknown | The currently cited official sources do not expose every required protocol/artifact field. | Official full text/supplement or author-owned code/config with the missing protocol and artifact provenance. |
-| [IMMoE](https://arxiv.org/abs/2607.19032) | protocol.anomaly_generation, protocol.contamination, protocol.preprocessing, protocol.evaluation, protocol.data_setting, protocol.verification, publisher DOI / final proceedings record | The currently cited official sources do not expose every required protocol/artifact field. | Official full text/supplement or author-owned code/config with the missing protocol and artifact provenance. |
-| [MVAS](https://doi.org/10.1109/TMM.2026.3660076) | protocol.anomaly_generation, protocol.contamination, protocol.preprocessing, protocol.evaluation, protocol.data_setting, protocol.verification, code_status=unknown | The currently cited official sources do not expose every required protocol/artifact field. | Official full text/supplement or author-owned code/config with the missing protocol and artifact provenance. |
-| [MATCH](https://arxiv.org/abs/2606.24375) | protocol.anomaly_generation, protocol.contamination, protocol.preprocessing, protocol.evaluation, protocol.data_setting, protocol.verification, code_status=unknown | The currently cited official sources do not expose every required protocol/artifact field. | Official full text/supplement or author-owned code/config with the missing protocol and artifact provenance. |
-| [MOD-TDID](https://doi.org/10.1007/s10489-026-07375-y) | protocol.anomaly_generation, protocol.contamination, protocol.preprocessing, protocol.evaluation, protocol.data_setting, protocol.verification | The currently cited official sources do not expose every required protocol/artifact field. | Official full text/supplement or author-owned code/config with the missing protocol and artifact provenance. |
-| [RNAMOD](https://openreview.net/forum?id=mL4B6DdgPU) | protocol.anomaly_generation, protocol.contamination, protocol.preprocessing, protocol.evaluation, protocol.data_setting, code_status=unknown | The currently cited official sources do not expose every required protocol/artifact field. | Official full text/supplement or author-owned code/config with the missing protocol and artifact provenance. |
-| [SCoNE](https://doi.org/10.1609/AAAI.V40I19.38643) | protocol.anomaly_generation, protocol.contamination, protocol.preprocessing, protocol.evaluation, protocol.data_setting, protocol.verification, code_status=unknown | The currently cited official sources do not expose every required protocol/artifact field. | Official full text/supplement or author-owned code/config with the missing protocol and artifact provenance. |
-| [SGANet](https://arxiv.org/abs/2604.05632) | protocol.anomaly_generation, protocol.contamination, protocol.preprocessing, protocol.evaluation, protocol.data_setting, protocol.verification, code_status=unknown | The currently cited official sources do not expose every required protocol/artifact field. | Official full text/supplement or author-owned code/config with the missing protocol and artifact provenance. |
-| [M2AD](https://arxiv.org/abs/2505.10996) | protocol.anomaly_generation, protocol.contamination, protocol.data_setting, publisher DOI / final proceedings record | The currently cited official sources do not expose every required protocol/artifact field. | Official full text/supplement or author-owned code/config with the missing protocol and artifact provenance. |
-| [LRTDM](https://doi.org/10.1016/j.inffus.2025.103313) | protocol.anomaly_generation, protocol.contamination, protocol.preprocessing, protocol.evaluation, protocol.data_setting, protocol.verification, code_status=unknown | The currently cited official sources do not expose every required protocol/artifact field. | Official full text/supplement or author-owned code/config with the missing protocol and artifact provenance. |
-| [Multi-Flow](https://doi.org/10.1109/CVPRW67362.2025.00378) | protocol.anomaly_generation, protocol.contamination, protocol.preprocessing, protocol.evaluation | The currently cited official sources do not expose every required protocol/artifact field. | Official full text/supplement or author-owned code/config with the missing protocol and artifact provenance. |
-| [MGFMOD](https://doi.org/10.1016/j.ijar.2025.109402) | protocol.anomaly_generation, protocol.contamination, protocol.preprocessing, protocol.evaluation, protocol.data_setting, protocol.verification | The currently cited official sources do not expose every required protocol/artifact field. | Official full text/supplement or author-owned code/config with the missing protocol and artifact provenance. |
-| [MODGF](https://doi.org/10.1109/ICASSP49660.2025.10889803) | protocol.anomaly_generation, protocol.contamination, protocol.preprocessing, protocol.evaluation, protocol.data_setting, protocol.verification, code_status=unknown | The currently cited official sources do not expose every required protocol/artifact field. | Official full text/supplement or author-owned code/config with the missing protocol and artifact provenance. |
-| [IDIF](https://doi.org/10.1609/AAAI.V39I12.33349) | protocol.anomaly_generation, protocol.contamination, protocol.preprocessing, protocol.evaluation, protocol.data_setting, protocol.verification | The currently cited official sources do not expose every required protocol/artifact field. | Official full text/supplement or author-owned code/config with the missing protocol and artifact provenance. |
-| [IAMOD](https://doi.org/10.1145/3638354) | protocol.anomaly_generation, protocol.contamination, protocol.preprocessing, protocol.evaluation, protocol.data_setting, protocol.verification | The currently cited official sources do not expose every required protocol/artifact field. | Official full text/supplement or author-owned code/config with the missing protocol and artifact provenance. |
-| [Learning Diffusion Models for Multi-view Anomaly Detection](https://doi.org/10.1007/978-3-031-73414-4_19) | protocol.anomaly_generation, protocol.contamination, protocol.preprocessing, protocol.evaluation, protocol.data_setting, protocol.verification | The currently cited official sources do not expose every required protocol/artifact field. | Official full text/supplement or author-owned code/config with the missing protocol and artifact provenance. |
-| [INA-CR](https://doi.org/10.1007/s00530-024-01526-2) | protocol.anomaly_generation, protocol.contamination, protocol.preprocessing, protocol.evaluation, protocol.data_setting, protocol.verification | The currently cited official sources do not expose every required protocol/artifact field. | Official full text/supplement or author-owned code/config with the missing protocol and artifact provenance. |
-| [MODGD](https://doi.org/10.1016/j.inffus.2023.102012) | protocol.anomaly_generation, protocol.contamination, protocol.preprocessing, protocol.evaluation, protocol.data_setting, protocol.verification | The currently cited official sources do not expose every required protocol/artifact field. | Official full text/supplement or author-owned code/config with the missing protocol and artifact provenance. |
-| [RCPMOD](https://doi.org/10.1145/3664647.3681125) | protocol.anomaly_generation, protocol.contamination, protocol.preprocessing, protocol.evaluation, protocol.data_setting, code_status=unknown | The currently cited official sources do not expose every required protocol/artifact field. | Official full text/supplement or author-owned code/config with the missing protocol and artifact provenance. |
-| [SeeM](https://doi.org/10.1007/978-981-97-2242-6_7) | protocol.anomaly_generation, protocol.contamination, protocol.preprocessing, protocol.evaluation, protocol.data_setting, protocol.verification | The currently cited official sources do not expose every required protocol/artifact field. | Official full text/supplement or author-owned code/config with the missing protocol and artifact provenance. |
-| [SRLSP](https://doi.org/10.1145/3532191) | protocol.anomaly_generation, protocol.contamination, protocol.preprocessing, protocol.evaluation, protocol.data_setting, protocol.verification | The currently cited official sources do not expose every required protocol/artifact field. | Official full text/supplement or author-owned code/config with the missing protocol and artifact provenance. |
-| [dPoE](https://doi.org/10.1145/3581783.3612487) | protocol.anomaly_generation, protocol.contamination, protocol.preprocessing, protocol.evaluation, protocol.data_setting, protocol.verification | The currently cited official sources do not expose every required protocol/artifact field. | Official full text/supplement or author-owned code/config with the missing protocol and artifact provenance. |
-| [ECMOD](https://doi.org/10.1007/978-3-031-30678-5_9) | protocol.anomaly_generation, protocol.contamination, protocol.preprocessing, protocol.evaluation, protocol.data_setting, protocol.verification | The currently cited official sources do not expose every required protocol/artifact field. | Official full text/supplement or author-owned code/config with the missing protocol and artifact provenance. |
-| [FMOD](https://doi.org/10.1109/TBDATA.2020.3004057) | protocol.anomaly_generation, protocol.contamination, protocol.preprocessing, protocol.evaluation, protocol.data_setting, protocol.verification, code_status=not_found | The currently cited official sources do not expose every required protocol/artifact field. | Official full text/supplement or author-owned code/config with the missing protocol and artifact provenance. |
-| [CGAEs](https://doi.org/10.1109/ICTAI52525.2021.00218) | protocol.anomaly_generation, protocol.contamination, protocol.preprocessing, protocol.evaluation, protocol.data_setting, protocol.verification, code_status=not_found | The currently cited official sources do not expose every required protocol/artifact field. | Official full text/supplement or author-owned code/config with the missing protocol and artifact provenance. |
-| [Learning Probabilistic Latent Structure for Outlier Detection from Multi-view Data](https://doi.org/10.1007/978-3-030-75762-5_5) | protocol.anomaly_generation, protocol.contamination, protocol.preprocessing, protocol.evaluation, protocol.data_setting, protocol.verification, code_status=unknown | The currently cited official sources do not expose every required protocol/artifact field. | Official full text/supplement or author-owned code/config with the missing protocol and artifact provenance. |
-| [NCMOD](https://doi.org/10.1609/AAAI.V35I8.16873) | protocol.anomaly_generation, protocol.contamination, protocol.preprocessing, protocol.evaluation, protocol.data_setting, protocol.verification | The currently cited official sources do not expose every required protocol/artifact field. | Official full text/supplement or author-owned code/config with the missing protocol and artifact provenance. |
-| [MultiVAE](https://doi.org/10.1007/978-3-030-85896-4_10) | protocol.anomaly_generation, protocol.contamination, protocol.preprocessing, protocol.evaluation, protocol.data_setting, protocol.verification, code_status=not_found | The currently cited official sources do not expose every required protocol/artifact field. | Official full text/supplement or author-owned code/config with the missing protocol and artifact provenance. |
-| [HBM](https://www.ijcai.org/proceedings/2020/335) | protocol.anomaly_generation, protocol.contamination, protocol.preprocessing, protocol.evaluation, protocol.data_setting, protocol.verification | The currently cited official sources do not expose every required protocol/artifact field. | Official full text/supplement or author-owned code/config with the missing protocol and artifact provenance. |
-| [MUVAD](https://doi.org/10.1609/AAAI.V33I01.33014894) | protocol.anomaly_generation, protocol.contamination, protocol.preprocessing, protocol.evaluation, protocol.data_setting, protocol.verification, code_status=not_found | The currently cited official sources do not expose every required protocol/artifact field. | Official full text/supplement or author-owned code/config with the missing protocol and artifact provenance. |
-| [MODDIS](https://doi.org/10.1109/ICDM.2019.00136) | protocol.anomaly_generation, protocol.contamination, protocol.preprocessing, protocol.evaluation, protocol.data_setting, protocol.verification | The currently cited official sources do not expose every required protocol/artifact field. | Official full text/supplement or author-owned code/config with the missing protocol and artifact provenance. |
-| [CRMOD](https://doi.org/10.1109/TIP.2017.2754942) | protocol.anomaly_generation, protocol.contamination, protocol.preprocessing, protocol.evaluation, protocol.data_setting, protocol.verification, code_status=not_found | The currently cited official sources do not expose every required protocol/artifact field. | Official full text/supplement or author-owned code/config with the missing protocol and artifact provenance. |
-| [LDSR](https://doi.org/10.1609/AAAI.V32I1.11826) | protocol.anomaly_generation, protocol.contamination, protocol.preprocessing, protocol.evaluation, protocol.data_setting, protocol.verification | The currently cited official sources do not expose every required protocol/artifact field. | Official full text/supplement or author-owned code/config with the missing protocol and artifact provenance. |
-| [Multi-View Group Anomaly Detection](https://doi.org/10.1145/3269206.3271770) | protocol.view_setting, protocol.anomaly_generation, protocol.contamination, protocol.preprocessing, protocol.evaluation, protocol.data_setting, protocol.verification, code_status=unknown | The currently cited official sources do not expose every required protocol/artifact field. | Official full text/supplement or author-owned code/config with the missing protocol and artifact provenance. |
-| [MLRA+](https://doi.org/10.1145/3168363) | protocol.anomaly_generation, protocol.contamination, protocol.preprocessing, protocol.evaluation, protocol.data_setting, protocol.verification | The currently cited official sources do not expose every required protocol/artifact field. | Official full text/supplement or author-owned code/config with the missing protocol and artifact provenance. |
-| [Partial Multi-View Outlier Detection Based on Collective Learning](https://doi.org/10.1609/AAAI.V32I1.11278) | protocol.anomaly_generation, protocol.contamination, protocol.preprocessing, protocol.evaluation, protocol.data_setting, protocol.verification, code_status=not_found | The currently cited official sources do not expose every required protocol/artifact field. | Official full text/supplement or author-owned code/config with the missing protocol and artifact provenance. |
-| [PLVM](https://proceedings.neurips.cc/paper/2016/hash/0f96613235062963ccde717b18f97592-Abstract.html) | protocol.anomaly_generation, protocol.contamination, protocol.preprocessing, protocol.evaluation, protocol.data_setting, protocol.verification, code_status=not_found | The currently cited official sources do not expose every required protocol/artifact field. | Official full text/supplement or author-owned code/config with the missing protocol and artifact provenance. |
-| [DMOD](https://www.ijcai.org/Abstract/15/572) | protocol.anomaly_generation, protocol.contamination, protocol.preprocessing, protocol.evaluation, protocol.data_setting, protocol.verification, code_status=not_found | The currently cited official sources do not expose every required protocol/artifact field. | Official full text/supplement or author-owned code/config with the missing protocol and artifact provenance. |
-| [MLRA](https://doi.org/10.1137/1.9781611974010.84) | protocol.anomaly_generation, protocol.contamination, protocol.preprocessing, protocol.evaluation, protocol.data_setting, protocol.verification | The currently cited official sources do not expose every required protocol/artifact field. | Official full text/supplement or author-owned code/config with the missing protocol and artifact provenance. |
-| [Using Consensus Clustering for Multi-view Anomaly Detection](https://doi.org/10.1109/SPW.2012.18) | protocol.anomaly_generation, protocol.contamination, protocol.preprocessing, protocol.evaluation, protocol.data_setting, protocol.verification, code_status=not_found | The currently cited official sources do not expose every required protocol/artifact field. | Official full text/supplement or author-owned code/config with the missing protocol and artifact provenance. |
-| [HOAD](https://ieeexplore.ieee.org/document/6137313) | protocol.anomaly_generation, protocol.contamination, protocol.preprocessing, protocol.evaluation, protocol.data_setting, protocol.verification, code_status=not_found | The currently cited official sources do not expose every required protocol/artifact field. | Official full text/supplement or author-owned code/config with the missing protocol and artifact provenance. |
+## P0 — DMOD / `dmod-main-uci`
+
+**Unknown / unresolved:**
+
+- random-value distribution
+- view split boundary
+- overlap policy
+- random seeds
+
+**Evidence checked:** paper
+
+**Next source:** author supplement, versioned official code/config, or dataset-generation artifact.
+
+## P1 — LDSR / `ldsr-main`
+
+**Unknown / unresolved:**
+
+- random-value distribution
+- exact feature split boundaries
+- seeds
+- normalization
+
+**Evidence checked:** official_code, paper
+
+**Next source:** author supplement, versioned official code/config, or dataset-generation artifact.
+
+## P1 — MODDIS / `moddis-official-code`
+
+**Unknown / unresolved:**
+
+- dataset identities and variants
+- paper/code match
+- exact class and mixed affected-view rule
+- seeds
+
+**Evidence checked:** official_code
+
+**Next source:** author supplement, versioned official code/config, or dataset-generation artifact.
+
+## P1 — NCMOD / `ncmod-main`
+
+**Unknown / unresolved:**
+
+- repetitions and seeds
+- normalization
+- inlier class choices
+- missing official generation script
+
+**Evidence checked:** official_code, paper
+
+**Next source:** author supplement, versioned official code/config, or dataset-generation artifact.
+
+## P0 — SRLSP / `srlsp-public-artifact`
+
+**Unknown / unresolved:**
+
+- paper datasets
+- feature variants
+- all anomaly operators and ratios
+- preprocessing
+- repetitions and seeds
+
+**Evidence checked:** official_code
+
+**Next source:** author supplement, versioned official code/config, or dataset-generation artifact.
+
+## P0 — IAMOD / `iamod-public-artifact`
+
+**Unknown / unresolved:**
+
+- paper experiment tables
+- dataset dimensions
+- anomaly operators and ratios
+- epoch selection correspondence to paper
+- seeds
+
+**Evidence checked:** official_code
+
+**Next source:** author supplement, versioned official code/config, or dataset-generation artifact.
+
+## P1 — MODGD / `modgd-main`
+
+**Unknown / unresolved:**
+
+- Caltech dimension inconsistency
+- exact random replacement distribution
+- exact swapped-view count
+- seeds
+- ZIP commit identity
+
+**Evidence checked:** paper
+
+**Next source:** author supplement, versioned official code/config, or dataset-generation artifact.
+
+## P0 — RCPMOD / `rcpmod-main`
+
+**Unknown / unresolved:**
+
+- random-value distribution
+- anomaly/view-removal ordering
+- repetitions
+- seeds
+- official code
+
+**Evidence checked:** paper
+
+**Next source:** author supplement, versioned official code/config, or dataset-generation artifact.
+
+## P0 — LRTDM / `lrtdm-accessible-evidence`
+
+**Unknown / unresolved:**
+
+- all dataset variants
+- anomaly generation and ratios
+- preprocessing
+- training endpoint
+- evaluation
+- code
+
+**Evidence checked:** paper
+
+**Next source:** author supplement, versioned official code/config, or dataset-generation artifact.
+
+## P0 — SCoNE / `scone-main`
+
+**Unknown / unresolved:**
+
+- normalization
+- exact corruption operators
+- overlap policy
+- seeds
+- official code
+
+**Evidence checked:** paper
+
+**Next source:** author supplement, versioned official code/config, or dataset-generation artifact.
+
+## P0 — RNAMOD / `rnamod-public-record`
+
+**Unknown / unresolved:**
+
+- dataset names and variants
+- all corruption operators and ratios
+- preprocessing
+- training/evaluation protocol
+- official code
+
+**Evidence checked:** official_project, unknown
+
+**Next source:** author supplement, versioned official code/config, or dataset-generation artifact.

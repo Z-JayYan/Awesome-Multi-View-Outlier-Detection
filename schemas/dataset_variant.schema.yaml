@@ -1,0 +1,29 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+title: Awesome-MVOD dataset variant
+type: object
+additionalProperties: false
+required: [id, canonical_dataset, papers, samples, views, view_dimensions, feature_source, preprocessing, evidence, resolution]
+properties:
+  id: {type: string, pattern: '^[a-z0-9]+(?:-[a-z0-9]+)*$'}
+  canonical_dataset: {type: string, minLength: 2}
+  papers: {type: array, uniqueItems: true, items: {type: string}}
+  samples: {$ref: '#/$defs/known'}
+  views: {$ref: '#/$defs/known'}
+  view_dimensions: {$ref: '#/$defs/known'}
+  feature_source: {$ref: '#/$defs/known'}
+  preprocessing: {$ref: '#/$defs/known'}
+  evidence: {type: array, minItems: 1, items: {$ref: '#/$defs/evidence'}}
+  resolution: {enum: [resolved, partially_resolved, unresolved]}
+  notes: {type: string}
+$defs:
+  known: {type: [string, integer, array, object, 'null']}
+  evidence:
+    type: object
+    additionalProperties: false
+    required: [source_type, source, locator, note, confidence]
+    properties:
+      source_type: {enum: [paper, supplement, official_code, official_project, derived, unknown]}
+      source: {type: [string, 'null'], format: uri}
+      locator: {type: string}
+      note: {type: string}
+      confidence: {enum: [high, medium, low, unknown]}

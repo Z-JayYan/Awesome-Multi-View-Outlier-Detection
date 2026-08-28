@@ -1,0 +1,97 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+title: Awesome-MVOD experiment-level protocol
+type: object
+additionalProperties: false
+required: [id, paper_id, priority, track, dataset_variants, view_setting, preprocessing, anomaly_generation, ratios, training, evaluation, code_evidence, provenance, unresolved]
+properties:
+  id: {type: string, pattern: '^[a-z0-9]+(?:-[a-z0-9]+)*$'}
+  paper_id: {type: string}
+  priority: {enum: [P0, P1]}
+  track: {enum: [core_mvod, partial_mvod]}
+  dataset_variants: {type: array, minItems: 1, uniqueItems: true, items: {type: string}}
+  view_setting: {enum: [complete, partial, unknown]}
+  preprocessing:
+    type: object
+    additionalProperties: false
+    required: [normalization, dimensionality_reduction, feature_construction, order]
+    properties:
+      normalization: {}
+      dimensionality_reduction: {}
+      feature_construction: {}
+      order: {}
+  anomaly_generation:
+    type: object
+    additionalProperties: false
+    required: [attribute, class, mixed]
+    properties:
+      attribute: {$ref: '#/$defs/anomaly'}
+      class: {$ref: '#/$defs/anomaly'}
+      mixed: {$ref: '#/$defs/anomaly'}
+  ratios:
+    type: object
+    additionalProperties: false
+    required: [settings, denominator, overlap_allowed, total_contamination]
+    properties:
+      settings: {type: [array, string]}
+      denominator: {type: string}
+      overlap_allowed: {type: [boolean, string]}
+      total_contamination: {type: [number, array, string]}
+  training:
+    type: object
+    additionalProperties: false
+    required: [paradigm, transductive, train_test_split, training_contamination, uses_test_instances, hyperparameter_selection]
+    properties:
+      paradigm: {enum: [unsupervised, semi_supervised, unknown]}
+      transductive: {type: [boolean, string]}
+      train_test_split: {type: string}
+      training_contamination: {type: [number, array, string]}
+      uses_test_instances: {type: [boolean, string]}
+      hyperparameter_selection: {type: string}
+  evaluation:
+    type: object
+    additionalProperties: false
+    required: [metrics, aggregation, repetitions, seeds, reporting, endpoint]
+    properties:
+      metrics: {type: array, minItems: 1, items: {type: string}}
+      aggregation: {type: string}
+      repetitions: {type: [integer, string]}
+      seeds: {type: [array, integer, string]}
+      reporting: {type: string}
+      endpoint: {enum: [sample, image, pixel, unknown]}
+  code_evidence:
+    type: object
+    additionalProperties: false
+    required: [official_repository, commit_or_release, dataset_loader, anomaly_generator, preprocessing_script, evaluation_script, protocol_matches_paper, discrepancy]
+    properties:
+      official_repository: {type: [string, 'null'], format: uri}
+      commit_or_release: {type: string}
+      dataset_loader: {type: string}
+      anomaly_generator: {type: string}
+      preprocessing_script: {type: string}
+      evaluation_script: {type: string}
+      protocol_matches_paper: {enum: [yes, no, partial, unknown]}
+      discrepancy: {type: string}
+  provenance: {type: array, minItems: 1, items: {$ref: '#/$defs/evidence'}}
+  unresolved: {type: array, items: {type: string}}
+$defs:
+  anomaly:
+    type: object
+    additionalProperties: false
+    required: [enabled, operator, affected_views, ratio, implementation_notes]
+    properties:
+      enabled: {type: [boolean, string]}
+      operator: {type: string}
+      affected_views: {type: [integer, array, string]}
+      ratio: {type: [number, array, string]}
+      implementation_notes: {type: string}
+  evidence:
+    type: object
+    additionalProperties: false
+    required: [fields, source_type, source, locator, note, confidence]
+    properties:
+      fields: {type: array, minItems: 1, items: {type: string}}
+      source_type: {enum: [paper, supplement, official_code, official_project, derived, unknown]}
+      source: {type: [string, 'null'], format: uri}
+      locator: {type: string}
+      note: {type: string}
+      confidence: {enum: [high, medium, low, unknown]}

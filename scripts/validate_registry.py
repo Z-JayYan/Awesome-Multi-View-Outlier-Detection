@@ -114,12 +114,16 @@ def main() -> int:
     datasets = load_yaml(ROOT / "data" / "datasets.yaml") or []
     resources = load_yaml(ROOT / "data" / "resources.yaml") or []
     comparability = load_yaml(ROOT / "data" / "comparability.yaml") or {}
+    variants = load_yaml(ROOT / "data" / "dataset_variants.yaml") or []
+    protocols = load_yaml(ROOT / "data" / "protocols.yaml") or []
 
     errors.extend(schema_errors(ROOT / "schemas" / "paper.schema.yaml", papers, "paper"))
     errors.extend(schema_errors(ROOT / "schemas" / "dataset.schema.yaml", datasets, "dataset"))
     errors.extend(schema_errors(ROOT / "schemas" / "resource.schema.yaml", resources, "resource"))
     errors.extend(document_schema_errors(ROOT / "schemas" / "taxonomy.schema.yaml", taxonomy, "taxonomy"))
     errors.extend(document_schema_errors(ROOT / "schemas" / "comparability.schema.yaml", comparability, "comparability"))
+    errors.extend(schema_errors(ROOT / "schemas" / "dataset_variant.schema.yaml", variants, "dataset variant"))
+    errors.extend(schema_errors(ROOT / "schemas" / "protocol.schema.yaml", protocols, "protocol"))
 
     allowed = {
         "track": set(taxonomy["tracks"]),
@@ -261,6 +265,46 @@ def main() -> int:
                 errors.append(f"{label}: invalid reproducibility.{field}")
 
     paper_ids = {paper["id"] for paper in papers}
+    variant_ids = {variant["id"] for variant in variants}
+    if len(variant_ids) != len(variants):
+        errors.append("data/dataset_variants.yaml contains duplicate ids")
+    protocol_ids = {protocol["id"] for protocol in protocols}
+    if len(protocol_ids) != len(protocols):
+        errors.append("data/protocols.yaml contains duplicate ids")
+    for variant in variants:
+        dangling = set(variant["papers"]) - paper_ids
+        if dangling:
+            errors.append(f"{variant['id']}: dangling paper references: {sorted(dangling)}")
+    protocol_papers: set[str] = set()
+    for experiment in protocols:
+        label = experiment["id"]
+        protocol_papers.add(experiment["paper_id"])
+        if experiment["paper_id"] not in paper_ids:
+            errors.append(f"{label}: dangling paper_id {experiment['paper_id']!r}")
+        dangling = set(experiment["dataset_variants"]) - variant_ids
+        if dangling:
+            errors.append(f"{label}: dangling dataset variants: {sorted(dangling)}")
+        paper = next((item for item in papers if item["id"] == experiment["paper_id"]), None)
+        if paper and experiment["track"] != paper["track"]:
+            errors.append(f"{label}: experiment track disagrees with paper track")
+        if paper and experiment["view_setting"] != paper["view_setting"]:
+            errors.append(f"{label}: experiment view setting disagrees with paper")
+        for anomaly_name, anomaly in experiment["anomaly_generation"].items():
+            if anomaly["enabled"] is False and anomaly["ratio"] not in {0, 0.0, "unknown"}:
+                errors.append(f"{label}: disabled {anomaly_name} anomaly has a non-zero ratio")
+            ratio = anomaly["ratio"]
+            values = ratio if isinstance(ratio, list) else [ratio]
+            for value in values:
+                if isinstance(value, (int, float)) and not 0 <= value <= 1:
+                    errors.append(f"{label}: invalid {anomaly_name} ratio {value}")
+    priority_ids = {
+        "dmod-2015", "ldsr-2018", "moddis-2019", "ncmod-2021", "srlsp-2023",
+        "iamod-2024", "modgd-2024", "lrtdm-2025", "scone-2026", "rnamod-2026",
+        "rcpmod-2024",
+    }
+    missing_priority = priority_ids - protocol_papers
+    if missing_priority:
+        errors.append(f"priority papers lack protocol records: {sorted(missing_priority)}")
     for dataset in datasets:
         label = dataset["name"]
         declared = dataset.get("papers_using_dataset", [])
