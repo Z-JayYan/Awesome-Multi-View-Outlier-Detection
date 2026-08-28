@@ -1,6 +1,6 @@
 # Protocol Map
 
-> v0.2: narrative guidance is no longer the only protocol representation. Every paper has a machine-readable `protocol` fingerprint in `data/papers.yaml`, and conservative decision rules live in `data/comparability.yaml`. See [Protocol Comparability](COMPARABILITY.md).
+> Since v0.2, narrative guidance is no longer the only protocol representation. Every paper has a machine-readable `protocol` fingerprint in `data/papers.yaml`, and conservative decision rules live in `data/comparability.yaml`. See [Protocol Comparability](COMPARABILITY.md) and [Common Synthetic MVOD Protocols](COMMON_SYNTHETIC_PROTOCOLS.md).
 
 There is no field-wide, unique MVOD protocol. Results should be compared only after the following axes are matched.
 

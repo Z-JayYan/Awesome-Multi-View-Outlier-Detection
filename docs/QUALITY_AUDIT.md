@@ -1,6 +1,14 @@
-# v0.2 Quality Audit
+# v0.2.1 Quality Audit
 
-Audit date: 2026-08-27.
+Audit date: 2026-08-28.
+
+## Public release cleanup
+
+- The synthetic-protocol guide is published as `COMMON_SYNTHETIC_PROTOCOLS.md`; D1–D6 are explicitly local configuration identifiers rather than universal benchmark names.
+- Every documented internal Markdown path is checked for existence.
+- Paper, dataset, resource, taxonomy, and comparability registries are covered by validation and formal tests.
+- Generated README and registry tables must remain deterministic and committed.
+- Public citation and scoped license files are present without inferring a real-world maintainer name.
 
 ## Verification status
 

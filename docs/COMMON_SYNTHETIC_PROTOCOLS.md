@@ -1,14 +1,14 @@
 # Common Synthetic MVOD Protocols
 
-The title intentionally avoids calling D1–D6 a universal standard. Public papers and code use several ratio grids and naming conventions; the labels are not safe to interpret without a source.
+This document describes recurring synthetic anomaly-construction conventions in Multi-View Outlier Detection (MVOD). It does not define a universal benchmark.
 
 ## What can be stated safely
 
 - Attribute, class, and combined/mixed corruptions recur across the literature.
 - Papers commonly vary the relative proportions of those corruption types.
-- Identical labels such as `D1` can refer to experiment-specific configurations rather than a globally standardized recipe.
+- Labels such as `D1` through `D6` are local configuration identifiers. They are not field-wide standardized benchmark names, and the same label can refer to different experiment-specific configurations.
 
-## Required registry for a D1–D6 suite
+## Required registry for a locally named D1–D6 suite
 
 | Field | Example description, not a prescribed value |
 |---|---|
@@ -20,4 +20,4 @@ The title intentionally avoids calling D1–D6 a universal standard. Public pape
 | `preprocessing_order` | Before or after corruption |
 | `source` | Exact paper section and code path/commit |
 
-No numeric D1–D6 table is included in the first release because the public evidence reviewed did not justify treating one mapping as field-wide. Contributions are welcome when they cite the exact paper/code and label the mapping as paper-specific.
+No numeric D1–D6 table is included because the reviewed public evidence does not justify treating one mapping as field-wide. A contribution may document a paper-specific mapping only when it cites the exact paper or code and identifies the labels as local to that source.

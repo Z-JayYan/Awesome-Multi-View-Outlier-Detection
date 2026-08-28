@@ -1,0 +1,12 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+title: Awesome-MVOD resource entry
+type: object
+required: [type, title, url, scope]
+additionalProperties: false
+properties:
+  type:
+    enum: [related_awesome_list, book_chapter, dataset_hub, bibliography, preprint_index]
+  title: {type: string, minLength: 2}
+  url: {type: string, format: uri}
+  year: {type: integer, minimum: 2000, maximum: 2100}
+  scope: {type: string, minLength: 10}

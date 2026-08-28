@@ -37,6 +37,8 @@ Every paper requires a `protocol` block covering:
 - dataset variants, train/test splits, and normal-only training;
 - verification sources and confidence.
 
+For synthetic anomaly suites, also read [`docs/COMMON_SYNTHETIC_PROTOCOLS.md`](docs/COMMON_SYNTHETIC_PROTOCOLS.md). Labels such as D1–D6 must be documented as source-local configuration identifiers, never as field-wide standard benchmark names.
+
 Unknown protocol evidence is valid. A fabricated complete fingerprint is not.
 
 ## Dataset submissions
@@ -55,6 +57,7 @@ python scripts/generate_tables.py
 python scripts/validate_registry.py
 python -m unittest discover -s tests -v
 git diff --exit-code
+git diff --check
 ```
 
 `git diff --exit-code` is the generated-file freshness check after generation. CI also validates JSON Schemas, duplicate paper identities, duplicate DOIs, dataset references, and internal Markdown links.

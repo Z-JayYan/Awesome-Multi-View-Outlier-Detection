@@ -50,7 +50,7 @@ properties:
       view_identity_correspondence: {type: string}
     required: [camera_view_structure, annotation_levels, normal_only_training, view_identity_correspondence]
     additionalProperties: false
-  # v0.1 compatibility aliases; canonical v0.2 consumers should use the fields above.
+  # v0.1 compatibility aliases; canonical v0.2+ consumers should use the fields above.
   instances: {type: [integer, 'null']}
   views: {type: [integer, 'null']}
   feature_dimensions: {type: string}

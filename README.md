@@ -3,11 +3,11 @@
 [![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
 [![Registry validation](https://github.com/Z-JayYan/Awesome-Multi-View-Outlier-Detection/actions/workflows/validate.yml/badge.svg)](https://github.com/Z-JayYan/Awesome-Multi-View-Outlier-Detection/actions/workflows/validate.yml)
 [![Papers](https://img.shields.io/badge/papers-42-4c1)](data/papers.yaml)
-[![Version](https://img.shields.io/badge/version-0.2.0-blue)](BUILD_REPORT.md)
+[![Version](https://img.shields.io/badge/version-0.2.1-blue)](CHANGELOG.md)
 
 > A curated, auditable, and machine-readable knowledge base for **Multi-View Outlier Detection (MVOD)** and carefully separated adjacent multi-view anomaly-detection settings.
 
-**v0.2 theme:** Coverage + Comparability. Verified metadata is preferred to apparent completeness; protocol comparability is preferred to a cross-paper leaderboard.
+**v0.2.1 — Public Release Cleanup.** The v0.2 Coverage + Comparability foundation is retained; this release formalizes consistency checks, licensing, citation, and release-facing documentation.
 
 ## Why this repository
 
@@ -32,7 +32,7 @@ Ordinary multi-view clustering/classification, single-view anomaly detection, an
 - **I want papers:** browse the generated [complete paper registry](docs/PAPERS.md).
 - **I want datasets:** inspect [dataset cards](docs/DATASETS.md) and the machine-readable [dataset registry](data/datasets.yaml).
 - **I need baselines:** use the method-level [Baseline Evidence Map](docs/BASELINE_MAP.md).
-- **I need protocol information:** inspect each paper's `protocol` block and read [Protocol Comparability](docs/COMPARABILITY.md).
+- **I need protocol information:** inspect each paper's `protocol` block, read [Protocol Comparability](docs/COMPARABILITY.md), and consult [Common Synthetic MVOD Protocols](docs/COMMON_SYNTHETIC_PROTOCOLS.md) for locally named synthetic configurations.
 - **I need reproducible code:** check `code_status`, `verified_from`, and `reproducibility` in the registry.
 - **I want to compare two papers:** run `python scripts/compare_protocols.py PAPER_ID_A PAPER_ID_B`.
 
@@ -208,7 +208,7 @@ This generated table is navigation, not a ranking. The Track column is part of e
 
 Artifact claims are evidence-backed. `official` code requires a paper, author page, or official project source establishing ownership; a GitHub search hit alone is insufficient. `unknown` means the audit did not find enough official evidence, not that an artifact cannot exist.
 
-The registry separately records official code, configs, dataset instructions, pretrained weights, environment details, and repository license. See [Reproducibility](docs/REPRODUCIBILITY.md) and the [v0.2 coverage audit](docs/COVERAGE_AUDIT_V02.md).
+The registry separately records official code, configs, dataset instructions, pretrained weights, environment details, and repository license. See [Reproducibility](docs/REPRODUCIBILITY.md) and the historical [v0.2 coverage audit](docs/COVERAGE_AUDIT_V02.md).
 
 ## Contributing
 
@@ -216,8 +216,8 @@ Corrections and carefully verified additions are welcome. Read [CONTRIBUTING.md]
 
 ## Citation
 
-Repository metadata is prepared in [`CITATION.cff.template`](CITATION.cff.template). It remains a template until the repository owner supplies a verified personal or organizational author identity.
+Use the machine-readable [`CITATION.cff`](CITATION.cff) when citing this release. The author identity is limited to the repository owner's verified GitHub identity; no real-world name has been inferred.
 
 ## License
 
-No license has been selected. Choosing a legal license remains an explicit repository-owner decision; the v0.2 upgrade does not assume MIT, Apache, Creative Commons, or another license.
+Code, schemas, tests, and workflows are licensed under the [MIT License](LICENSE-CODE). Original documentation, taxonomy, and curated metadata are licensed under [Creative Commons Attribution 4.0 International](LICENSE-CONTENT). Bibliographic facts and linked third-party works are not claimed as original repository content. See the [changelog](CHANGELOG.md) for release history.

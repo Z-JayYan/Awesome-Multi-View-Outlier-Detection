@@ -17,6 +17,9 @@ CURRENT_YEAR = 2026
 ID_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*-[0-9]{4}$")
 GITHUB_RE = re.compile(r"^https://github\.com/[^/]+/[^/]+/?$")
 MARKDOWN_LINK_RE = re.compile(r"(?<!!)\[[^\]]*\]\(([^)]+)\)")
+DOCUMENTED_PATH_RE = re.compile(
+    r"`((?:docs|data|schemas|scripts)/[A-Za-z0-9_.\-/]+\.(?:md|yaml|py))`"
+)
 DOI_RE = re.compile(r"10\.\d{4,9}/[-._;()/:a-z0-9]+", re.IGNORECASE)
 REQUIRED = {
     "id", "title", "year", "venue", "venue_type", "venue_status", "track",
@@ -62,6 +65,16 @@ def schema_errors(schema_path: Path, entries: list[dict], label: str) -> list[st
     return errors
 
 
+def document_schema_errors(schema_path: Path, document: object, label: str) -> list[str]:
+    schema = load_yaml(schema_path)
+    validator = Draft202012Validator(schema, format_checker=FormatChecker())
+    errors: list[str] = []
+    for error in sorted(validator.iter_errors(document), key=lambda item: list(item.path)):
+        location = ".".join(str(part) for part in error.path) or "<document>"
+        errors.append(f"{label}: schema {location}: {error.message}")
+    return errors
+
+
 def internal_link_errors() -> list[str]:
     errors: list[str] = []
     for path in sorted(ROOT.rglob("*.md")):
@@ -81,16 +94,32 @@ def internal_link_errors() -> list[str]:
     return errors
 
 
+def documented_path_errors() -> list[str]:
+    errors: list[str] = []
+    for path in sorted(ROOT.rglob("*.md")):
+        if ".git" in path.parts:
+            continue
+        text = path.read_text(encoding="utf-8")
+        for documented in DOCUMENTED_PATH_RE.findall(text):
+            if not (ROOT / documented).exists():
+                errors.append(f"{path.relative_to(ROOT)}: documented path does not exist: {documented!r}")
+    return errors
+
+
 def main() -> int:
     errors: list[str] = []
     warnings: list[str] = []
     taxonomy = load_yaml(ROOT / "data" / "taxonomy.yaml")
     papers = load_yaml(ROOT / "data" / "papers.yaml") or []
     datasets = load_yaml(ROOT / "data" / "datasets.yaml") or []
+    resources = load_yaml(ROOT / "data" / "resources.yaml") or []
     comparability = load_yaml(ROOT / "data" / "comparability.yaml") or {}
 
     errors.extend(schema_errors(ROOT / "schemas" / "paper.schema.yaml", papers, "paper"))
     errors.extend(schema_errors(ROOT / "schemas" / "dataset.schema.yaml", datasets, "dataset"))
+    errors.extend(schema_errors(ROOT / "schemas" / "resource.schema.yaml", resources, "resource"))
+    errors.extend(document_schema_errors(ROOT / "schemas" / "taxonomy.schema.yaml", taxonomy, "taxonomy"))
+    errors.extend(document_schema_errors(ROOT / "schemas" / "comparability.schema.yaml", comparability, "comparability"))
 
     allowed = {
         "track": set(taxonomy["tracks"]),
@@ -111,6 +140,18 @@ def main() -> int:
     dataset_names = {entry["name"] for entry in datasets}
     if len(dataset_names) != len(datasets):
         errors.append("data/datasets.yaml contains duplicate dataset names")
+
+    resource_titles: set[str] = set()
+    resource_urls: set[str] = set()
+    for resource in resources:
+        title = normalize_title(resource.get("title", ""))
+        url = resource.get("url")
+        if title in resource_titles:
+            errors.append(f"data/resources.yaml contains duplicate resource title: {resource.get('title')!r}")
+        resource_titles.add(title)
+        if url in resource_urls:
+            errors.append(f"data/resources.yaml contains duplicate resource URL: {url!r}")
+        resource_urls.add(url)
 
     seen_ids: set[str] = set()
     seen_title_year: set[tuple[str, int]] = set()
@@ -238,6 +279,7 @@ def main() -> int:
         errors.append("data/comparability.yaml contains duplicate rule ids")
 
     errors.extend(internal_link_errors())
+    errors.extend(documented_path_errors())
 
     if warnings:
         print("Warnings:")
@@ -249,8 +291,8 @@ def main() -> int:
             print(f"  - {error}")
         return 1
     print(
-        f"PASS: {len(papers)} papers, {len(datasets)} datasets, "
-        f"{len(seen_dois)} unique DOIs; schemas, registries, references, and internal links are consistent"
+        f"PASS: {len(papers)} papers, {len(datasets)} datasets, {len(resources)} resources, "
+        f"{len(seen_dois)} unique DOIs; schemas, registries, references, and documented paths are consistent"
     )
     return 0
 

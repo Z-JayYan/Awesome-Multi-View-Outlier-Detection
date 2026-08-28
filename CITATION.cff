@@ -3,13 +3,15 @@ message: "If you use this registry, please cite the repository release."
 title: "Awesome Multi-View Outlier Detection"
 type: dataset
 authors:
-  # TODO(owner): replace with a verified personal or organizational identity.
-  - name: "TODO: repository owner or maintaining organization"
+  - name: "Z-JayYan"
+version: "0.2.1"
+date-released: "2026-08-28"
 repository-code: "https://github.com/Z-JayYan/Awesome-Multi-View-Outlier-Detection"
 url: "https://github.com/Z-JayYan/Awesome-Multi-View-Outlier-Detection"
-license: "TODO"
-version: "0.2.0"
-date-released: "2026-08-27"
+license: CC-BY-4.0
+abstract: >-
+  A curated and reproducible knowledge base for Multi-View Outlier Detection,
+  including papers, datasets, protocols, baselines, taxonomy, and code evidence.
 keywords:
   - multi-view outlier detection
   - multi-view anomaly detection

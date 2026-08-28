@@ -1,0 +1,45 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+title: Awesome-MVOD controlled taxonomy
+type: object
+required:
+  - version
+  - tracks
+  - statuses
+  - view_settings
+  - training_paradigms
+  - protocol_confidence
+  - tasks
+  - mechanisms
+  - anomaly_types
+  - evidence_levels
+  - venue_types
+  - venue_statuses
+  - code_statuses
+  - link_statuses
+  - reproducibility_values
+additionalProperties: false
+properties:
+  version: {type: integer, minimum: 1}
+  tracks: {$ref: '#/$defs/unique_strings'}
+  statuses: {$ref: '#/$defs/unique_strings'}
+  view_settings: {$ref: '#/$defs/unique_strings'}
+  training_paradigms: {$ref: '#/$defs/unique_strings'}
+  protocol_confidence: {$ref: '#/$defs/unique_strings'}
+  tasks: {$ref: '#/$defs/unique_strings'}
+  mechanisms:
+    type: object
+    minProperties: 1
+    additionalProperties: {type: string, minLength: 5}
+  anomaly_types: {$ref: '#/$defs/unique_strings'}
+  evidence_levels: {$ref: '#/$defs/unique_strings'}
+  venue_types: {$ref: '#/$defs/unique_strings'}
+  venue_statuses: {$ref: '#/$defs/unique_strings'}
+  code_statuses: {$ref: '#/$defs/unique_strings'}
+  link_statuses: {$ref: '#/$defs/unique_strings'}
+  reproducibility_values: {$ref: '#/$defs/unique_strings'}
+$defs:
+  unique_strings:
+    type: array
+    minItems: 1
+    uniqueItems: true
+    items: {type: string, minLength: 1}

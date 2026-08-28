@@ -1,11 +1,13 @@
-# Awesome-MVOD v0.2 Build Report
+# Awesome-MVOD v0.2.1 Public Release Cleanup Report
 
-Build date: 2026-08-27
-Release theme: **Coverage + Comparability**
+Build date: 2026-08-28
+Release theme: **Public Release Cleanup**
+
+The v0.2 **Coverage + Comparability** research structure remains intact. v0.2.1 adds release-facing consistency, tests, licensing, citation, and naming cleanup without expanding the literature registry.
 
 ## Repository audit
 
-| Metric | v0.1 | v0.2 |
+| Metric | v0.1 | v0.2 / v0.2.1 |
 |---|---:|---:|
 | Total papers | 40 | 42 |
 | CORE complete-view | 30 | 31 |
@@ -49,11 +51,33 @@ No valid paper was removed or downgraded.
 - Generated-file freshness check in CI.
 - Unit tests for conservative comparability decisions.
 - Monthly, non-blocking external-link audit separated from per-commit CI to reduce publisher anti-bot false failures.
+- Formal tests cover registry validation, duplicate identities, dataset references, taxonomy values, generated-file freshness, and documented internal paths.
+- `data/comparability.yaml` is validated against `schemas/comparability.schema.yaml`.
 
-## Publication decisions still required
+## v0.2.1 release cleanup
 
-- **License:** no legal license has been selected. Candidate discussion remains owner-controlled.
-- **Citation author:** repository URL, title, version, and release date are filled in `CITATION.cff.template`; a verified personal or organizational author identity is still required before renaming it to `CITATION.cff`.
+- Published the synthetic-protocol guide as `docs/COMMON_SYNTHETIC_PROTOCOLS.md`; D1–D6 remain explicitly source-local configuration identifiers.
+- Replaced the citation template with a public `CITATION.cff` using the verified GitHub maintainer identity.
+- Added scoped MIT and CC BY 4.0 license files.
+- Added `CHANGELOG.md` and normalized current version markers to v0.2.1.
+
+## Publication status
+
+- **License:** code is MIT; original documentation and curated metadata are CC BY 4.0.
+- **Citation:** `CITATION.cff` identifies the maintainer as `Z-JayYan`, the identity supported by repository ownership and Git metadata. No unverified real name is asserted.
+
+## v0.2.1 validation result
+
+Executed on 2026-08-28:
+
+```text
+PASS: 42 papers, 13 datasets, 5 resources, 33 unique DOIs
+PASS: paper, dataset, resource, taxonomy, and comparability schemas
+PASS: generated tables are fresh under both generator entry points
+PASS: 13 unit tests
+PASS: Citation File Format 1.2.0 schema validation
+PASS: Python compilation and git diff --check
+```
 
 ## Remaining uncertainty
 
