@@ -35,7 +35,7 @@ These are anomaly definitions, not fixed synthetic corruption recipes. Different
 
 ### Core Research Scope
 
-**Complete MVOD** assumes that every object has all aligned feature views. This is the repository's main benchmark space. CORE includes classical and deep methods, as well as graph, tensor, generative, and contrastive models.
+**Core MVOD** assumes that every object has all aligned feature views. This is the repository's main benchmark space. CORE includes classical and deep methods, as well as graph, tensor, generative, and contrastive models.
 
 ### Extended MVOD Settings
 
