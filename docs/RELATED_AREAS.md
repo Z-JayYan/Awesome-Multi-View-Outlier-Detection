@@ -1,6 +1,6 @@
 # Related Areas
 
-**Related does not mean benchmark-compatible.** These areas share mechanisms with classical MVOD while changing the observation model, labels, or metrics.
+**Related does not mean benchmark-compatible.** These areas share mechanisms with complete-view MVOD while changing the observation model, labels, or metrics.
 
 - **Multimodal industrial anomaly detection:** combines RGB, depth, point clouds, or sensors to detect and localize physical defects.
 - **3D anomaly detection:** models point clouds or meshes; view alignment and geometry replace tabular aligned-feature assumptions.

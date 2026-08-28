@@ -315,7 +315,7 @@ def main() -> int:
         if sorted(declared) != actual:
             errors.append(f"{label}: papers_using_dataset is stale; expected {actual}")
 
-    expected_statuses = {"DIRECTLY_COMPARABLE", "CONDITIONALLY_COMPARABLE", "NOT_DIRECTLY_COMPARABLE", "UNKNOWN"}
+    expected_statuses = {"DIRECTLY_COMPARABLE", "PARTIALLY_COMPARABLE", "NOT_DIRECTLY_COMPARABLE", "INSUFFICIENT_INFORMATION"}
     if set(comparability.get("statuses", [])) != expected_statuses:
         errors.append("data/comparability.yaml must define the four conservative statuses exactly")
     rule_ids = [rule.get("id") for rule in comparability.get("rules", [])]

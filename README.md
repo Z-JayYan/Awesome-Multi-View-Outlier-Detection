@@ -1,5 +1,7 @@
 # Awesome Multi-View Outlier Detection
 
+**English** | [简体中文](README.zh-CN.md)
+
 [![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
 [![Registry validation](https://github.com/Z-JayYan/Awesome-Multi-View-Outlier-Detection/actions/workflows/validate.yml/badge.svg)](https://github.com/Z-JayYan/Awesome-Multi-View-Outlier-Detection/actions/workflows/validate.yml)
 [![Papers](https://img.shields.io/badge/papers-42-4c1)](data/papers.yaml)
@@ -7,45 +9,50 @@
 
 > A curated, auditable, and machine-readable knowledge base for **Multi-View Outlier Detection (MVOD)** and carefully separated adjacent multi-view anomaly-detection settings.
 
-**v0.3.0 — Protocol Reconstruction.** This release moves from paper-level comparability metadata toward evidence-backed experiment records and dataset-variant-aware comparison.
+**v0.3.0 — Scientific Usability & Research Landscape.** This release connects the auditable registry to method evolution, baseline selection, and dataset-variant-aware protocol comparison.
 
 > **Same dataset name does not imply the same benchmark protocol.** Protocol reconstruction follows primary evidence and may remain incomplete when papers, supplements, or official code do not disclose a field.
 
 `Paper → Dataset Variant → Protocol Fingerprint → Comparability`
 
-## Why this repository
+## What is MVOD?
 
-This repository helps a researcher answer four practical questions: what task a paper actually studies, which baselines are methodologically relevant, whether two reported results are comparable, and what public evidence supports a paper/code claim. The single source of truth is [`data/papers.yaml`](data/papers.yaml), not a hand-maintained list of links.
+Multi-View Outlier Detection (MVOD) assigns anomaly evidence to aligned objects observed through multiple feature views. Depending on the paper, an anomaly may be an unusual attribute pattern, an unexpected class, a mixed class-attribute inconsistency, a generic deviation, or a natural defect. These definitions are related but not interchangeable.
 
-## Scope and task tracks
+This repository helps researchers understand how methods evolved, choose scientifically relevant baselines, and determine whether two experimental results share enough protocol to compare. The machine-readable registries are the source of truth; generated tables are navigation views.
+
+## Repository Scope
 
 **Multi-View Outlier Detection (MVOD)** is overloaded. Track is a task setting—not a synonym for model age, “classical algorithm,” or “non-deep method.” A CORE method may be deep, contrastive, graph-based, or tensor-based.
 
 | Track | Definition | Typical endpoint | Direct benchmark boundary |
 |---|---|---|---|
-| **Track 1 — CORE: Classical / complete-view Multi-View Outlier Detection** | Each object has all aligned feature views and an explicit sample correspondence across views. | Object/sample outlier score | Main complete-view MVOD comparison space |
+| **Track 1 — CORE: Complete-View Multi-View Outlier Detection** | Each object has all aligned feature views and an explicit sample correspondence across views. | Object/sample outlier score | Main complete-view MVOD comparison space |
 | **Track 2 — PARTIAL / INCOMPLETE Multi-View Outlier Detection** | An aligned object may be missing one or more views; the method must handle incomplete observations as well as anomalies. | Object/sample score under a missing-view protocol | Separate from complete-view results; still methodologically relevant |
-| **Track 3 — INDUSTRIAL / NATURAL Multi-View Anomaly Detection** | Multiple cameras, RGB/depth, point clouds, or other sensors observe a physical object or scene with natural defects. | Sample, image, object, or pixel endpoint | Not pooled with feature-level classical MVOD |
+| **Track 3 — INDUSTRIAL / NATURAL Multi-View Anomaly Detection** | Multiple cameras, RGB/depth, point clouds, or other sensors observe a physical object or scene with natural defects. | Sample, image, object, or pixel endpoint | Not pooled with feature-level complete-view MVOD |
 
 The industrial/natural track frequently uses normal-only training, frozen visual backbones, raw images, and image/pixel metrics. These choices differ fundamentally from complete-view feature-level MVOD. A paper title containing “multi-view anomaly detection” does not determine its track; the data model and evaluation protocol do.
 
 Ordinary multi-view clustering/classification, single-view anomaly detection, and systems that merely ensemble unrelated backbones are out of scope. Borderline records remain explicitly marked rather than being silently forced into CORE.
 
-## Quick start
+## Start Here
 
-- **I want papers:** browse the generated [complete paper registry](docs/PAPERS.md).
-- **I want datasets:** inspect [dataset cards](docs/DATASETS.md) and the machine-readable [dataset registry](data/datasets.yaml).
-- **I need baselines:** use the method-level [Baseline Evidence Map](docs/BASELINE_MAP.md).
-- **I need protocol information:** read the generated [protocol cards](docs/PROTOCOLS.md), inspect [dataset variants](docs/DATASET_VARIANTS.md), and use [Protocol Comparability](docs/COMPARABILITY.md).
-- **I need reproducible code:** check `code_status`, `verified_from`, and `reproducibility` in the registry.
-- **I want to compare two papers:** run `python scripts/compare_protocols.py PAPER_ID_A PAPER_ID_B`.
+- [Research Landscape](docs/RESEARCH_LANDSCAPE.md) · [中文](docs/RESEARCH_LANDSCAPE.zh-CN.md)
+- [Method Taxonomy](docs/METHOD_TAXONOMY.md)
+- [Anomaly Taxonomy](docs/ANOMALY_TAXONOMY.md)
+- [Dataset and Benchmark Variants](docs/DATASET_VARIANTS.md) · [中文](docs/DATASET_VARIANTS.zh-CN.md)
+- [Baseline Map](docs/BASELINE_MAP.md)
+- [Comparability Rules](docs/COMPARABILITY.md) · [中文](docs/COMPARABILITY.zh-CN.md)
+- [Paper Database](docs/PAPERS.md)
+
+To compare reconstructed protocols, run `python scripts/compare_protocols.py PAPER_ID_A PAPER_ID_B`.
 
 ## Recent research
 
 Recent work is ordered **Track → Year → Venue**. Placement in the same year is not a claim of benchmark compatibility.
 
 <!-- AUTO-GENERATED: RECENT START -->
-### Recent Classical Multi-View Outlier Detection
+### Recent Complete-View MVOD
 
 #### 2026
 
@@ -169,13 +176,15 @@ Each card answers **why compare**, identifies the closest counterfactual, record
 
 > **Same dataset name ≠ directly comparable results.**
 
-The conservative statuses are `DIRECTLY_COMPARABLE`, `CONDITIONALLY_COMPARABLE`, `NOT_DIRECTLY_COMPARABLE`, and `UNKNOWN`. Direct comparison requires matching dataset variant, anomaly generation, view completeness, preprocessing, contamination, metric, endpoint, feature/backbone level, train/test setting, and relevant repetition/seed details.
+The conservative statuses are `DIRECTLY_COMPARABLE`, `PARTIALLY_COMPARABLE`, `NOT_DIRECTLY_COMPARABLE`, and `INSUFFICIENT_INFORMATION`. Direct comparison requires matching dataset variant, anomaly generation, view completeness, preprocessing, contamination, metric, endpoint, feature/backbone level, train/test setting, and relevant repetition/seed details.
 
 This repository intentionally has no traditional cross-protocol leaderboard. Where evidence is incomplete, the correct label is **Reported Result Context — not directly comparable**. See [comparability rules](data/comparability.yaml) and the full [decision guide](docs/COMPARABILITY.md).
 
 ## Representative registry snapshot
 
 This generated table is navigation, not a ranking. The Track column is part of every comparison decision.
+
+Anomaly abbreviations: **A = Attribute**, **C = Class**, **M = Mixed / Class-Attribute**, **G = Generic**, **N = Natural**.
 
 <!-- AUTO-GENERATED: PAPERS START -->
 | Year | Method | Track | Venue | Mechanism | Anomaly | Code |

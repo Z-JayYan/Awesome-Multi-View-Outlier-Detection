@@ -13,7 +13,7 @@ properties:
     minItems: 4
     maxItems: 4
     items:
-      enum: [DIRECTLY_COMPARABLE, CONDITIONALLY_COMPARABLE, NOT_DIRECTLY_COMPARABLE, UNKNOWN]
+      enum: [DIRECTLY_COMPARABLE, PARTIALLY_COMPARABLE, NOT_DIRECTLY_COMPARABLE, INSUFFICIENT_INFORMATION]
   required_factors:
     type: array
     uniqueItems: true
@@ -31,7 +31,7 @@ properties:
         priority: {type: integer, minimum: 1}
         when: {type: string, minLength: 5}
         result:
-          enum: [DIRECTLY_COMPARABLE, CONDITIONALLY_COMPARABLE, NOT_DIRECTLY_COMPARABLE, UNKNOWN]
+          enum: [DIRECTLY_COMPARABLE, PARTIALLY_COMPARABLE, NOT_DIRECTLY_COMPARABLE, INSUFFICIENT_INFORMATION]
         rationale: {type: string, minLength: 10}
   track_matrix:
     type: object
@@ -40,7 +40,7 @@ properties:
       type: object
       minProperties: 3
       additionalProperties:
-        enum: [DIRECTLY_COMPARABLE, CONDITIONALLY_COMPARABLE, NOT_DIRECTLY_COMPARABLE, UNKNOWN]
+        enum: [DIRECTLY_COMPARABLE, PARTIALLY_COMPARABLE, NOT_DIRECTLY_COMPARABLE, INSUFFICIENT_INFORMATION]
   leaderboard_policy:
     type: object
     required: [allow_only_when, otherwise, warning]

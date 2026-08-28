@@ -57,7 +57,7 @@ def compact_papers(papers: list[dict]) -> str:
 
 def recent_research(papers: list[dict]) -> str:
     tracks = [
-        ("Recent Classical Multi-View Outlier Detection", "core_mvod"),
+        ("Recent Complete-View MVOD", "core_mvod"),
         ("Recent Partial / Incomplete Multi-View Outlier Detection", "partial_mvod"),
         ("Recent Industrial / Natural Multi-View Anomaly Detection", "related_natural_multimodal"),
     ]
@@ -193,7 +193,7 @@ def write_variant_doc(variants: list[dict]) -> None:
     grouped = defaultdict(list)
     for variant in variants:
         grouped[variant["canonical_dataset"]].append(variant)
-    lines = ["# Dataset Variant Registry", "",
+    lines = ["# Dataset Variant Registry", "", "**English** | [简体中文](DATASET_VARIANTS.zh-CN.md)", "",
              "Generated from `data/dataset_variants.yaml`. A common dataset label is not evidence of a common N × V × feature × preprocessing protocol.", ""]
     for canonical in sorted(grouped, key=str.casefold):
         lines.extend([f"## {canonical}", ""])

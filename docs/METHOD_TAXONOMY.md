@@ -54,7 +54,7 @@ Controlled tags: `partial_view` plus the actual scoring mechanism.
 
 ## 9. Related natural multimodal and multi-view AD
 
-RGB–depth, point-cloud, multi-camera, and multi-sensor systems may use spatial registration, geometric correspondence, cross-modal reconstruction, or feature fusion. They share mechanisms with classical MVOD but use natural defects, localization metrics, and object/image-level protocols; they remain a separate track.
+RGB–depth, point-cloud, multi-camera, and multi-sensor systems may use spatial registration, geometric correspondence, cross-modal reconstruction, or feature fusion. They share mechanisms with complete-view MVOD but use natural defects, localization metrics, and object/image-level protocols; they remain a separate track.
 
 ## Categories considered but not promoted
 

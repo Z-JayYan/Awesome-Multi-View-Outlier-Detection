@@ -127,6 +127,21 @@ class RepositoryIntegrityTest(unittest.TestCase):
         self.assertTrue((ROOT / "docs/COMMON_SYNTHETIC_PROTOCOLS.md").is_file())
         self.assertFalse((ROOT / "docs/D1_D6_PROTOCOL.md").exists())
 
+    def test_bilingual_web_entry_points(self):
+        pairs = [
+            ("README.md", "README.zh-CN.md"),
+            ("docs/RESEARCH_LANDSCAPE.md", "docs/RESEARCH_LANDSCAPE.zh-CN.md"),
+            ("docs/DATASET_VARIANTS.md", "docs/DATASET_VARIANTS.zh-CN.md"),
+            ("docs/COMPARABILITY.md", "docs/COMPARABILITY.zh-CN.md"),
+            ("V0.3_REVIEW_REPORT.md", "V0.3_REVIEW_REPORT.zh-CN.md"),
+        ]
+        for english, chinese in pairs:
+            english_path, chinese_path = ROOT / english, ROOT / chinese
+            self.assertTrue(english_path.is_file(), english)
+            self.assertTrue(chinese_path.is_file(), chinese)
+            self.assertIn(chinese_path.name, english_path.read_text(encoding="utf-8"))
+            self.assertIn(english_path.name, chinese_path.read_text(encoding="utf-8"))
+
 
 if __name__ == "__main__":
     unittest.main()

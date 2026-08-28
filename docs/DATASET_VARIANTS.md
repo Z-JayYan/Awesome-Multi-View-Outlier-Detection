@@ -1,5 +1,7 @@
 # Dataset Variant Registry
 
+**English** | [简体中文](DATASET_VARIANTS.zh-CN.md)
+
 Generated from `data/dataset_variants.yaml`. A common dataset label is not evidence of a common N × V × feature × preprocessing protocol.
 
 ## 100Leaves

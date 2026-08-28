@@ -28,7 +28,7 @@ class ComparabilityRulesTest(unittest.TestCase):
 
     def test_missing_protocol_evidence_stays_unknown(self):
         status, _ = compare(self.papers["iamod-2024"], self.papers["modgd-2024"])
-        self.assertEqual(status, "UNKNOWN")
+        self.assertEqual(status, "INSUFFICIENT_INFORMATION")
 
     @staticmethod
     def known_protocol_paper(paper_id, metric="AUROC"):
@@ -66,7 +66,7 @@ class ComparabilityRulesTest(unittest.TestCase):
     def test_known_fingerprint_difference_is_conditional(self):
         left = self.known_protocol_paper("synthetic-left-2026")
         right = self.known_protocol_paper("synthetic-right-2026", metric="AUPRC")
-        self.assertEqual(compare(left, right)[0], "CONDITIONALLY_COMPARABLE")
+        self.assertEqual(compare(left, right)[0], "PARTIALLY_COMPARABLE")
 
     @staticmethod
     def experiment(experiment_id, variant="v1", ratio=0.15, metric="AUROC", view="complete"):
@@ -85,19 +85,19 @@ class ComparabilityRulesTest(unittest.TestCase):
 
     def test_same_name_different_variant_is_conditional(self):
         result = compare_experiments(self.experiment("left", "bbc-a"), self.experiment("right", "bbc-b"))
-        self.assertEqual(result["status"], "CONDITIONALLY_COMPARABLE")
+        self.assertEqual(result["status"], "PARTIALLY_COMPARABLE")
         self.assertTrue(any("dataset variant" in item for item in result["mismatched"]))
 
     def test_unknown_critical_field_is_unknown(self):
         right = self.experiment("right")
         right["preprocessing"]["normalization"] = "unknown"
         result = compare_experiments(self.experiment("left"), right)
-        self.assertEqual(result["status"], "UNKNOWN")
+        self.assertEqual(result["status"], "INSUFFICIENT_INFORMATION")
         self.assertIn("normalization", result["unknown"])
 
     def test_ratio_difference_is_conditional(self):
         result = compare_experiments(self.experiment("left", ratio=0.10), self.experiment("right", ratio=0.15))
-        self.assertEqual(result["status"], "CONDITIONALLY_COMPARABLE")
+        self.assertEqual(result["status"], "PARTIALLY_COMPARABLE")
 
     def test_complete_vs_partial_is_blocking(self):
         result = compare_experiments(self.experiment("left"), self.experiment("right", view="partial"))

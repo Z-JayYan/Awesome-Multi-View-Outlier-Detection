@@ -5,7 +5,7 @@ The tree is generated conceptually from the registry's multi-label tags. A paper
 ```mermaid
 flowchart TB
   ROOT[Multi-View Anomaly / Outlier Detection]
-  ROOT --> CORE[Classical aligned-instance MVOD]
+  ROOT --> CORE[Complete-view aligned-instance MVOD]
   ROOT --> PARTIAL[Partial / incomplete MVOD]
   ROOT --> NATURAL[Related natural multimodal track]
 

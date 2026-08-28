@@ -1,6 +1,10 @@
 # Changelog
 
-## v0.3.0 — Protocol Reconstruction
+## v0.3.0 — Scientific Usability & Research Landscape
+
+- Added first-class English / Simplified Chinese navigation for GitHub web readers.
+- Corrected CORE terminology to mean complete-view task setting rather than classical method family.
+- Added a bilingual research landscape and bilingual dataset-variant/comparability guidance.
 
 - Moved the repository from paper-level comparability metadata toward experiment-level protocol reconstruction and dataset-variant-aware comparison.
 - Added 11 evidence-provenanced priority protocol records and 18 dataset-variant/audit records without increasing the paper count.

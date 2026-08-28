@@ -17,7 +17,7 @@ A submission must include:
 - `verified_from` sources listing the specific facts each source supports;
 - baseline relevance only when the card neutrally explains why a researcher should compare.
 
-Do not assign a Track from the title alone. `CORE` is a complete-view task setting, not a synonym for shallow or non-deep. A missing-view industrial-camera method is not automatically classical partial MVOD.
+Do not assign a Track from the title alone. `CORE` is a complete-view task setting, not a synonym for shallow or non-deep. A missing-view industrial-camera method is not automatically partial MVOD.
 
 ## Evidence hierarchy
 
