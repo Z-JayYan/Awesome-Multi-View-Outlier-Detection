@@ -33,7 +33,7 @@ def load_protocols() -> dict[str, dict]:
 
 
 def compare_experiments(a: dict, b: dict) -> dict[str, Any]:
-    out = {"status": "INSUFFICIENT_INFORMATION", "matched": [], "mismatched": [], "unknown": [],
+    out = {"status": "UNKNOWN", "matched": [], "mismatched": [], "unknown": [],
            "blocking": [], "warnings": [],
            "recommendation": "Do not merge reported numbers without protocol normalization."}
     if a["id"] == b["id"]:
@@ -69,9 +69,9 @@ def compare_experiments(a: dict, b: dict) -> dict[str, Any]:
     if "dataset variant" in out["unknown"]:
         out["warnings"].append("A shared dataset name would not establish a shared feature variant.")
     if out["unknown"]:
-        out["status"] = "INSUFFICIENT_INFORMATION"
+        out["status"] = "UNKNOWN"
     elif out["mismatched"]:
-        out["status"] = "PARTIALLY_COMPARABLE"
+        out["status"] = "CONDITIONALLY_COMPARABLE"
     else:
         out.update(status="DIRECTLY_COMPARABLE",
                    recommendation="Captured fingerprints match; still cite the evidence and setting IDs.")
@@ -97,9 +97,9 @@ def _paper_compare(a: dict, b: dict) -> tuple[str, list[str]]:
               ("train/test setting", a["protocol"]["data_setting"], b["protocol"]["data_setting"])]
     unknown = [name for name, left, right in fields if is_unknown(left) or is_unknown(right)]
     if unknown:
-        return "INSUFFICIENT_INFORMATION", ["essential evidence is unknown: " + ", ".join(unknown)]
+        return "UNKNOWN", ["essential evidence is unknown: " + ", ".join(unknown)]
     different = [name for name, left, right in fields if left != right]
-    return ("PARTIALLY_COMPARABLE", ["fingerprint differs: " + ", ".join(different)]) if different else ("DIRECTLY_COMPARABLE", ["all captured fields match"])
+    return ("CONDITIONALLY_COMPARABLE", ["fingerprint differs: " + ", ".join(different)]) if different else ("DIRECTLY_COMPARABLE", ["all captured fields match"])
 
 
 def compare(a: dict, b: dict) -> tuple[str, list[str]]:

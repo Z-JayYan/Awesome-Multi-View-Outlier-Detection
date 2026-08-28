@@ -1,10 +1,13 @@
 # Changelog
 
-## v0.3.0 — Scientific Usability & Research Landscape
+## v0.3.0 — Research Portal & Taxonomy Redesign
 
 - Added first-class English / Simplified Chinese navigation for GitHub web readers.
 - Corrected CORE terminology to mean complete-view task setting rather than classical method family.
 - Added a bilingual research landscape and bilingual dataset-variant/comparability guidance.
+- Rebuilt both home pages around field discovery, recent work, datasets, evidence-backed baseline selection, and protocol-aware comparison.
+- Upgraded the multi-label method taxonomy and conceptual research map with representative verified papers.
+- Moved release-specific reports from the repository root into `docs/releases/`.
 
 - Moved the repository from paper-level comparability metadata toward experiment-level protocol reconstruction and dataset-variant-aware comparison.
 - Added 11 evidence-provenanced priority protocol records and 18 dataset-variant/audit records without increasing the paper count.

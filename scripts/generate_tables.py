@@ -39,11 +39,29 @@ def code_link(paper: dict) -> str:
     return f"[official]({url})" if url else "—"
 
 
+ANOMALY_LABELS = {
+    "attribute": "Attribute",
+    "class": "Class",
+    "mixed": "Mixed",
+    "group": "Group anomaly",
+    "generic": "General MVOD",
+    "natural": "Natural anomaly",
+}
+
+
+TRACK_LABELS = {
+    "core_mvod": "CORE",
+    "partial_mvod": "PARTIAL",
+    "related_natural_multimodal": "RELATED",
+    "uncertain": "UNCERTAIN",
+}
+
+
 def compact_papers(papers: list[dict]) -> str:
     lines = ["| Year | Method | Track | Venue | Mechanism | Anomaly | Code |",
              "|---:|---|---|---|---|---|---|"]
     for paper in sorted(papers, key=lambda item: (-item["year"], item["title"].casefold())):
-        anomaly = "/".join(tag[0].upper() for tag in paper["anomaly_types"])
+        anomaly = ", ".join(ANOMALY_LABELS[tag] for tag in paper["anomaly_types"])
         mechanisms = ", ".join(tag.replace("_", " ") for tag in paper["mechanisms"][:2])
         track = {
             "core_mvod": "CORE",
@@ -55,34 +73,26 @@ def compact_papers(papers: list[dict]) -> str:
     return "\n".join(lines)
 
 
-def recent_research(papers: list[dict]) -> str:
-    tracks = [
-        ("Recent Complete-View MVOD", "core_mvod"),
-        ("Recent Partial / Incomplete Multi-View Outlier Detection", "partial_mvod"),
-        ("Recent Industrial / Natural Multi-View Anomaly Detection", "related_natural_multimodal"),
-    ]
+def recent_research(papers: list[dict], language: str = "en") -> str:
     lines: list[str] = []
-    for track_heading, track in tracks:
-        lines.append(f"### {track_heading}\n")
-        grouped: dict[int, dict[str, list[dict]]] = defaultdict(lambda: defaultdict(list))
-        for paper in papers:
-            if paper["track"] == track and paper["year"] >= 2024:
-                grouped[paper["year"]][paper["venue"]].append(paper)
-        if not grouped:
-            lines.extend(["_No verified entries in this release._", ""])
-            continue
-        for year in sorted(grouped, reverse=True):
-            lines.append(f"#### {year}\n")
-            for venue in sorted(grouped[year]):
-                lines.append(f"**{venue}**")
-                for paper in sorted(grouped[year][venue], key=lambda item: item["title"]):
-                    status = {
-                        "preprint": " (preprint)",
-                        "accepted": " (accepted; publisher record/DOI may still be pending)",
-                    }.get(paper["venue_status"], "")
-                    code = f" [[code]]({paper['links']['code']})" if paper["links"].get("code") else ""
-                    lines.append(f"- **{paper['title']}**{status} [[paper]]({paper['links']['paper']}){code}")
-                lines.append("")
+    selected = [paper for paper in papers if paper.get("featured") and paper["year"] >= 2024]
+    for year in sorted({paper["year"] for paper in selected}, reverse=True):
+        lines.append(f"### {year}\n")
+        for paper in sorted((item for item in selected if item["year"] == year), key=lambda item: item["title"].casefold()):
+            acronym = paper.get("acronym")
+            prefix = f"**{acronym}** — " if acronym else ""
+            status = " · preprint" if paper["venue_status"] == "preprint" else ""
+            code_label = "代码" if language == "zh" else "Code"
+            paper_label = "论文" if language == "zh" else "Paper"
+            code = f" · [{code_label}]({paper['links']['code']})" if paper["links"].get("code") else ""
+            track = TRACK_LABELS[paper["track"]]
+            lines.append(
+                f"- {prefix}{paper['title']} — *{paper['venue']} {paper['year']}* · `{track}`{status} · "
+                f"[{paper_label}]({paper['links']['paper']}){code}"
+            )
+        lines.append("")
+    browse = "浏览完整论文数据库" if language == "zh" else "Browse the complete paper registry"
+    lines.append(f"[{browse} →](docs/PAPERS.md)")
     return "\n".join(lines).rstrip()
 
 
@@ -98,6 +108,92 @@ def dataset_table(datasets: list[dict]) -> str:
         variants = ", ".join(dataset.get("known_variants", ["unknown"]))
         track = dataset["task_track"].replace("related_natural_multimodal", "industrial / natural").replace("core_mvod", "CORE")
         lines.append(f"| {name} | {track} | {n} | {views} | {dims} | {variants} |")
+    return "\n".join(lines)
+
+
+def dataset_portal_table(datasets: list[dict], language: str = "en") -> str:
+    header = "| 数据集 | 领域 | 范围 | 备注 |" if language == "zh" else "| Dataset | Domain | Scope | Notes |"
+    lines = [header, "|---|---|---|---|"]
+    for dataset in sorted(datasets, key=lambda item: item["name"].casefold()):
+        name = f"[{dataset['name']}]({dataset['official_source']})"
+        scope = {
+            "core_mvod": "CORE",
+            "partial_mvod": "PARTIAL",
+            "related_natural_multimodal": "RELATED",
+            "uncertain": "UNCERTAIN",
+        }.get(dataset["task_track"], dataset["task_track"])
+        notes = dataset["notes"].replace("|", "\\|")
+        lines.append(f"| {name} | {dataset['domain']} | {scope} | {notes} |")
+    return "\n".join(lines)
+
+
+def readme_stats(papers: list[dict], datasets: list[dict]) -> str:
+    verified = sum(paper["status"] == "verified" for paper in papers)
+    official_code = sum(paper["code_status"] == "official" for paper in papers)
+    return " ".join([
+        f"[![Papers](https://img.shields.io/badge/papers-{len(papers)}-4c1)](docs/PAPERS.md)",
+        f"[![Verified records](https://img.shields.io/badge/verified-{verified}-2f855a)](docs/QUALITY_AUDIT.md)",
+        f"[![Official code](https://img.shields.io/badge/official_code-{official_code}-2563eb)](docs/REPRODUCIBILITY.md)",
+        f"[![Datasets](https://img.shields.io/badge/datasets-{len(datasets)}-7c3aed)](docs/DATASETS.md)",
+        "[![License: CC BY 4.0](https://img.shields.io/badge/license-CC_BY_4.0-lightgrey)](LICENSE-CONTENT)",
+    ])
+
+
+def latest_updates(papers: list[dict], datasets: list[dict], language: str = "en") -> str:
+    latest_year = max(paper["year"] for paper in papers)
+    latest_count = sum(paper["year"] == latest_year for paper in papers)
+    if language == "zh":
+        return "\n".join([
+            f"- **{latest_year} 覆盖：**CORE 及相关多视图异常设定共收录 {latest_count} 条记录。",
+            "- **研究地图：**重新组织方法分类与代表性研究路线。",
+            f"- **数据集：**{len(datasets)} 个源数据集已关联到论文级 benchmark 变体。",
+            "- **v0.3：**重构研究门户、中英文入口和协议感知的基线指南。",
+            "",
+            "[查看完整变更记录 →](CHANGELOG.md)",
+        ])
+    return "\n".join([
+        f"- **{latest_year} coverage:** {latest_count} records across CORE and related multi-view anomaly settings.",
+        "- **Research map:** method taxonomy and representative research routes reorganized for field navigation.",
+        f"- **Datasets:** {len(datasets)} source datasets linked to paper-specific benchmark variants.",
+        "- **v0.3:** research-portal layout, bilingual entry points, and protocol-aware baseline guidance.",
+        "",
+        "[See the full changelog →](CHANGELOG.md)",
+    ])
+
+
+def baseline_portal_table(papers: list[dict], language: str = "en") -> str:
+    by_id = {paper["id"]: paper for paper in papers}
+    groups = [
+        ("Historical foundations", ["dmod-2015", "ldsr-2018"]),
+        ("Local / neighborhood", ["srlsp-2023", "rnamod-2026", "scone-2026"]),
+        ("Shared latent / generative", ["dpoe-2023"]),
+        ("Information-theoretic", ["iamod-2024"]),
+        ("Graph-based", ["modgd-2024", "rnamod-2026"]),
+        ("Tensor / low-rank", ["lrtdm-2025", "mod-tdid-2026"]),
+        ("Partial-view contrastive", ["rcpmod-2024"]),
+    ]
+    if language == "zh":
+        labels = {
+            "Historical foundations": "历史基础",
+            "Local / neighborhood": "局部 / 邻域",
+            "Shared latent / generative": "共享潜变量 / 生成式",
+            "Information-theoretic": "信息论",
+            "Graph-based": "图方法",
+            "Tensor / low-rank": "张量 / 低秩",
+            "Partial-view contrastive": "部分视图对比学习",
+        }
+        lines = ["| 研究问题 / 机制 | 代表性锚点 |", "|---|---|"]
+    else:
+        labels = {}
+        lines = ["| Research question / mechanism | Representative anchors |", "|---|---|"]
+    for question, ids in groups:
+        anchors = []
+        for paper_id in ids:
+            paper = by_id[paper_id]
+            if not paper.get("baseline"):
+                raise RuntimeError(f"README baseline anchor lacks evidence card: {paper_id}")
+            anchors.append(paper_link(paper))
+        lines.append(f"| {labels.get(question, question)} | {', '.join(anchors)} |")
     return "\n".join(lines)
 
 
@@ -292,10 +388,17 @@ def main() -> None:
     write_variant_doc(variants)
     write_uncertainty_queue(protocols, papers)
     readme = ROOT / "README.md"
+    replace_region(readme, "STATS", readme_stats(papers, datasets))
+    replace_region(readme, "UPDATES", latest_updates(papers, datasets))
     replace_region(readme, "RECENT", recent_research(papers))
-    representative = [paper for paper in papers if paper.get("featured")]
-    replace_region(readme, "PAPERS", compact_papers(representative))
-    replace_region(readme, "DATASETS", dataset_table(datasets))
+    replace_region(readme, "DATASETS", dataset_portal_table(datasets))
+    replace_region(readme, "BASELINES", baseline_portal_table(papers))
+    readme_zh = ROOT / "README.zh-CN.md"
+    replace_region(readme_zh, "STATS", readme_stats(papers, datasets))
+    replace_region(readme_zh, "UPDATES", latest_updates(papers, datasets, "zh"))
+    replace_region(readme_zh, "RECENT", recent_research(papers, "zh"))
+    replace_region(readme_zh, "DATASETS", dataset_portal_table(datasets, "zh"))
+    replace_region(readme_zh, "BASELINES", baseline_portal_table(papers, "zh"))
     counts = Counter(paper["track"] for paper in papers)
     print(f"Generated tables for {len(papers)} papers, {len(datasets)} datasets, {len(variants)} variants, and {len(protocols)} protocols: {dict(counts)}")
 

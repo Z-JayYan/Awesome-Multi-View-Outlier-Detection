@@ -4,6 +4,7 @@ from pathlib import Path
 import subprocess
 import sys
 import unittest
+from urllib.parse import urlparse
 
 import yaml
 
@@ -18,6 +19,7 @@ from validate_registry import (  # noqa: E402
     main as validate_registry,
     normalize_title,
 )
+from generate_tables import ANOMALY_LABELS, recent_research  # noqa: E402
 
 
 def load_yaml(relative_path):
@@ -84,6 +86,7 @@ class RepositoryIntegrityTest(unittest.TestCase):
     def test_generated_files_fresh(self):
         generated = [
             ROOT / "README.md",
+            ROOT / "README.zh-CN.md",
             ROOT / "docs/PAPERS.md",
             ROOT / "docs/DATASETS.md",
             ROOT / "docs/BASELINE_MAP.md",
@@ -110,6 +113,49 @@ class RepositoryIntegrityTest(unittest.TestCase):
         self.assertEqual(internal_link_errors(), [])
         self.assertEqual(documented_path_errors(), [])
 
+    def test_readme_portal_sections_match_registry(self):
+        verified = sum(paper["status"] == "verified" for paper in self.papers)
+        official_code = sum(paper["code_status"] == "official" for paper in self.papers)
+        for filename in ("README.md", "README.zh-CN.md"):
+            text = normalized_text(ROOT / filename)
+            self.assertIn(f"papers-{len(self.papers)}-", text)
+            self.assertIn(f"verified-{verified}-", text)
+            self.assertIn(f"official_code-{official_code}-", text)
+            self.assertIn(f"datasets-{len(self.datasets)}-", text)
+            for marker in ("STATS", "UPDATES", "RECENT", "DATASETS", "BASELINES"):
+                self.assertEqual(text.count(f"AUTO-GENERATED: {marker} START"), 1)
+                self.assertEqual(text.count(f"AUTO-GENERATED: {marker} END"), 1)
+
+    def test_recent_papers_are_unique_and_links_are_web_urls(self):
+        rendered = recent_research(self.papers)
+        selected = [
+            paper for paper in self.papers
+            if paper.get("featured") and paper["year"] >= 2024
+        ]
+        self.assertEqual(len({paper["id"] for paper in selected}), len(selected))
+        for paper in selected:
+            urls = [paper["links"]["paper"]]
+            if paper["links"].get("code"):
+                urls.append(paper["links"]["code"])
+            self.assertEqual(rendered.count(f"]({paper['links']['paper']})"), 1)
+            for url in urls:
+                parsed = urlparse(url)
+                self.assertIn(parsed.scheme, {"http", "https"})
+                self.assertTrue(parsed.netloc, url)
+
+    def test_display_terminology_and_anomaly_labels(self):
+        used_anomalies = {
+            anomaly
+            for paper in self.papers
+            for anomaly in paper["anomaly_types"]
+        }
+        self.assertLessEqual(used_anomalies, set(ANOMALY_LABELS))
+        for path in ROOT.rglob("*"):
+            if path.is_file() and path.suffix.lower() in {".md", ".yaml", ".py"}:
+                text = path.read_text(encoding="utf-8").casefold()
+                old_display_name = "classical" + " / complete-view"
+                self.assertNotIn(old_display_name, text, str(path))
+
     def test_public_release_files(self):
         citation = load_yaml("CITATION.cff")
         for field in (
@@ -124,6 +170,11 @@ class RepositoryIntegrityTest(unittest.TestCase):
         self.assertTrue((ROOT / "LICENSE-CODE").is_file())
         self.assertTrue((ROOT / "LICENSE-CONTENT").is_file())
         self.assertTrue((ROOT / "CHANGELOG.md").is_file())
+        self.assertTrue((ROOT / "docs/releases/v0.3.md").is_file())
+        self.assertTrue((ROOT / "docs/releases/v0.3.zh-CN.md").is_file())
+        self.assertFalse((ROOT / "BUILD_REPORT.md").exists())
+        self.assertFalse((ROOT / "V0.3_REVIEW_REPORT.md").exists())
+        self.assertNotIn("BUILD_REPORT.md", normalized_text(ROOT / "README.md"))
         self.assertTrue((ROOT / "docs/COMMON_SYNTHETIC_PROTOCOLS.md").is_file())
         self.assertFalse((ROOT / "docs/D1_D6_PROTOCOL.md").exists())
 
@@ -133,7 +184,7 @@ class RepositoryIntegrityTest(unittest.TestCase):
             ("docs/RESEARCH_LANDSCAPE.md", "docs/RESEARCH_LANDSCAPE.zh-CN.md"),
             ("docs/DATASET_VARIANTS.md", "docs/DATASET_VARIANTS.zh-CN.md"),
             ("docs/COMPARABILITY.md", "docs/COMPARABILITY.zh-CN.md"),
-            ("V0.3_REVIEW_REPORT.md", "V0.3_REVIEW_REPORT.zh-CN.md"),
+            ("docs/releases/v0.3.md", "docs/releases/v0.3.zh-CN.md"),
         ]
         for english, chinese in pairs:
             english_path, chinese_path = ROOT / english, ROOT / chinese

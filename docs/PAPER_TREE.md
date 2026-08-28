@@ -1,39 +1,36 @@
-# Paper Tree
+# MVOD Research Map
 
-The tree is generated conceptually from the registry's multi-label tags. A paper can appear in more than one branch; this is a navigation aid, not a claim of mutually exclusive schools.
+This is a conceptual research map, not a strict citation lineage. A method may belong to multiple families, and arrows show a change in research emphasis rather than a proven paper-to-paper dependency.
 
 ```mermaid
-flowchart TB
-  ROOT[Multi-View Anomaly / Outlier Detection]
-  ROOT --> CORE[Complete-view aligned-instance MVOD]
-  ROOT --> PARTIAL[Partial / incomplete MVOD]
-  ROOT --> NATURAL[Related natural multimodal track]
+flowchart LR
+  A[Consensus and clustering<br/>HOAD · Consensus Clustering]
+  B[Shared structure<br/>DMOD · MLRA · LDSR]
+  C[Cross-view representation<br/>PLVM · CGAEs · NCMOD]
+  D[Deep and generative decomposition<br/>MODDIS · dPoE · SeeM]
+  E[Local, graph, and neighborhood evidence<br/>SRLSP · MODGD · IAMOD]
+  F[Recent reliable and efficient MVOD<br/>RNAMOD · SCoNE · MOD-TDID]
 
-  CORE --> REP[Representation-based evidence]
-  CORE --> REL[Relation-based evidence]
-  CORE --> PROB[Probabilistic / information evidence]
+  A --> B --> C --> D --> E --> F
 
-  REP --> SUB[Subspace / low-rank / self-representation]
-  REP --> LAT[Shared latent / shared-private]
-  REP --> REC[Reconstruction / generative]
+  P[Partial / incomplete setting<br/>Collective Learning · RCPMOD]
+  I[Industrial / natural setting<br/>Diffusion MVAD · IDIF · M2AD]
 
-  REL --> CLU[Cluster consensus]
-  REL --> MAP[Cross-view mapping]
-  REL --> LOC[Local neighborhood]
-  REL --> GR[Graph / tensor / high-order]
-  REL --> CON[Contrastive alignment]
-
-  PROB --> PLV[Latent-variable likelihood]
-  PROB --> INF[Information-theoretic fusion]
-  PROB --> PNEI[Probabilistic neighborhoods / ensembles]
-
-  PARTIAL --> COLL[Collective relation transfer]
-  PARTIAL --> PCON[Contrastive partial-view learning]
-  PARTIAL --> MOE[Masked or mixture-of-experts fusion]
-
-  NATURAL --> RGBD[RGB-D / RGB-3D]
-  NATURAL --> MVCAM[Multi-camera / multi-view images]
-  NATURAL --> SENSOR[Multi-sensor / time-series]
+  C -. shared mechanisms .-> P
+  D -. shared mechanisms .-> I
+  E -. shared mechanisms .-> P
+  E -. shared mechanisms .-> I
 ```
 
-The initial release keeps Mermaid as the source of truth and does not install a renderer solely to produce a PNG.
+## Reading the map
+
+1. **Consensus and clustering** ask whether views agree on group structure.
+2. **Shared structure** models normal objects with common subspaces, coefficients, or low-rank components.
+3. **Cross-view representation** learns a space or mapping that explains aligned views.
+4. **Deep and generative decomposition** separates shared, private, and reconstruction evidence with nonlinear or probabilistic models.
+5. **Local, graph, and neighborhood evidence** shifts attention from one global space to sample relations.
+6. **Reliable and efficient MVOD** studies robustness to unreliable neighborhoods and the cost of complex representation learning.
+
+Partial-view and industrial work are shown as adjacent settings because they reuse mechanisms while changing the observation model or evaluation protocol.
+
+For full method definitions and source links, see the [Method Taxonomy](METHOD_TAXONOMY.md) and [Paper Registry](PAPERS.md).

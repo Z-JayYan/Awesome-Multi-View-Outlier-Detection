@@ -8,7 +8,7 @@
 
 ## Related repositories
 
-- [Awesome Industrial Anomaly Detection](https://github.com/Z-JayYan/awesome-industrial-anomaly-detection) — strong navigation model and a related RGB-D/3D track, but not a classical MVOD benchmark.
+- [Awesome Industrial Anomaly Detection](https://github.com/Z-JayYan/awesome-industrial-anomaly-detection) — strong navigation model and a related RGB-D/3D track, but not a CORE complete-view MVOD benchmark.
 
 ## Dataset sources
 

@@ -11,8 +11,8 @@
 | 状态 | 含义 |
 |---|---|
 | `DIRECTLY_COMPARABLE` | 关键实验条件已经核实且一致。 |
-| `PARTIALLY_COMPARABLE` | 研究任务接近，但部分实验条件不同。 |
+| `CONDITIONALLY_COMPARABLE` | 研究任务接近，但部分实验条件不同。 |
 | `NOT_DIRECTLY_COMPARABLE` | 任务设定、视图完整性或评价对象不同。 |
-| `INSUFFICIENT_INFORMATION` | 论文或代码没有提供足够信息。 |
+| `UNKNOWN` | 论文或代码没有提供足够信息。 |
 
 仓库不制作跨协议排行榜。条件不一致时，论文中的数字只能作为背景信息。

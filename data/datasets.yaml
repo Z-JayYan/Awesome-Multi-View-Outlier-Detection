@@ -379,7 +379,7 @@
   classes: 30
   source: https://realiad4ad.github.io/Real-IAD/
   source_kind: official_dataset
-  notes: Related natural multi-view track; protocol and metrics are not comparable to tabular classical MVOD.
+  notes: Related natural multi-view track; protocol and metrics are not comparable to tabular complete-view MVOD.
   task_track: related_natural_multimodal
   num_samples: 150000
   num_views: 5
@@ -397,7 +397,7 @@
   - unknown
   official_source: https://realiad4ad.github.io/Real-IAD/
   common_preprocessing: paper_specific
-  protocol_notes: Related natural multi-view track; protocol and metrics are not comparable to tabular classical MVOD.
+  protocol_notes: Related natural multi-view track; protocol and metrics are not comparable to tabular complete-view MVOD.
   papers_using_dataset:
   - idif-2025
   - immoe-2026

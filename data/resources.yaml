@@ -1,7 +1,7 @@
 - type: related_awesome_list
   title: Awesome Industrial Anomaly Detection
   url: https://github.com/Z-JayYan/awesome-industrial-anomaly-detection
-  scope: Industrial image, RGB-D, and 3D anomaly detection; related rather than core classical MVOD.
+  scope: Industrial image, RGB-D, and 3D anomaly detection; related rather than CORE complete-view MVOD.
 
 - type: book_chapter
   title: Multi-View Outlier Detection

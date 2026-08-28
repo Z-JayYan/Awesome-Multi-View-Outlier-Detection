@@ -1,65 +1,76 @@
-# Method Taxonomy: Where Does the Anomaly Evidence Come From?
+# Method Taxonomy
 
-This is a multi-label mechanism taxonomy. It deliberately avoids a single “deep vs. non-deep” split: depth describes an implementation family, while the tags below describe the evidence used to score an instance.
-
-Task Track is orthogonal to this taxonomy. A deep or contrastive method may belong to CORE complete-view MVOD; a partial-view method is not a lesser method category; and industrial multi-view anomaly detection is a related protocol space rather than a chronological replacement for CORE.
+MVOD methods often combine several mechanisms. This taxonomy is therefore multi-label: it describes where anomaly evidence comes from, not whether a model is classical or deep. Task scope, code availability, and protocol completeness are recorded separately.
 
 ## 1. Cluster and consensus disagreement
 
-Early methods compare cluster memberships or cross-view cluster structures. They are historically important but may rely on visible cluster structure and, in some formulations, pairwise-view processing.
+These methods compare cluster assignments or cluster structure across views. An object is suspicious when it cannot join a stable cross-view consensus.
 
-Controlled tags: `clustering`, sometimes `correspondence` or `graph`.
+**Representative papers:** [HOAD](https://ieeexplore.ieee.org/document/6137313), [Consensus Clustering](https://doi.org/10.1109/SPW.2012.18)
+
+**Registry tags:** `clustering`, `correspondence`, `graph`
 
 ## 2. Subspace, low-rank, and self-representation
 
-These methods explain normal instances using common or view-specific low-dimensional structure. Sparse residuals, inconsistent coefficients, or deviations from a shared representation become anomaly evidence.
+Normal objects are expected to share a compact linear structure or explain one another with consistent coefficients. Sparse residuals and inconsistent representations provide anomaly evidence.
 
-Controlled tags: `subspace`, `low_rank`, `self_representation`, `shared_latent`.
+**Representative papers:** [DMOD](https://www.ijcai.org/Abstract/15/572), [MLRA](https://doi.org/10.1137/1.9781611974010.84), [LDSR](https://doi.org/10.1609/AAAI.V32I1.11826), [SRLSP](https://doi.org/10.1145/3532191)
 
-## 3. Shared latent and generative modeling
+**Registry tags:** `subspace`, `low_rank`, `self_representation`, `shared_latent`
 
-A latent variable or representation is expected to explain all views of a normal instance. Low joint likelihood, multiple inferred latent explanations, or disagreement between shared/private factors indicates an anomaly.
+## 3. Shared latent and shared-private modeling
 
-Controlled tags: `shared_latent`, `shared_private`, `generative`, `information_theoretic`.
+A latent representation explains what views have in common, while shared-private models also retain view-specific information. Anomalies appear when one representation cannot explain the views consistently.
+
+**Representative papers:** [PLVM](https://proceedings.neurips.cc/paper/2016/hash/0f96613235062963ccde717b18f97592-Abstract.html), [MODDIS](https://doi.org/10.1109/ICDM.2019.00136), [dPoE](https://doi.org/10.1145/3581783.3612487), [SeeM](https://doi.org/10.1007/978-981-97-2242-6_7)
+
+**Registry tags:** `shared_latent`, `shared_private`, `generative`
 
 ## 4. Reconstruction and cross-view mapping
 
-Normal cross-view relations allow one view to reconstruct or predict another, or allow all views to reconstruct through a common code. Within-view error is often sensitive to attribute anomalies; cross-view error is often sensitive to incompatible pairings. That mapping is paper-specific, not universal.
+One view predicts another, or all views reconstruct through a common code. Within-view error may reveal attribute anomalies, while failed cross-view prediction may reveal inconsistent pairings. The exact interpretation depends on the paper's protocol.
 
-Controlled tags: `reconstruction`, `cross_view_mapping`, optionally `shared_latent`.
+**Representative papers:** [CGAEs](https://doi.org/10.1109/ICTAI52525.2021.00218), [NCMOD](https://doi.org/10.1609/AAAI.V35I8.16873), [MODDIS](https://doi.org/10.1109/ICDM.2019.00136)
+
+**Registry tags:** `reconstruction`, `cross_view_mapping`, `shared_latent`
 
 ## 5. Local structure and neighborhood consistency
 
-Rather than require global clusters, these methods compare nearest-neighbor sets, local similarity graphs, or neighborhood relations across views. An instance is suspicious when its local role changes between views or fails to join a cross-view consensus neighborhood.
+These methods compare nearest neighbors, local similarity, or an object's role in each view. They are useful when a global shared representation is too coarse to expose local inconsistency.
 
-Controlled tags: `local_structure`, `graph`, `probabilistic_neighborhood`, `ensemble`.
+**Representative papers:** [SRLSP](https://doi.org/10.1145/3532191), [MODGD](https://doi.org/10.1016/j.inffus.2023.102012), [RNAMOD](https://openreview.net/forum?id=mL4B6DdgPU), [SCoNE](https://doi.org/10.1609/AAAI.V40I19.38643)
+
+**Registry tags:** `local_structure`, `graph`, `probabilistic_neighborhood`, `ensemble`
 
 ## 6. Graph, tensor, and high-order relations
 
-Graphs encode sample relations within each view; filtering, denoising, fusion, or sparse outlier components expose disagreement. Tensor methods retain high-order view/sample interactions rather than flattening them into pairwise comparisons.
+Graphs encode sample relations within a view; tensor models retain interactions across samples and views. Filtering, denoising, fusion, or sparse high-order components expose disagreement.
 
-Controlled tags: `graph`, `tensor`, `low_rank`, `local_structure`.
+**Representative papers:** [MODGD](https://doi.org/10.1016/j.inffus.2023.102012), [LRTDM](https://doi.org/10.1016/j.inffus.2025.103313), [MOD-TDID](https://doi.org/10.1007/s10489-026-07375-y)
 
-## 7. Contrastive and information-theoretic representation
+**Registry tags:** `graph`, `tensor`, `low_rank`, `local_structure`
 
-Contrastive objectives treat aligned views of the same instance or compatible neighborhoods as positives, while information objectives control what is shared and what remains view-specific. Anomalies are detected through alignment failure, information imbalance, or downstream reconstruction/neighborhood scores.
+## 7. Contrastive alignment
 
-Controlled tags: `contrastive`, `information_theoretic`, `shared_private`, `local_structure`.
+Contrastive objectives pull compatible views or neighborhoods together and separate incompatible evidence. A failed alignment can contribute to the anomaly score, but missing-view and complete-view protocols remain distinct.
 
-## 8. Partial / incomplete multi-view modeling
+**Representative papers:** [ECMOD](https://github.com/scu-kdde/OAM-ECMOD-2023), [RCPMOD](https://doi.org/10.1145/3664647.3681125)
 
-Missing views are part of the problem, not merely a preprocessing nuisance. Methods transfer relations from observed views, impute missing views, learn partial-view consensus, or mask unavailable experts before scoring anomalies.
+**Registry tags:** `contrastive`, `correspondence`, `partial_view`
 
-Controlled tags: `partial_view` plus the actual scoring mechanism.
+## 8. Probabilistic and information-theoretic modeling
 
-## 9. Related natural multimodal and multi-view AD
+Probabilistic models use likelihood or uncertainty; information-theoretic methods control what is shared and what remains view-specific. These signals may be combined with reconstruction or neighborhood evidence.
 
-RGB–depth, point-cloud, multi-camera, and multi-sensor systems may use spatial registration, geometric correspondence, cross-modal reconstruction, or feature fusion. They share mechanisms with complete-view MVOD but use natural defects, localization metrics, and object/image-level protocols; they remain a separate track.
+**Representative papers:** [PLVM](https://proceedings.neurips.cc/paper/2016/hash/0f96613235062963ccde717b18f97592-Abstract.html), [IAMOD](https://doi.org/10.1145/3638354), [SCoNE](https://doi.org/10.1609/AAAI.V40I19.38643)
 
-## Categories considered but not promoted
+**Registry tags:** `generative`, `information_theoretic`, `probabilistic_neighborhood`
 
-`retrieval_rank` remains in the vocabulary for publicly verified future work, but current evidence does not justify making retrieval/rank a top-level historical branch. The taxonomy does not include any unpublished method as support for a category.
+## Task-setting overlays
 
-## Tagging rule
+- **Partial / incomplete MVOD:** missing views are part of the task. Methods may use relation transfer, imputation, masking, or contrastive learning.
+- **Industrial / natural MVAD:** images, RGB-D, point clouds, or sensors introduce natural-defect and localization protocols that remain separate from CORE benchmarks.
 
-Assign the smallest set of tags that explains the scoring signal. Do not tag every architectural component. Bibliographic verification, scope confidence, code availability, and protocol completeness are separate fields: a verified paper may still have `unknown` protocol details.
+## Evidence and tagging rules
+
+Representative papers above are drawn from verified records in [`data/papers.yaml`](../data/papers.yaml). A paper may appear in several families. Tags describe the scoring mechanism, not every architectural component, and they do not imply that reported results are directly comparable.

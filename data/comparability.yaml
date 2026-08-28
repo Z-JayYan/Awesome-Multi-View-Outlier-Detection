@@ -1,9 +1,9 @@
 version: 0.3.0
 statuses:
   - DIRECTLY_COMPARABLE
-  - PARTIALLY_COMPARABLE
+  - CONDITIONALLY_COMPARABLE
   - NOT_DIRECTLY_COMPARABLE
-  - INSUFFICIENT_INFORMATION
+  - UNKNOWN
 
 required_factors:
   - dataset_variant
@@ -28,12 +28,12 @@ rules:
   - id: dataset-identity-is-insufficient
     priority: 2
     when: dataset names match but any variant, anomaly-generation, preprocessing, or split field differs
-    result: PARTIALLY_COMPARABLE
+    result: CONDITIONALLY_COMPARABLE
     rationale: The same base dataset can be transformed into incompatible benchmarks.
   - id: missing-essential-evidence
     priority: 3
     when: one or more required factors is unknown for either paper
-    result: INSUFFICIENT_INFORMATION
+    result: UNKNOWN
     rationale: Missing protocol evidence cannot be converted into assumed comparability.
   - id: exact-fingerprint-match
     priority: 4
@@ -43,17 +43,17 @@ rules:
 
 track_matrix:
   core_mvod:
-    core_mvod: PARTIALLY_COMPARABLE
+    core_mvod: CONDITIONALLY_COMPARABLE
     partial_mvod: NOT_DIRECTLY_COMPARABLE
     related_natural_multimodal: NOT_DIRECTLY_COMPARABLE
   partial_mvod:
     core_mvod: NOT_DIRECTLY_COMPARABLE
-    partial_mvod: PARTIALLY_COMPARABLE
+    partial_mvod: CONDITIONALLY_COMPARABLE
     related_natural_multimodal: NOT_DIRECTLY_COMPARABLE
   related_natural_multimodal:
     core_mvod: NOT_DIRECTLY_COMPARABLE
     partial_mvod: NOT_DIRECTLY_COMPARABLE
-    related_natural_multimodal: PARTIALLY_COMPARABLE
+    related_natural_multimodal: CONDITIONALLY_COMPARABLE
 
 leaderboard_policy:
   allow_only_when: all required factors are verified and match

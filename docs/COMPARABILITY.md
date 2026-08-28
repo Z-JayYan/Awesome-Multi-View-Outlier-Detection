@@ -15,9 +15,9 @@ The machine-readable rules are in [`data/comparability.yaml`](../data/comparabil
 | Status | Meaning |
 |---|---|
 | `DIRECTLY_COMPARABLE` | All relevant captured fields are verified and match. |
-| `PARTIALLY_COMPARABLE` | The task boundary is compatible, but one or more known protocol choices differs and must be controlled or explained. |
+| `CONDITIONALLY_COMPARABLE` | The task boundary is compatible, but one or more known protocol choices differs and must be controlled or explained. |
 | `NOT_DIRECTLY_COMPARABLE` | Task setting, view completeness, endpoint, feature level, or another hard boundary is incompatible. |
-| `INSUFFICIENT_INFORMATION` | Essential evidence is missing for at least one paper. Unknown never means “probably comparable.” |
+| `UNKNOWN` | Essential evidence is missing for at least one paper. Unknown never means “probably comparable.” |
 
 ## Track-level matrix
 
@@ -32,7 +32,7 @@ The machine-readable rules are in [`data/comparability.yaml`](../data/comparabil
 1. Reject a direct comparison when view setting or evaluation endpoint is incompatible.
 2. Require the same exact dataset variant—not only the same display name.
 3. Compare anomaly generation, affected views, contamination, preprocessing, feature source/backbone, train/test setting, metric, endpoint, repetitions, and seeds.
-4. Return `INSUFFICIENT_INFORMATION` whenever an essential field has not been verified.
+4. Return `UNKNOWN` whenever an essential field has not been verified.
 5. Use `DIRECTLY_COMPARABLE` only when the relevant complete fingerprint is verified and equal.
 
 Use `python scripts/compare_protocols.py PAPER_ID_A PAPER_ID_B` for a conservative registry-level check. The tool intentionally refuses to turn missing evidence into a score.
