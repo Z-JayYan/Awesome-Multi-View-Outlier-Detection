@@ -35,15 +35,15 @@ These are anomaly definitions, not fixed synthetic corruption recipes. Different
 
 ### Core Research Scope
 
-**CORE — Complete-View Multi-View Outlier Detection** assumes that every object has all aligned feature views. This is the repository's main benchmark space. CORE includes classical and deep methods, as well as graph, tensor, generative, and contrastive models.
+**Complete MVOD** assumes that every object has all aligned feature views. This is the repository's main benchmark space. CORE includes classical and deep methods, as well as graph, tensor, generative, and contrastive models.
 
 ### Extended MVOD Settings
 
-**Partial / Incomplete MVOD** studies objects with missing views. It is methodologically close to CORE, but missing observations create a distinct protocol and comparison boundary.
+**Incomplete MVOD** studies objects with missing views. It is methodologically close to CORE, but missing observations create a distinct protocol and comparison boundary.
 
 ### Related Multi-View Anomaly Detection
 
-**Industrial / Natural MVAD** covers multi-camera images, RGB-D, point clouds, and natural defects. These studies share cross-view ideas with CORE but use different data, supervision, and evaluation.
+**IndustriaL MVAD** covers multi-camera images, RGB-D, point clouds, and natural defects. These studies share cross-view ideas with CORE but use different data, supervision, and evaluation.
 
 ## Quick Navigation
 
