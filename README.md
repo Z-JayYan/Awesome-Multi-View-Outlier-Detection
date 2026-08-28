@@ -7,49 +7,38 @@
 [![Papers](https://img.shields.io/badge/papers-42-4c1)](data/papers.yaml)
 [![Version](https://img.shields.io/badge/version-0.3.0-blue)](CHANGELOG.md)
 
-> A curated, auditable, and machine-readable knowledge base for **Multi-View Outlier Detection (MVOD)** and carefully separated adjacent multi-view anomaly-detection settings.
-
-**v0.3.0 — Scientific Usability & Research Landscape.** This release connects the auditable registry to method evolution, baseline selection, and dataset-variant-aware protocol comparison.
-
-> **Same dataset name does not imply the same benchmark protocol.** Protocol reconstruction follows primary evidence and may remain incomplete when papers, supplements, or official code do not disclose a field.
-
-`Paper → Dataset Variant → Protocol Fingerprint → Comparability`
+Papers, code, datasets, and experimental protocols for **Multi-View Outlier Detection (MVOD)**. The collection is maintained as structured data so that every table can be regenerated and checked.
 
 ## What is MVOD?
 
-Multi-View Outlier Detection (MVOD) assigns anomaly evidence to aligned objects observed through multiple feature views. Depending on the paper, an anomaly may be an unusual attribute pattern, an unexpected class, a mixed class-attribute inconsistency, a generic deviation, or a natural defect. These definitions are related but not interchangeable.
+MVOD studies objects described by several views, such as different feature sets, languages, sensors, or camera angles. The aim is to find objects whose behavior is unusual within or across those views.
 
-This repository helps researchers understand how methods evolved, choose scientifically relevant baselines, and determine whether two experimental results share enough protocol to compare. The machine-readable registries are the source of truth; generated tables are navigation views.
+This repository is organized around three practical needs: learning the field, choosing baselines, and checking whether reported results can actually be compared.
 
 ## Repository Scope
 
-**Multi-View Outlier Detection (MVOD)** is overloaded. Track is a task setting—not a synonym for model age, “classical algorithm,” or “non-deep method.” A CORE method may be deep, contrastive, graph-based, or tensor-based.
+The papers are separated by problem setting, not by whether the method is classical or deep.
 
-| Track | Definition | Typical endpoint | Direct benchmark boundary |
-|---|---|---|---|
-| **Track 1 — CORE: Complete-View Multi-View Outlier Detection** | Each object has all aligned feature views and an explicit sample correspondence across views. | Object/sample outlier score | Main complete-view MVOD comparison space |
-| **Track 2 — PARTIAL / INCOMPLETE Multi-View Outlier Detection** | An aligned object may be missing one or more views; the method must handle incomplete observations as well as anomalies. | Object/sample score under a missing-view protocol | Separate from complete-view results; still methodologically relevant |
-| **Track 3 — INDUSTRIAL / NATURAL Multi-View Anomaly Detection** | Multiple cameras, RGB/depth, point clouds, or other sensors observe a physical object or scene with natural defects. | Sample, image, object, or pixel endpoint | Not pooled with feature-level complete-view MVOD |
+| Track | Setting | Kept separate because |
+|---|---|---|
+| **CORE / Complete-view MVOD** | Every object has all aligned feature views. | This is the main feature-level MVOD setting. |
+| **PARTIAL / Incomplete MVOD** | Some objects are missing one or more views. | Missing observations change both the task and the protocol. |
+| **INDUSTRIAL / Natural MVAD** | Images or sensors capture real defects across views. | Data, supervision, and image/pixel evaluation differ from feature-level MVOD. |
 
-The industrial/natural track frequently uses normal-only training, frozen visual backbones, raw images, and image/pixel metrics. These choices differ fundamentally from complete-view feature-level MVOD. A paper title containing “multi-view anomaly detection” does not determine its track; the data model and evaluation protocol do.
-
-Ordinary multi-view clustering/classification, single-view anomaly detection, and systems that merely ensemble unrelated backbones are out of scope. Borderline records remain explicitly marked rather than being silently forced into CORE.
+Deep, graph, tensor, and contrastive methods may all belong to CORE. Ordinary multi-view clustering and single-view anomaly detection are outside the collection.
 
 ## Start Here
 
-- [Research Landscape](docs/RESEARCH_LANDSCAPE.md) · [中文](docs/RESEARCH_LANDSCAPE.zh-CN.md)
-- [Method Taxonomy](docs/METHOD_TAXONOMY.md)
-- [Anomaly Taxonomy](docs/ANOMALY_TAXONOMY.md)
-- [Dataset and Benchmark Variants](docs/DATASET_VARIANTS.md) · [中文](docs/DATASET_VARIANTS.zh-CN.md)
-- [Baseline Map](docs/BASELINE_MAP.md)
-- [Comparability Rules](docs/COMPARABILITY.md) · [中文](docs/COMPARABILITY.zh-CN.md)
-- [Paper Database](docs/PAPERS.md)
+- **New to MVOD:** [Research Landscape](docs/RESEARCH_LANDSCAPE.md) · [中文](docs/RESEARCH_LANDSCAPE.zh-CN.md)
+- **Choosing methods:** [Method Taxonomy](docs/METHOD_TAXONOMY.md) · [Baseline Map](docs/BASELINE_MAP.md)
+- **Checking experiments:** [Dataset Variants](docs/DATASET_VARIANTS.md) · [Comparability Rules](docs/COMPARABILITY.md)
+- **Browsing records:** [Paper Database](docs/PAPERS.md) · [Anomaly Taxonomy](docs/ANOMALY_TAXONOMY.md)
 
 To compare reconstructed protocols, run `python scripts/compare_protocols.py PAPER_ID_A PAPER_ID_B`.
 
 ## Recent research
 
-Recent work is ordered **Track → Year → Venue**. Placement in the same year is not a claim of benchmark compatibility.
+Recent work is grouped by track, then by year and venue. This is a reading list, not a ranking.
 
 <!-- AUTO-GENERATED: RECENT START -->
 ### Recent Complete-View MVOD
@@ -132,19 +121,11 @@ Recent work is ordered **Track → Year → Venue**. Placement in the same year 
 - **Learning Diffusion Models for Multi-view Anomaly Detection** [[paper]](https://doi.org/10.1007/978-3-031-73414-4_19) [[code]](https://github.com/jayliu0313/Diffusion_Multi-View_AD)
 <!-- AUTO-GENERATED: RECENT END -->
 
-## Taxonomy overview
+## How papers are tagged
 
-The registry uses orthogonal fields rather than one mutually exclusive category:
+Methods are tagged along several independent axes: problem setting, mechanism, training regime, anomaly type, and evidence level. See the [Method Taxonomy](docs/METHOD_TAXONOMY.md), [Anomaly Taxonomy](docs/ANOMALY_TAXONOMY.md), and [Paper Tree](docs/PAPER_TREE.md).
 
-- `track` and `view_setting` describe the task boundary;
-- `mechanisms` describe representation and evidence families such as graph, tensor, neighborhood, reconstruction, contrastive, or information-theoretic modeling;
-- `training_paradigm` records the learning regime when verified;
-- `anomaly_types` and `evidence_levels` describe what is scored and where evidence is gathered;
-- `protocol` records the known benchmark fingerprint without filling unreported fields by inference.
-
-See [Method Taxonomy](docs/METHOD_TAXONOMY.md), [Anomaly Taxonomy](docs/ANOMALY_TAXONOMY.md), [Evidence Levels](docs/EVIDENCE_LEVELS.md), and the [Paper Tree](docs/PAPER_TREE.md).
-
-## Benchmark and dataset overview
+## Datasets
 
 <!-- AUTO-GENERATED: DATASETS START -->
 | Dataset | Track | Samples | Views | Feature / modality | Variants |
@@ -164,25 +145,19 @@ See [Method Taxonomy](docs/METHOD_TAXONOMY.md), [Anomaly Taxonomy](docs/ANOMALY_
 | [Reuters](https://archive.ics.uci.edu/dataset/137/reuters+21578+text+categorization+collection) | CORE | unknown | unknown | variant-dependent | unknown |
 <!-- AUTO-GENERATED: DATASETS END -->
 
-Dataset names are labels, not protocol identifiers. BBCSport, Reuters, Caltech101, and other reused sources may have different feature partitions, subsets, preprocessing, or anomaly generation in different papers.
+The same dataset name may refer to different samples, features, views, preprocessing, or injected anomalies. Use the [variant registry](docs/DATASET_VARIANTS.md) before comparing results.
 
-## Baseline selection guide
+## Choosing baselines
 
-The [Baseline Evidence Map](docs/BASELINE_MAP.md) provides method-level cards for Reliable Neighborhood-Aware Multi-View Outlier Detection (RNAMOD), Regularized Contrastive Partial Multi-view Outlier Detection (RCPMOD), Information-aware Multi-view Outlier Detection (IAMOD), Multi-view Outlier Detection via Graphs Denoising (MODGD), Low-rank Tucker Decomposition for Multi-view Outlier Detection based on Meta-learning (LRTDM), Self-Representation Learning with Local Similarity Preserving for Multi-View Outlier Detection (SRLSP), and other historical/frontier anchors.
+The [Baseline Map](docs/BASELINE_MAP.md) groups representative methods by the question they help test: shared representation, local structure, graph denoising, contrastive learning, efficiency, and other choices. It explains why a method is relevant without turning reported numbers into a leaderboard.
 
-Each card answers **why compare**, identifies the closest counterfactual, records artifact status, and states why the reported numbers may still not be directly comparable. Track mismatch does not erase methodological relevance: for example, RCPMOD is a strong contrastive baseline even when a new method uses complete views.
+## Comparing results
 
-## Protocol comparability warning
+Same dataset and metric are not enough. Views, features, anomaly construction, contamination, preprocessing, train/test setup, and repetition policy may still differ. The [comparison guide](docs/COMPARABILITY.md) records four outcomes, from directly comparable to insufficient information. The repository does not publish a cross-protocol leaderboard.
 
-> **Same dataset name ≠ directly comparable results.**
+## Selected papers
 
-The conservative statuses are `DIRECTLY_COMPARABLE`, `PARTIALLY_COMPARABLE`, `NOT_DIRECTLY_COMPARABLE`, and `INSUFFICIENT_INFORMATION`. Direct comparison requires matching dataset variant, anomaly generation, view completeness, preprocessing, contamination, metric, endpoint, feature/backbone level, train/test setting, and relevant repetition/seed details.
-
-This repository intentionally has no traditional cross-protocol leaderboard. Where evidence is incomplete, the correct label is **Reported Result Context — not directly comparable**. See [comparability rules](data/comparability.yaml) and the full [decision guide](docs/COMPARABILITY.md).
-
-## Representative registry snapshot
-
-This generated table is navigation, not a ranking. The Track column is part of every comparison decision.
+This generated table highlights representative records. It is not a ranking.
 
 Anomaly abbreviations: **A = Attribute**, **C = Class**, **M = Mixed / Class-Attribute**, **G = Generic**, **N = Natural**.
 
@@ -217,15 +192,13 @@ Anomaly abbreviations: **A = Attribute**, **C = Class**, **M = Mixed / Class-Att
 | 2011 | [HOAD](https://ieeexplore.ieee.org/document/6137313) | CORE | ICDM | clustering, graph | C | — |
 <!-- AUTO-GENERATED: PAPERS END -->
 
-## Reproducibility overview
+## Code and reproducibility
 
-Artifact claims are evidence-backed. `official` code requires a paper, author page, or official project source establishing ownership; a GitHub search hit alone is insufficient. `unknown` means the audit did not find enough official evidence, not that an artifact cannot exist.
-
-The registry separately records official code, configs, dataset instructions, pretrained weights, environment details, and repository license. See [Reproducibility](docs/REPRODUCIBILITY.md) and the historical [v0.2 coverage audit](docs/COVERAGE_AUDIT_V02.md).
+Code is marked `official` only when a paper, author page, or project page establishes ownership. Configs, data instructions, weights, environments, and licenses are tracked separately in [Reproducibility](docs/REPRODUCIBILITY.md). `unknown` simply means that the checked sources were not enough to decide.
 
 ## Contributing
 
-Corrections and carefully verified additions are welcome. Read [CONTRIBUTING.md](CONTRIBUTING.md), edit the registry, regenerate derived files, and run the validator and tests before opening a pull request.
+Corrections and verified additions are welcome. Read [CONTRIBUTING.md](CONTRIBUTING.md), edit the data files, regenerate the tables, and run the tests before opening a pull request.
 
 ## Citation
 

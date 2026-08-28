@@ -7,40 +7,32 @@
 [![Papers](https://img.shields.io/badge/papers-42-4c1)](data/papers.yaml)
 [![Version](https://img.shields.io/badge/version-0.3.0-blue)](CHANGELOG.md)
 
-> 面向多视图离群检测（MVOD）研究者的、可审计且机器可读的科研知识库，并严格区分相邻的多视图异常检测任务。
-
-**v0.3.0 — 科研可用性与研究脉络。** 本版本将结构化论文 registry 与方法演化、baseline 选择、benchmark variant 和协议可比性连接起来。
-
-> **同名数据集不代表相同 benchmark protocol。** 无法从论文、supplementary material、官方代码或作者页面核实的字段保留为 `unknown`。
-
-`论文 → Benchmark Variant → Protocol Fingerprint → 可比性`
+多视图离群检测（MVOD）的论文、代码、数据集和实验协议索引。所有表格都由结构化数据生成，便于检查和维护。
 
 ## 什么是 MVOD？
 
-多视图离群检测利用同一对象的多个特征视图计算异常证据。不同论文中的异常可能指属性异常、类别异常、混合异常、未细分的通用异常或真实自然缺陷；这些定义相关，但不能直接互换。
+一个对象可以有多种描述，例如不同特征、语言、传感器或拍摄角度。MVOD 的目标，是找出在单个视图内或多个视图之间表现异常的对象。
 
-本仓库帮助研究者理解方法如何演化、选择科学上合理的 baseline，并判断两个结果是否具有足够一致的实验协议。机器可读 registry 是 single source of truth，网页表格只是导航视图。
+仓库主要解决三件事：快速了解领域、选择基线方法、核对论文结果能否直接比较。
 
 ## 仓库范围
 
-| 轨道 | 定义 | 常见端点 | 直接比较边界 |
-|---|---|---|---|
-| **Track 1 — CORE：完整视图 MVOD** | 每个对象拥有全部对齐特征视图，视图间样本对应明确。 | 对象/样本异常分数 | 完整视图 MVOD 主比较空间 |
-| **Track 2 — PARTIAL / INCOMPLETE MVOD** | 对齐对象可能缺失一个或多个视图，方法同时处理缺失观测与异常。 | 缺失视图协议下的对象/样本分数 | 与完整视图结果分开 |
-| **Track 3 — INDUSTRIAL / NATURAL MVAD** | 多相机、RGB/depth、点云或传感器观察带真实缺陷的对象或场景。 | 样本、图像、对象或像素端点 | 不与特征级完整视图 MVOD 合并 |
+这里按问题设定分组，而不是按“传统方法/深度方法”分组。
 
-CORE 是任务设定，不等于 classical、shallow 或 non-deep。深度、对比学习、图和张量方法都可以属于 CORE。
+| 轨道 | 问题设定 | 为什么分开 |
+|---|---|---|
+| **CORE / 完整视图 MVOD** | 每个对象都有全部对齐视图。 | 这是特征级 MVOD 的主要设定。 |
+| **PARTIAL / 不完整视图 MVOD** | 部分对象缺少一个或多个视图。 | 缺失观测改变了任务和实验协议。 |
+| **INDUSTRIAL / 自然异常检测** | 图像或传感器从多个角度记录真实缺陷。 | 数据、监督方式及图像/像素评估均不同。 |
+
+深度、图、张量和对比学习方法都可能属于 CORE。
 
 ## 从这里开始
 
-- [研究脉络](docs/RESEARCH_LANDSCAPE.zh-CN.md) · [English](docs/RESEARCH_LANDSCAPE.md)
-- [方法分类](docs/METHOD_TAXONOMY.md)
-- [异常类型分类](docs/ANOMALY_TAXONOMY.md)
-- [数据集与 Benchmark Variant](docs/DATASET_VARIANTS.zh-CN.md) · [English](docs/DATASET_VARIANTS.md)
-- [Baseline Map](docs/BASELINE_MAP.md)
-- [协议可比性规则](docs/COMPARABILITY.zh-CN.md) · [English](docs/COMPARABILITY.md)
-- [完整论文数据库](docs/PAPERS.md)
-- [v0.3 中文审计报告](V0.3_REVIEW_REPORT.zh-CN.md)
+- **初次了解 MVOD：** [研究脉络](docs/RESEARCH_LANDSCAPE.zh-CN.md)
+- **选择方法：** [方法分类](docs/METHOD_TAXONOMY.md) · [基线方法图](docs/BASELINE_MAP.md)
+- **核对实验：** [数据集变体](docs/DATASET_VARIANTS.zh-CN.md) · [可比性规则](docs/COMPARABILITY.zh-CN.md)
+- **查找资料：** [论文数据库](docs/PAPERS.md) · [异常类型](docs/ANOMALY_TAXONOMY.md)
 
 命令行比较两个已重建协议：
 
@@ -48,32 +40,20 @@ CORE 是任务设定，不等于 classical、shallow 或 non-deep。深度、对
 python scripts/compare_protocols.py PAPER_ID_A PAPER_ID_B
 ```
 
-## 验证维度
+## 如何理解“已核实”
 
-Bibliography、artifact 和 protocol verification 相互独立。论文书目信息已核实，不代表实验协议可以复现；发现官方代码，也不表示配置、数据预处理和 checkpoint 均已发布。
-
-| 审计维度 | 状态 |
-|---|---:|
-| 书目信息已核实 | 42 / 42 |
-| 官方 artifact 已核实 | 以英文 README 的自动生成统计为准 |
-| 协议充分/部分核实 | 以英文 README 和 BUILD_REPORT 的自动生成统计为准 |
+论文题目、作者和出处已核实，不代表实验可以复现。官方代码、配置、数据处理、预训练权重和实验协议是分别记录的；查不到的内容保留为 `unknown`。
 
 ## 比较规则
 
-保守状态为 `DIRECTLY_COMPARABLE`、`PARTIALLY_COMPARABLE`、`NOT_DIRECTLY_COMPARABLE` 和 `INSUFFICIENT_INFORMATION`。
-
-> **相同数据集 + 相同指标，不代表结果可以直接比较。**
-
-必须检查 source dataset、benchmark variant、feature representation、views、sample subset、anomaly generation、ratio、training contamination、preprocessing、metric、endpoint、seed/repetition 以及 transductive/inductive 假设。
-
-本仓库不建立跨协议 leaderboard。
+数据集名称和评价指标相同，结果仍可能不能直接比较。还需要核对样本子集、视图、特征、异常构造、异常比例、预处理、训练/测试划分和重复实验方式。详见[可比性规则](docs/COMPARABILITY.zh-CN.md)。本仓库不制作跨协议排行榜。
 
 ## 论文表与最新研究
 
-完整的 42 篇论文表和按 Track → Year → Venue 生成的最新研究列表位于英文首页及 [论文数据库](docs/PAPERS.md)。论文标题、作者、venue 和链接保留原文，避免翻译造成身份歧义。
+完整的 42 篇论文表和最新研究列表位于英文首页及[论文数据库](docs/PAPERS.md)。论文标题、作者和期刊/会议信息保留原文，避免翻译造成歧义。
 
-异常缩写：**A = Attribute（属性）**、**C = Class（类别）**、**M = Mixed / Class-Attribute（混合）**、**G = Generic（通用/未细分）**、**N = Natural（自然缺陷）**。
+异常缩写：**A = 属性异常**、**C = 类别异常**、**M = 混合异常**、**G = 未细分异常**、**N = 自然缺陷**。
 
 ## 贡献与引用
 
-提交修正前请阅读 [CONTRIBUTING.md](CONTRIBUTING.md)，修改 registry 后重新生成派生文件并运行全部校验。引用信息见 [CITATION.cff](CITATION.cff)。
+提交修正前请阅读 [CONTRIBUTING.md](CONTRIBUTING.md)。引用信息见 [CITATION.cff](CITATION.cff)。
